@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="main.css">
 </head>
 
@@ -12,8 +13,26 @@
     <div class="header">
         <span id="title">Qu Student Registration</span>
     </div>
-    <div>
+
+    <div class="searchC">
         <input type="search" name="search" id="search" placeholder="Search Courses">
+        <i class='bx bx-search-alt-2'></i>
+        <!-- courses will be added dynamically using JSON -->
+    </div>
+
+    <div class="registerC">
+        <label for="courses">Register a course</label>
+        <i class='bx bx-book-alt'></i>
+        <select name="courses" id="courses">
+            <option value="course1">Course 1</option>
+            <option value="course2">Course 2</option>
+            <option value="course3">Course 3</option>
+            <!-- More courses will be added using JSON -->
+        </select>
+    </div>
+
+    <div class="box">
+        <p>availibe courses here later</p>
     </div>
 </body>
 

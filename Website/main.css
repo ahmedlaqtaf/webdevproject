@@ -11,3 +11,40 @@
     border-bottom: 1px solid #000000;
     padding: 10px 0;
 }
+
+.searchC {
+    position: absolute;
+    margin-top: 20px;
+    left: 600px
+}
+
+.searchC i {
+    position: absolute;
+    bottom: 5px;
+    padding-left: 3px;
+}
+
+.registerC {
+    margin-top: 20px;
+    position: absolute;
+    right: 100px;
+}
+
+.registerC i {
+    position: absolute;
+    top: 5px;
+    padding-left: 85px;
+}
+
+.box {
+    width: 300px;
+    height: 400px;
+    border: 1px solid #000;
+    padding: 20px;
+    margin-left: 50px;
+    margin-top: 50px;
+    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
