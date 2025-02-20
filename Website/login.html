@@ -19,21 +19,55 @@
 
 
     <div class="wrapper">
-        <form action="main.html">
+        <form id="loginForm" action="#">
             <h1>Student Login</h1>
             <div class="input-box">
-                <input type="text" placeholder="Username" required>
+                <input type="text" id="username" placeholder="Username" required>
                 <i class='bx bxs-user'></i>
             </div>
             <div class="input-box">
-                <input type="password" placeholder="Password" required>
+                <input type="password"  id="password" placeholder="Password" required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
+            <div id="error-message" class="error-message"></div>
             <button type="submit" class="btn">Login</button>
         </form>
     </div>
 
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+        document.getElementById('username').addEventListener('input', function() {
+        document.getElementById('error-message').style.display = 'none';
+            });
 
+        document.getElementById('password').addEventListener('input', function() {
+        document.getElementById('error-message').style.display = 'none';
+            });
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            fetch('users.json')
+                .then(response => response.json())
+                .then(data => {
+                    const user = data.find(user => user.username === username && user.password === password);
+
+                    if (user) {
+                        window.location.href = 'main.html';
+                    } else {
+                        errorMessage.textContent = 'Invalid username or password';
+                        errorMessage.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    errorMessage.textContent = 'Failed to fetch user data. Please try again later.'; 
+                    errorMessage.style.display = 'block';
+                });
+        });
+    </script>
 
 
 </body>
