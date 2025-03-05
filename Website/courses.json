@@ -1,0 +1,34 @@
+{
+    "courses": [
+        {
+            "id": "CS101",
+            "name": "Introduction to Programming",
+            "category": "Programming",
+            "description": "Learn basic programming concepts using Python"
+        },
+        {
+            "id": "DB202",
+            "name": "Database Management Systems",
+            "category": "Databases",
+            "description": "Comprehensive course on relational and NoSQL databases"
+        },
+        {
+            "id": "WD301",
+            "name": "Web Development with JavaScript",
+            "category": "Programming",
+            "description": "Modern web development techniques and frameworks"
+        },
+        {
+            "id": "OOP401",
+            "name": "Object-Oriented Programming",
+            "category": "Programming",
+            "description": "Advanced OOP principles and design patterns"
+        },
+        {
+            "id": "ML501",
+            "name": "Machine Learning Fundamentals",
+            "category": "Data Science",
+            "description": "Introduction to machine learning algorithms"
+        }
+    ]
+}
