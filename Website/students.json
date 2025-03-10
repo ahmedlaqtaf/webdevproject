@@ -1,0 +1,13 @@
+{
+    "students": [{
+        "id": "202501234",
+        "name": "Ali",
+        "userId": "1",
+        "completed_courses": ["CS151", "OOP251"]
+    }, {
+        "id": "202503456",
+        "name": "Fatima",
+        "completed_courses": ["CS151", "OOP251"],
+        "registered_courses": []
+    }]
+}

@@ -3,31 +3,42 @@
             "id": "CS151",
             "name": "Introduction to Programming",
             "category": "Programming",
-            "description": "Learn basic programming concepts using Python"
+            "description": "Learn basic programming concepts using Python",
+            "prerequisites": [],
+            "open_for_registration": true
+
         },
         {
             "id": "DB351",
             "name": "Database Management Systems",
             "category": "Databases",
-            "description": "Comprehensive course on relational and NoSQL databases"
+            "description": "Comprehensive course on relational and NoSQL databases",
+            "prerequisites": ["OOP251"],
+            "open_for_registration": true
         },
         {
             "id": "WD350",
             "name": "Web Development with JavaScript",
             "category": "Programming",
-            "description": "Modern web development techniques and frameworks"
+            "description": "Modern web development techniques and frameworks",
+            "prerequisites": ["CS151"],
+            "open_for_registration": false
         },
         {
             "id": "OOP251",
             "name": "Object-Oriented Programming",
             "category": "Programming",
-            "description": "Advanced OOP principles and design patterns"
+            "description": "Advanced OOP principles and design patterns",
+            "prerequisites": ["CS151"],
+            "open_for_registration": true
         },
         {
             "id": "ML501",
             "name": "Machine Learning Fundamentals",
             "category": "Data Science",
-            "description": "Introduction to machine learning algorithms"
+            "description": "Introduction to machine learning algorithms",
+            "prerequisites": ["WD350"],
+            "open_for_registration": false
         }
     ]
 }
