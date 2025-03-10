@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap');
+* {
+    font-family: "Poppins", sans-serif;
+}
+
 :root {
     --indigo-50: #eef2ff;
     --indigo-100: #e0e7ff;
@@ -7,9 +12,7 @@
     --indigo-500: #6366f1;
     --indigo-600: #4f46e5;
     --indigo-700: #4338ca;
-
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -80,7 +83,13 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: ease .2s;
+}
+
+.course-card:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transform: scale(1.01);
 }
 
 .course-card h3 {

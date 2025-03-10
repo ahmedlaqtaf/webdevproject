@@ -4,55 +4,55 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1", user-scalable=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" , user-scalable=1 ">
     <title>Login</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="login.css">
+    <link rel=" stylesheet " href=" login.css ">
 
 </head>
 
 <body>
-    <div class="header">
-        <img src="images/uni-logo.png" alt="" class="logo">
-        <span id="title">Qu Student Management</span>
+    <div class=" header ">
+        <img src=" images/uni-logo.png " alt=" " class=" logo ">
+        <span id=" title ">Qu Student Management</span>
     </div>
 
 
-    <div class="wrapper">
-        <form id="loginForm" action="#">
+    <div class=" wrapper ">
+        <form id=" loginForm " action=" # ">
             <h1>Student Login</h1>
-            <div class="input-box">
-                <input type="text" id="username" placeholder="Username" required>
+            <div class=" input-box ">
+                <input type=" text " id=" username " placeholder=" Username " required>
                 <i class='bx bxs-user'></i>
             </div>
-            <div class="input-box">
-                <input type="password"  id="password" placeholder="Password" required>
+            <div class=" input-box ">
+                <input type=" password " id=" password " placeholder=" Password " required>
                 <i class='bx bxs-lock-alt'></i>
             </div>
-            <div id="error-message" class="error-message"></div>
-            <!-- <button type="submit" class="btn">Login</button> -->
+            <div id=" error-message " class=" error-message "></div>
+            <!-- <button type=" submit " class=" btn ">Login</button> -->
 
             <!-- test button -->
-            <!-- <button class="button-40" role="button">
-                <span class="text">Button 40</span>
+            <!-- <button class=" button-40 " role=" button ">
+                <span class=" text ">Button 40</span>
               </button> -->
-              <button class="button-10" role="button">
-                <span class="text">Login</span>
-              </button>
+            <button class=" button-10 " role=" button ">
+                <span class=" text ">Login</span>
+            </button>
 
-            
+
         </form>
     </div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
             event.preventDefault();
-        document.getElementById('username').addEventListener('input', function() {
-        document.getElementById('error-message').style.display = 'none';
+            document.getElementById('username').addEventListener('input', function () {
+                document.getElementById('error-message').style.display = 'none';
             });
 
-        document.getElementById('password').addEventListener('input', function() {
-        document.getElementById('error-message').style.display = 'none';
+            document.getElementById('password').addEventListener('input', function () {
+                document.getElementById('error-message').style.display = 'none';
             });
 
             const username = document.getElementById('username').value;
@@ -73,7 +73,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    errorMessage.textContent = 'Failed to fetch user data. Please try again later.'; 
+                    errorMessage.textContent = 'Failed to fetch user data. Please try again later.';
                     errorMessage.style.display = 'block';
                 });
         });

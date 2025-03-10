@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Search functionality
             searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.toLowerCase();
-                const filteredCourses = courses.filter(course => 
-                    course.name.toLowerCase().includes(searchTerm) || 
+                const filteredCourses = courses.filter(course =>
+                    course.name.toLowerCase().includes(searchTerm) ||
                     course.category.toLowerCase().includes(searchTerm)
                 );
                 displayCourses(filteredCourses);
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function displayCourses(courses) {
         courseList.innerHTML = ''; // Clear previous results
-        
+
         if (courses.length === 0) {
             courseList.innerHTML = '<p>No courses found.</p>';
             return;
