@@ -23,12 +23,34 @@ body {
 }
 
 .header {
-    text-align: center;
-    background-color: #000000;
-    color: white;
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    align-items: center;
+    color: rgb(255, 255, 255);
     padding: 15px;
     margin-bottom: 20px;
+    border-radius: 1px;
+}
+
+#title {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+#logoutButton { 
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 15px;
     border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+    background-color: #c0392b;
 }
 
 .searchC {
@@ -51,30 +73,9 @@ body {
     color: #888;
 }
 
-.registerC {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.registerC label {
-    margin-right: 10px;
-}
-
-.registerC i {
-    margin-right: 10px;
-    color: #3498db;
-}
-
-#coursesDropdown {
-    flex-grow: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
 .courseList {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 15px;
 }
 
@@ -95,4 +96,110 @@ body {
 .course-card h3 {
     margin-top: 0;
     color: #3498db;
+}
+
+.register-btn {
+    background-color: var(--indigo-600);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.register-btn:hover:not([disabled]) {
+    background-color: var(--indigo-700);
+}
+
+.register-btn[disabled] {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: black;
+}
+
+.instructor-option {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.instructor-option:hover {
+    background-color: var(--indigo-50);
+}
+
+.seats-available {
+    color: green;
+}
+
+.seats-limited {
+    color: orange;
+}
+
+.seats-full {
+    color: red;
+}
+
+.status-pending {
+    background-color: #ffeeba;
+    color: #856404;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 100;
+    max-width: 300px;
+}
+
+.error-notification {
+    background-color: #f44336;
 }

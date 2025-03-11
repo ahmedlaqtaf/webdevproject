@@ -3,11 +3,13 @@
         "id": "202501234",
         "name": "Ali",
         "userId": "1",
-        "completed_courses": ["CS151", "OOP251"]
+        "completed_courses": ["CS151", "OOP251"],
+        "grade": 3.9
     }, {
         "id": "202503456",
         "name": "Fatima",
+        "userId": "2",
         "completed_courses": ["CS151", "OOP251"],
-        "registered_courses": []
+        "grade": 3.8
     }]
 }
