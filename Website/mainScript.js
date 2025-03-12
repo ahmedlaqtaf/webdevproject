@@ -229,4 +229,14 @@ fetch('students.json')
             window.location.href = "login.html";
         }, 1500);
     });
+
+    // In mainScript.js, update the Learning Path button click event
+document.querySelector('[data-tab="learningPath"]').addEventListener('click', () => {
+    const studentId = sessionStorage.getItem('studentId');
+    if (studentId) {
+        window.location.href = `learningPath.html?studentId=${studentId}`;
+    } else {
+        window.location.href = 'login.html';
+    }
+});
 });
