@@ -5,17 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Registration</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
     <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
     <div class="header">
         <span id="title">Qu Student Registration</span>
+        <span id="userRole" class="user-role">Student</span>
         <div class="logout">
             <button id="logoutButton">Logout</button>
         </div>
     </div>
+
+    <div class="nav-tabs" id="navTabs">
+        <button class="tab-link" data-tab="courseList" onClick="window.location.href='main.html'">Course List</button>
+        <button class="tab-link" data-tab="learningPath" onclick="window.location.href='learningPath.html'">Learning Path</button>
+    </div>
+
+
+
 
     <div class="searchC">
         <input type="search" name="search" id="searchInput" placeholder="Search Courses by Name or Category">

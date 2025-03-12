@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Path</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="header">
+        <span id="title">Qu Student Registration</span>
+        <span id="userRole" class="user-role">Student</span>
+        <div class="logout">
+            <button id="logoutButton">Logout</button>
+        </div>
+    </div>
+
+    <div class="nav-tabs" id="navTabs">
+        <button class="tab-link" data-tab="courseList" onClick="window.location.href='main.html'">Course List</button>
+        <button class="tab-link" data-tab="learningPath" onclick="window.location.href='learningPath.html'">Learning Path</button>
+    </div>
+
+    <div id="mainContent">
+        <div id="learningPath" class="tab-content">
+            <h2>Your Learning Path</h2>
+            <div id="completedCourses">
+                <h3>Completed Courses</h3>
+                <ul id="completedCoursesList"></ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

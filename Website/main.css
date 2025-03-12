@@ -203,3 +203,52 @@ body {
 .error-notification {
     background-color: #f44336;
 }
+#learningPath {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#learningPath h2 {
+    margin-top: 0;
+    color: var(--indigo-600);
+}
+
+#learningPath h3 {
+    color: var(--indigo-500);
+    margin-bottom: 10px;
+}
+
+#learningPath ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#learningPath ul li {
+    background-color: var(--indigo-50);
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--indigo-100);
+}
+
+#navTabs {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 20px;
+    background-color: #ffffff;
+}
+
+.tab-link{
+    text-decoration: none;
+    color: #333;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.tab-link:hover{
+    background-color: #3634348a; 
+}
