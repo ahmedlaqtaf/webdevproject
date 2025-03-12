@@ -1,5 +1,6 @@
 {
-    "courses": [{
+    "courses": [
+        {
             "id": "CS151",
             "name": "Introduction to Programming",
             "category": "Programming",
@@ -7,7 +8,6 @@
             "prerequisites": [],
             "open_for_registration": true,
             "status": "pending"
-
         },
         {
             "id": "DB351",
@@ -43,6 +43,60 @@
             "description": "Introduction to machine learning algorithms",
             "prerequisites": ["WD350"],
             "open_for_registration": false,
+            "status": ""
+        },
+        {
+            "id": "AI601",
+            "name": "Artificial Intelligence",
+            "category": "Data Science",
+            "description": "Core concepts and applications of AI",
+            "prerequisites": ["ML501"],
+            "open_for_registration": false,
+            "status": ""
+        },
+        {
+            "id": "DS400",
+            "name": "Data Structures and Algorithms",
+            "category": "Computer Science",
+            "description": "In-depth study of data structures and algorithm design",
+            "prerequisites": ["CS151"],
+            "open_for_registration": true,
+            "status": ""
+        },
+        {
+            "id": "CN450",
+            "name": "Computer Networks",
+            "category": "Networking",
+            "description": "Networking concepts, protocols, and security",
+            "prerequisites": ["CS151"],
+            "open_for_registration": true,
+            "status": ""
+        },
+        {
+            "id": "SE500",
+            "name": "Software Engineering Principles",
+            "category": "Software Engineering",
+            "description": "Software development methodologies and best practices",
+            "prerequisites": ["OOP251"],
+            "open_for_registration": true,
+            "status": ""
+        },
+        {
+            "id": "CY600",
+            "name": "Cybersecurity Basics",
+            "category": "Security",
+            "description": "Introduction to cybersecurity principles and practices",
+            "prerequisites": ["CN450"],
+            "open_for_registration": false,
+            "status": ""
+        },
+        {
+            "id": "CC700",
+            "name": "Cloud Computing",
+            "category": "Cloud Computing",
+            "description": "Fundamentals of cloud platforms and services",
+            "prerequisites": ["CN450"],
+            "open_for_registration": true,
             "status": ""
         }
     ]

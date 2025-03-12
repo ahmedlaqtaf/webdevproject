@@ -1,9 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const courseList = document.getElementById('courseList');
-    const instructorModal = document.getElementById('instructorModal');
-    const instructorList = document.getElementById('instructorList');
-    const courseTitle = document.getElementById('courseTitle');
     const notification = document.getElementById('notification');
 
     // Get logged-in student ID from sessionStorage
@@ -23,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let pendingRegistrations = JSON.parse(sessionStorage.getItem('pendingRegistrations')) || [];
     let allCourses = [];
     let allInstructors = [];
-    let selectedCourseId = null;
     let studentData = null;
 
     // Fetch student data
@@ -146,7 +142,6 @@ fetch('students.json')
             button.addEventListener('click', (event) => {
                 const courseId = event.target.dataset.courseId;
                 selectedCourseId = courseId;
-                openInstructorModal(courseId);
             });
         });
     }

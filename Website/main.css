@@ -235,6 +235,7 @@ body {
 
 #navTabs {
     display: flex;
+    margin-bottom: 20px;;
     justify-content: flex-end;
     padding: 10px 20px;
     background-color: #ffffff;
