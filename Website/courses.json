@@ -1,6 +1,5 @@
 {
-    "courses": [
-        {
+    "courses": [{
             "id": "CS151",
             "name": "Introduction to Programming",
             "category": "Programming",
@@ -99,5 +98,6 @@
             "open_for_registration": true,
             "status": ""
         }
+
     ]
 }

@@ -55,8 +55,15 @@
                     const user = data.users.find(user => user.username === username && user.password === password);
 
                     if (user) {
+                        //alert(user.role);
                         sessionStorage.setItem('studentId', user.id); // Store student ID for later
-                        window.location.href = 'main.html';
+                        sessionStorage.setItem('userRole', user.role); // Store student ID for later
+                        if (user.role == "admin") {
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'main.html';
+                        }
+
                     } else {
                         errorMessage.textContent = 'Invalid username or password';
                         errorMessage.style.display = 'block';
