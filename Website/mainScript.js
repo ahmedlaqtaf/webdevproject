@@ -48,40 +48,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     // Fetch instructors data
-    fetch('instructors.json')
-        .then(response => response.json())
-        .then(data => {
-            allInstructors = data.instructors;
-        })
-        .catch(error => {
-            console.error("Error loading instructors data:", error);
-        });
+    // fetch('instructors.json')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         allInstructors = data.instructors;
+    //     })
+    //     .catch(error => {
+    //         console.error("Error loading instructors data:", error);
+    //     });
+
+    let localStorageCourses = localStorage.getItem("courses");
+    localStorageCourses = JSON.parse(localStorageCourses) || [];
+
+    displayCourses(localStorageCourses.courses);
+
+    searchInput.addEventListener('input', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredCourses = localStorageCourses.courses.filter(course =>
+            course.name.toLowerCase().includes(searchTerm) ||
+            course.category.toLowerCase().includes(searchTerm)
+        );
+        displayCourses(filteredCourses);
+    });
+
 
     // Fetch courses from JSON
-    fetch('courses.json')
-        .then(response => response.json())
-        .then(data => {
-            allCourses = data.courses;
-            displayCourses(allCourses);
+    // fetch('courses.json')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         allCourses = data.courses;
+    //         displayCourses(allCourses);
 
-            searchInput.addEventListener('input', () => {
-                const searchTerm = searchInput.value.toLowerCase();
-                const filteredCourses = allCourses.filter(course =>
-                    course.name.toLowerCase().includes(searchTerm) ||
-                    course.category.toLowerCase().includes(searchTerm)
-                );
-                displayCourses(filteredCourses);
-            });
-        })
-        .catch(error => {
-            console.error('Error loading courses:', error);
-            courseList.innerHTML = '<p>Error loading courses. Please try again later.</p>';
-            showNotification("Error loading courses. Please try again.", true);
-        });
+    // searchInput.addEventListener('input', () => {
+    //     const searchTerm = searchInput.value.toLowerCase();
+    //     const filteredCourses = allCourses.filter(course =>
+    //         course.name.toLowerCase().includes(searchTerm) ||
+    //         course.category.toLowerCase().includes(searchTerm)
+    //     );
+    //     displayCourses(filteredCourses);
+    // });
+    //     })
+    //     .catch(error => {
+    //         console.error('Error loading courses:', error);
+    //         courseList.innerHTML = '<p>Error loading courses. Please try again later.</p>';
+    //         showNotification("Error loading courses. Please try again.", true);
+    //     });
 
     // Display the courses
     function displayCourses(courses) {
         courseList.innerHTML = '';
+
+        let storedCourses = JSON.parse(localStorage.getItem('courses'));
+        if (storedCourses && storedCourses.courses.length > 0) {
+            allCourses = storedCourses.courses;
+        }
+
 
         if (courses.length === 0) {
             courseList.innerHTML = '<p>No courses found.</p>';
