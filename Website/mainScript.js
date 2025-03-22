@@ -33,19 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const student = data.students.find(s => s.userId === studentId);
 
             if (student) {
-                studentData = student;
-                completedCourses = student.completed_courses ?
-                    student.completed_courses.map(course => course.course) : [];
-
-                // Display student name in header
-                const title = document.getElementById('title');
-                title.textContent = `Qu Student Registration - Welcome, ${student.name}`;
+                completedCourses = student.completed_courses.map(course => course.course); // Ensure it's an array of course IDs
             }
+            let localStorageCourses = JSON.parse(localStorage.getItem("courses")) || { courses: [] };
+            allCourses = localStorageCourses.courses;
+            displayCourses(allCourses);
         })
         .catch(error => {
             console.error("Error loading student data:", error);
             showNotification("Error loading student data. Please try again.", true);
         });
+
 
     // Fetch instructors data
     // fetch('instructors.json')
@@ -247,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Logout button functionality
-    document.getElementById("logoutButton").addEventListener("click", function () {
+    document.getElementById("logoutButton").addEventListener("click", function() {
         sessionStorage.removeItem('studentId');
         showNotification("You have been logged out.");
         setTimeout(() => {
