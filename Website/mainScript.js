@@ -14,22 +14,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const studentResponse = await fetch('students.json');
             if (!studentResponse.ok) throw new Error("Failed to fetch students.json");
 
-            const user = await fetch('users.json');
-            if (!user.ok) throw new Error("Failed to fetch users.json");
+            const userResponse = await fetch('users.json');
+            if (!userResponse.ok) throw new Error("Failed to fetch users.json");
 
             const studentData = await studentResponse.json();
+            const userData = await userResponse.json();
+
+
             console.log("Student data:", studentData); 
-            const student = studentData.students.find(student => student.userId === user.id);
+            const student = studentData.students.find(student => student.userId === userResponse.id);
 
             if (student) {
                 completedCourses = student.completed_courses.map(course => course.course);
             }
 
             const coursesResponse = await fetch('courses.json');
-            if (!coursesResponse.ok) throw new Error("Failed to fetch courses.json");
-
             const coursesData = await coursesResponse.json();
-            //console.log("Courses data:", coursesData);
+            console.log("Courses data:", coursesData);
 
             allCourses = coursesData.courses;
 
