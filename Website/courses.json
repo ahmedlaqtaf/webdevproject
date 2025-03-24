@@ -5,8 +5,7 @@
             "category": "Programming",
             "description": "Learn basic programming concepts using Python",
             "prerequisites": [],
-            "open_for_registration": true,
-            "status": "pending"
+            "open_for_registration": true
         },
         {
             "id": "DB351",
@@ -14,8 +13,8 @@
             "category": "Databases",
             "description": "Comprehensive course on relational and NoSQL databases",
             "prerequisites": ["OOP251"],
-            "open_for_registration": true,
-            "status": ""
+            "open_for_registration": true
+
         },
         {
             "id": "WD350",
@@ -23,8 +22,8 @@
             "category": "Programming",
             "description": "Modern web development techniques and frameworks",
             "prerequisites": ["CS151"],
-            "open_for_registration": false,
-            "status": ""
+            "open_for_registration": false
+
         },
         {
             "id": "OOP251",
@@ -32,8 +31,8 @@
             "category": "Programming",
             "description": "Advanced OOP principles and design patterns",
             "prerequisites": ["CS151"],
-            "open_for_registration": true,
-            "status": ""
+            "open_for_registration": true
+
         },
         {
             "id": "ML501",
@@ -41,8 +40,8 @@
             "category": "Data Science",
             "description": "Introduction to machine learning algorithms",
             "prerequisites": ["WD350"],
-            "open_for_registration": false,
-            "status": ""
+            "open_for_registration": false
+
         },
         {
             "id": "AI601",
@@ -50,8 +49,8 @@
             "category": "Data Science",
             "description": "Core concepts and applications of AI",
             "prerequisites": ["ML501"],
-            "open_for_registration": false,
-            "status": ""
+            "open_for_registration": false
+
         },
         {
             "id": "DS400",
@@ -59,8 +58,7 @@
             "category": "Computer Science",
             "description": "In-depth study of data structures and algorithm design",
             "prerequisites": ["CS151"],
-            "open_for_registration": true,
-            "status": ""
+            "open_for_registration": true
         },
         {
             "id": "CN450",
@@ -68,8 +66,8 @@
             "category": "Networking",
             "description": "Networking concepts, protocols, and security",
             "prerequisites": ["CS151"],
-            "open_for_registration": true,
-            "status": ""
+            "open_for_registration": true
+
         },
         {
             "id": "SE500",
@@ -77,8 +75,8 @@
             "category": "Software Engineering",
             "description": "Software development methodologies and best practices",
             "prerequisites": ["OOP251"],
-            "open_for_registration": true,
-            "status": ""
+            "open_for_registration": true
+
         },
         {
             "id": "CY600",
@@ -86,8 +84,8 @@
             "category": "Security",
             "description": "Introduction to cybersecurity principles and practices",
             "prerequisites": ["CN450"],
-            "open_for_registration": false,
-            "status": ""
+            "open_for_registration": false
+
         },
         {
             "id": "CC700",
@@ -95,8 +93,8 @@
             "category": "Cloud Computing",
             "description": "Fundamentals of cloud platforms and services",
             "prerequisites": ["CN450"],
-            "open_for_registration": true,
-            "status": ""
+            "open_for_registration": true
+
         }
     ]
 }

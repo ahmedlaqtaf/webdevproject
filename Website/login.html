@@ -8,6 +8,7 @@
     <title>Login</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="login.css">
+    <script src="mainScript.js"></script>
 </head>
 
 <body>
@@ -37,44 +38,6 @@
 
 </html>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const loginForm = document.getElementById('loginForm');
 
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('error-message');
-
-            fetch('users.json')
-                .then(response => response.json())
-                .then(data => {
-                    const user = data.users.find(user => user.username === username && user.password === password);
-
-                    if (user) {
-                        sessionStorage.setItem('userRole', user.role); // Store user role
-
-                        if (user.role === "admin") {
-                            sessionStorage.setItem('adminId', user.id); // Store admin ID
-                            window.location.href = 'admin.html';
-                        } else {
-                            sessionStorage.setItem('studentId', user.id); // Store student ID
-                            window.location.href = 'main.html';
-                        }
-                    } else {
-                        errorMessage.textContent = 'Invalid username or password';
-                        errorMessage.style.display = 'block';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    errorMessage.textContent = 'Failed to fetch user data.';
-                    errorMessage.style.display = 'block';
-                });
-        });
-    });
-</script>
 
 </html>

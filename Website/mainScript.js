@@ -2,105 +2,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('searchInput');
     const courseList = document.getElementById('courseList');
     const notification = document.getElementById('notification');
-    const addCourseSection = document.getElementById('addCourseSection');
-
-    // Get logged-in student ID from sessionStorage
-    const studentId = sessionStorage.getItem('studentId');
-    const userId = sessionStorage.getItem('userId');
-    const userRole = sessionStorage.getItem('userRole');
-
-
-    if (!studentId) {
-        showNotification("Please log in first.", true);
-        setTimeout(() => {
-            window.location.href = "login.html";
-        }, 2000);
-        return;
-    }
-
-
+    const learningPathElement = document.getElementById('learningPath');
+    const logoutButton = document.getElementById('logoutButton');
 
     let completedCourses = [];
-    let pendingRegistrations = JSON.parse(sessionStorage.getItem('pendingRegistrations')) || [];
     let allCourses = [];
-    let allInstructors = [];
-    let studentData = null;
 
-    // Fetch student data
-    fetch('students.json')
-        .then(response => response.json())
-        .then(data => {
-            const student = data.students.find(s => s.userId === studentId);
+    // Fetch student data and initialize courses
+    async function initializeApp() {
+        try {
+            const studentResponse = await fetch('students.json');
+            if (!studentResponse.ok) throw new Error("Failed to fetch students.json");
+
+            const user = await fetch('users.json');
+            if (!user.ok) throw new Error("Failed to fetch users.json");
+
+            const studentData = await studentResponse.json();
+            console.log("Student data:", studentData); 
+            const student = studentData.students.find(student => student.userId === user.id);
 
             if (student) {
-                completedCourses = student.completed_courses.map(course => course.course); // Ensure it's an array of course IDs
+                completedCourses = student.completed_courses.map(course => course.course);
             }
-            let localStorageCourses = JSON.parse(localStorage.getItem("courses")) || { courses: [] };
-            allCourses = localStorageCourses.courses;
+
+            const coursesResponse = await fetch('courses.json');
+            if (!coursesResponse.ok) throw new Error("Failed to fetch courses.json");
+
+            const coursesData = await coursesResponse.json();
+            //console.log("Courses data:", coursesData);
+
+            allCourses = coursesData.courses;
+
             displayCourses(allCourses);
-        })
-        .catch(error => {
-            console.error("Error loading student data:", error);
-            showNotification("Error loading student data. Please try again.", true);
-        });
+        } catch (error) {
+            console.error("Error loading data:", error);
+            showNotification(error,"Error loading data. Please try again.", true);
+        }
+    }
 
-
-    // Fetch instructors data
-    // fetch('instructors.json')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         allInstructors = data.instructors;
-    //     })
-    //     .catch(error => {
-    //         console.error("Error loading instructors data:", error);
-    //     });
-
-    let localStorageCourses = localStorage.getItem("courses");
-    localStorageCourses = JSON.parse(localStorageCourses) || [];
-
-    displayCourses(localStorageCourses.courses);
-
-    searchInput.addEventListener('input', () => {
+    // Display courses based on search term
+    function handleSearch() {
         const searchTerm = searchInput.value.toLowerCase();
-        const filteredCourses = localStorageCourses.courses.filter(course =>
+        const filteredCourses = allCourses.filter(course =>
             course.name.toLowerCase().includes(searchTerm) ||
             course.category.toLowerCase().includes(searchTerm)
         );
         displayCourses(filteredCourses);
-    });
+    }
 
-
-    // Fetch courses from JSON
-    // fetch('courses.json')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         allCourses = data.courses;
-    //         displayCourses(allCourses);
-
-    // searchInput.addEventListener('input', () => {
-    //     const searchTerm = searchInput.value.toLowerCase();
-    //     const filteredCourses = allCourses.filter(course =>
-    //         course.name.toLowerCase().includes(searchTerm) ||
-    //         course.category.toLowerCase().includes(searchTerm)
-    //     );
-    //     displayCourses(filteredCourses);
-    // });
-    //     })
-    //     .catch(error => {
-    //         console.error('Error loading courses:', error);
-    //         courseList.innerHTML = '<p>Error loading courses. Please try again later.</p>';
-    //         showNotification("Error loading courses. Please try again.", true);
-    //     });
-
-    // Display the courses
+    // Display courses in the DOM
     function displayCourses(courses) {
         courseList.innerHTML = '';
-
-        let storedCourses = JSON.parse(localStorage.getItem('courses'));
-        if (storedCourses && storedCourses.courses.length > 0) {
-            allCourses = storedCourses.courses;
-        }
-
 
         if (courses.length === 0) {
             courseList.innerHTML = '<p>No courses found.</p>';
@@ -108,28 +60,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         courses.forEach(course => {
-            // Check prerequisites
             const prerequisitesMet = course.prerequisites ?
                 course.prerequisites.every(p => completedCourses.includes(p)) : true;
-
-            // Check if course is open
             const isOpen = course.open_for_registration;
-
-            // Check if already registered or pending
-            const isPending = pendingRegistrations.some(reg => reg.courseId === course.id);
-            const isRegistered = completedCourses.includes(course.id) || isPending;
-
-            // Determine if student can register
+            const isRegistered = completedCourses.includes(course.id);
             const canRegister = prerequisitesMet && isOpen && !isRegistered;
 
             let buttonText = "Register";
             let buttonDisabled = !canRegister;
             let statusMessage = "";
 
-            if (isPending) {
-                buttonText = "Pending";
-                statusMessage = "<span class='status-pending'>Pending</span>";
-            } else if (isRegistered) {
+             if (isRegistered) {
                 buttonText = "Already Registered";
             } else if (!isOpen) {
                 buttonText = "Registration Closed";
@@ -140,11 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const courseCard = document.createElement('div');
             courseCard.classList.add('course-card');
 
-            // Format prerequisites for display
-            let prerequisitesDisplay = "";
-            if (course.prerequisites && course.prerequisites.length > 0) {
-                prerequisitesDisplay = `<p><strong>Prerequisites:</strong> ${course.prerequisites.join(", ")}</p>`;
-            }
+            const prerequisitesDisplay = course.prerequisites && course.prerequisites.length > 0 ?
+                `<p><strong>Prerequisites:</strong> ${course.prerequisites.join(", ")}</p>` : '';
 
             courseCard.innerHTML = `
                 <h3>${course.name} (${course.id})</h3>
@@ -160,107 +98,103 @@ document.addEventListener('DOMContentLoaded', () => {
             courseList.appendChild(courseCard);
         });
 
-        // Register button event listener
+        // Add event listeners to register buttons
         document.querySelectorAll('.register-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const courseId = event.target.dataset.courseId;
-                selectedCourseId = courseId;
+                handleCourseRegistration(courseId);
             });
         });
     }
+
+
 
     // Show notification
     function showNotification(message, isError = false) {
         notification.textContent = message;
         notification.style.display = "block";
-
-        if (isError) {
-            notification.classList.add("error-notification");
-        } else {
-            notification.classList.remove("error-notification");
-        }
+        notification.classList.toggle("error-notification", isError);
 
         setTimeout(() => {
             notification.style.display = "none";
         }, 5000);
     }
 
+    // Initialize learning path
+    function initializeLearningPath() {
+        const completedCoursesList = document.getElementById('completedCoursesList');
+        const recommendedCoursesList = document.getElementById('recommendedCoursesList');
 
-    const learningPathElement = document.getElementById('learningPath');
-    if (learningPathElement) {
-        initializeLearningPath();
-    }
+        completedCoursesList.innerHTML = completedCourses.map(courseId => {
+            const course = allCourses.find(c => c.id === courseId);
+            return course ? `<li>${course.name} (${course.id})</li>` : '';
+        }).join('');
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const navTabs = document.getElementById('navTabs');
-        const mainContent = document.getElementById('mainContent');
-        const courseListSection = document.getElementById('courseList');
-        const learningPathSection = document.getElementById('learningPath');
 
-        // Tab switching functionality
-        navTabs.addEventListener('click', (event) => {
-            if (event.target.classList.contains('tab-link')) {
-                const tab = event.target.dataset.tab;
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.style.display = 'none';
-                });
-                document.getElementById(tab).style.display = 'block';
-            }
+        const recommendedCourses = allCourses.filter(course => {
+            const prerequisitesMet = course.prerequisites ?
+                course.prerequisites.every(p => completedCourses.includes(p)) : true;
+            return prerequisitesMet && !isRegistered && course.open_for_registration;
         });
 
+        recommendedCoursesList.innerHTML = recommendedCourses.map(course => {
+            return `<li>${course.name} (${course.id})</li>`;
+        }).join('');
+    }
 
-        // Function to display learning path
-        function displayLearningPath() {
-            const completedCoursesList = document.getElementById('completedCoursesList');
-            const pendingCoursesList = document.getElementById('pendingCoursesList');
-            const recommendedCoursesList = document.getElementById('recommendedCoursesList');
-
-            // Display completed courses
-            completedCoursesList.innerHTML = completedCourses.map(courseId => {
-                const course = allCourses.find(c => c.id === courseId);
-                return course ? `<li>${course.name} (${course.id})</li>` : '';
-            }).join('');
-
-            // Display pending courses
-            pendingCoursesList.innerHTML = pendingRegistrations.map(reg => {
-                const course = allCourses.find(c => c.id === reg.courseId);
-                return course ? `<li>${course.name} (${course.id}) - Pending Approval</li>` : '';
-            }).join('');
-
-            // Display recommended courses
-            const recommendedCourses = allCourses.filter(course => {
-                const prerequisitesMet = course.prerequisites ?
-                    course.prerequisites.every(p => completedCourses.includes(p)) : true;
-                const isRegistered = completedCourses.includes(course.id) || pendingRegistrations.some(reg => reg.courseId === course.id);
-                return prerequisitesMet && !isRegistered && course.open_for_registration;
-            });
-
-            recommendedCoursesList.innerHTML = recommendedCourses.map(course => {
-                return `<li>${course.name} (${course.id})</li>`;
-            }).join('');
-        }
-
-        // Call displayLearningPath when the Learning Path tab is clicked
-        document.querySelector('[data-tab="learningPath"]').addEventListener('click', displayLearningPath);
-    });
-
-    // Logout button functionality
-    document.getElementById("logoutButton").addEventListener("click", function() {
+    // Logout functionality
+    function handleLogout() {
         sessionStorage.removeItem('studentId');
         showNotification("You have been logged out.");
         setTimeout(() => {
             window.location.href = "login.html";
         }, 1500);
-    });
+    }
 
-    // In mainScript.js, update the Learning Path button click event
-    document.querySelector('[data-tab="learningPath"]').addEventListener('click', () => {
-        const studentId = sessionStorage.getItem('studentId');
-        if (studentId) {
-            window.location.href = `learningPath.html?studentId=${studentId}`;
-        } else {
-            window.location.href = 'login.html';
+    // Event listeners
+    searchInput.addEventListener('input', handleSearch);
+    logoutButton.addEventListener('click', handleLogout);
+
+    if (learningPathElement) {
+        initializeLearningPath();
+    }
+
+    // Initialize the app
+    initializeApp();
+});
+
+// Login functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('loginForm');
+
+    loginForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const errorMessage = document.getElementById('error-message');
+
+        try {
+            const response = await fetch('users.json');
+            const data = await response.json();
+            const user = data.users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                if (user.role === "admin") {
+                    window.location.href = 'admin.html';
+                } else if (user.role === "student") {
+                    window.location.href = 'main.html';
+                } else {
+                    window.location.href = 'instructor.html';
+                }
+            } else {
+                errorMessage.textContent = 'Invalid username or password';
+                errorMessage.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            errorMessage.textContent = 'Failed to fetch user data.';
+            errorMessage.style.display = 'block';
         }
     });
-
 });
