@@ -7,6 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let completedCourses = [];
     let allCourses = [];
+    const studentId = sessionStorage.getItem('studentId');
+    const userId = sessionStorage.getItem('userId');
+    const userRole = sessionStorage.getItem('userRole');
+
+if (!studentId) {
+        showNotification("Please log in first.", true);
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 2000);
+        return;
+    }
 
     // Fetch student data and initialize courses
     async function initializeApp() {
@@ -181,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const user = data.users.find(user => user.username === username && user.password === password);
 
             if (user) {
+                
                 if (user.role === "admin") {
                     window.location.href = 'admin.html';
                 } else if (user.role === "student") {

@@ -5,7 +5,8 @@
             "category": "Programming",
             "description": "Learn basic programming concepts using Python",
             "prerequisites": [],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "status": "pending" 
         },
         {
             "id": "DB351",
@@ -13,7 +14,8 @@
             "category": "Databases",
             "description": "Comprehensive course on relational and NoSQL databases",
             "prerequisites": ["OOP251"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "status": "pending"
 
         },
         {
@@ -22,7 +24,8 @@
             "category": "Programming",
             "description": "Modern web development techniques and frameworks",
             "prerequisites": ["CS151"],
-            "open_for_registration": false
+            "open_for_registration": false,
+            "status": "pending"
 
         },
         {
@@ -31,7 +34,8 @@
             "category": "Programming",
             "description": "Advanced OOP principles and design patterns",
             "prerequisites": ["CS151"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "status": "pending"
 
         },
         {
@@ -40,7 +44,8 @@
             "category": "Data Science",
             "description": "Introduction to machine learning algorithms",
             "prerequisites": ["WD350"],
-            "open_for_registration": false
+            "open_for_registration": false,
+            "status": "pending"
 
         },
         {
@@ -49,7 +54,8 @@
             "category": "Data Science",
             "description": "Core concepts and applications of AI",
             "prerequisites": ["ML501"],
-            "open_for_registration": false
+            "open_for_registration": false,
+            "status": "pending"
 
         },
         {
@@ -58,7 +64,8 @@
             "category": "Computer Science",
             "description": "In-depth study of data structures and algorithm design",
             "prerequisites": ["CS151"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "status": "pending"
         },
         {
             "id": "CN450",
@@ -66,7 +73,8 @@
             "category": "Networking",
             "description": "Networking concepts, protocols, and security",
             "prerequisites": ["CS151"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "status": "pending"
 
         },
         {
@@ -75,7 +83,8 @@
             "category": "Software Engineering",
             "description": "Software development methodologies and best practices",
             "prerequisites": ["OOP251"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "status": "pending"
 
         },
         {
@@ -84,7 +93,8 @@
             "category": "Security",
             "description": "Introduction to cybersecurity principles and practices",
             "prerequisites": ["CN450"],
-            "open_for_registration": false
+            "open_for_registration": false,
+            "status": "pending"
 
         },
         {
@@ -93,7 +103,8 @@
             "category": "Cloud Computing",
             "description": "Fundamentals of cloud platforms and services",
             "prerequisites": ["CN450"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "status": "pending"
 
         }
     ]
