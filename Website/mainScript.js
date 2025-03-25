@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch student data and initialize courses
     async function initializeApp() {
+
         try {
             const studentResponse = await fetch('students.json');
             if (!studentResponse.ok) throw new Error("Failed to fetch students.json");
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const userData = await userResponse.json();
 
 
-            console.log("Student data:", studentData); 
+            console.log("Student data:", studentData);
             const student = studentData.students.find(student => student.userId === userResponse.id);
 
             if (student) {
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const coursesResponse = await fetch('courses.json');
+
             const coursesData = await coursesResponse.json();
             console.log("Courses data:", coursesData);
 
@@ -37,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayCourses(allCourses);
         } catch (error) {
             console.error("Error loading data:", error);
-            showNotification(error,"Error loading data. Please try again.", true);
+            showNotification(error, "Error loading data. Please try again.", true);
         }
     }
 
@@ -71,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let buttonDisabled = !canRegister;
             let statusMessage = "";
 
-             if (isRegistered) {
+            if (isRegistered) {
                 buttonText = "Already Registered";
             } else if (!isOpen) {
                 buttonText = "Registration Closed";
@@ -135,7 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const recommendedCourses = allCourses.filter(course => {
             const prerequisitesMet = course.prerequisites ?
                 course.prerequisites.every(p => completedCourses.includes(p)) : true;
+            const isRegistered = completedCourses.includes(course.id);
             return prerequisitesMet && !isRegistered && course.open_for_registration;
+
         });
 
         recommendedCoursesList.innerHTML = recommendedCourses.map(course => {
@@ -165,10 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Login functionality
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
 
-    loginForm.addEventListener('submit', async function(event) {
+    loginForm.addEventListener('submit', async function (event) {
         event.preventDefault();
 
         const username = document.getElementById('username').value;
