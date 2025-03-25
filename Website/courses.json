@@ -5,7 +5,22 @@
             "category": "Programming",
             "description": "Learn basic programming concepts using Python",
             "prerequisites": [],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "classes": [{
+                    "id": "CS101-A",
+                    "instructor": "Ali Ahmed",
+                    "schedule": "Monday & Wednesday 10:00-11:30 AM",
+                    "capacity": 30,
+                    "enrolled_students": []
+                },
+                {
+                    "id": "CS101-B",
+                    "instructor": "Khalid Belal",
+                    "schedule": "Tuesday & Thursday 2:00-3:30 PM",
+                    "capacity": 25,
+                    "enrolled_students": []
+                }
+            ]
         },
         {
             "id": "DB351",
@@ -13,8 +28,14 @@
             "category": "Databases",
             "description": "Comprehensive course on relational and NoSQL databases",
             "prerequisites": ["OOP251"],
-            "open_for_registration": true
-
+            "open_for_registration": true,
+            "classes": [{
+                "id": "DB351-A",
+                "instructor": "Mohammed Ahmed",
+                "schedule": "Sunday & Thursday 9:00-10:20 AM",
+                "capacity": 30,
+                "enrolled_students": []
+            }]
         },
         {
             "id": "WD350",
@@ -75,8 +96,22 @@
             "category": "Software Engineering",
             "description": "Software development methodologies and best practices",
             "prerequisites": ["OOP251"],
-            "open_for_registration": true
-
+            "open_for_registration": true,
+            "classes": [{
+                    "id": "SE500-A",
+                    "instructor": "Ali Ahmed",
+                    "schedule": "Monday & Wednesday 10:00-11:30 AM",
+                    "capacity": 30,
+                    "enrolled_students": []
+                },
+                {
+                    "id": "SE500-B",
+                    "instructor": "Khalid Belal",
+                    "schedule": "Tuesday & Thursday 2:00-3:30 PM",
+                    "capacity": 25,
+                    "enrolled_students": []
+                }
+            ]
         },
         {
             "id": "CY600",

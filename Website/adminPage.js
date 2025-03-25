@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const courseList = document.getElementById('courseList');
-
     const courseFormContainer = document.getElementById('courseFormContainer');
     const closeFormBtn = document.getElementById('closeFormBtn');
     const courseForm = document.getElementById('courseForm');
 
-
+    // Initialize courses with the correct structure
     let courses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
     displayCourses(courses.courses);
 
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         courseFormContainer.classList.add('hidden');
     });
 
-    courseForm.addEventListener('submit', (e) => {
+    courseForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         // Get the course data from the form
@@ -27,42 +26,86 @@ document.addEventListener('DOMContentLoaded', () => {
             open_for_registration: document.getElementById('open_for_registration').value === 'true',
             status: "pending"
         };
-
+        if (!courses.courses) {
+            courses = { courses: [] };
+        }
         courses.courses.push(courseData);
-
-
         localStorage.setItem('courses', JSON.stringify(courses));
-        courseForm.reset();
-        courseFormContainer.classList.add('hidden');
-        displayCourses(courses.courses);
+
+        try {
+            const response = await fetch('courses.json');
+            const existingCoursesData = await response.json();
+            existingCoursesData.courses.push(courseData);
+            console.log('Updated Courses:', JSON.stringify(existingCoursesData, null, 2));
+            courseForm.reset();
+            courseFormContainer.classList.add('hidden');
+            displayCourses(courses.courses);
+        } catch (error) {
+            console.error('Error updating courses:', error);
+        }
     });
 
     function displayCourses(courses) {
-        const courseList = document.getElementById('courseList');
         courseList.innerHTML = '';
 
-        courses.forEach((course, index) => {
+        courses.forEach(course => {
             const courseCard = document.createElement('div');
             courseCard.classList.add('course-card');
+
+            let classesHTML = '';
+            if (course.classes && course.classes.length > 0) {
+                classesHTML += '<h4>Classes:</h4>';
+                course.classes.forEach(cls => {
+                    // Retrieve enrolled students for this specific class
+                    const enrollmentKey = `enrollment_${course.id}_${cls.id}`;
+                    const enrolledStudents = JSON.parse(localStorage.getItem(enrollmentKey)) || [];
+
+                    classesHTML += `
+                    <div class="class-card">
+                        <p><strong>Instructor:</strong> ${cls.instructor}</p>
+                        <p><strong>Schedule:</strong> ${cls.schedule}</p>
+                        <p><strong>Seats:</strong> ${enrolledStudents.length}/${cls.capacity}</p>
+                        <button class="validate-class-btn" data-course-id="${course.id}" data-class-id="${cls.id}">Validate</button>
+                    </div>
+                `;
+                });
+            } else {
+                classesHTML = '<p>No classes available.</p>';
+            }
 
             courseCard.innerHTML = `
             <h3>${course.name} (${course.id})</h3>
             <p><strong>Category:</strong> ${course.category}</p>
-            <p>${course.description}</p>
-            <p><strong>Status:</strong> ${course.status}</p>
-            <p><strong>Open for Registration:</strong> ${course.open_for_registration ? 'Yes' : 'No'}</p>
-            <button class="delete-btn" data-index="${index}">Delete</button>
+            ${classesHTML}
         `;
 
             courseList.appendChild(courseCard);
         });
 
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const index = e.target.getAttribute('data-index');
-                deleteCourse(index);
+        document.querySelectorAll('.validate-class-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const courseId = event.target.dataset.courseId;
+                const classId = event.target.dataset.classId;
+                validateClass(courseId, classId);
             });
         });
+    }
+
+    function validateClass(courseId, classId) {
+        let courses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
+
+        for (const course of courses.courses) {
+            if (course.id === courseId) {
+                const cls = course.classes.find(c => c.id === classId);
+                if (cls) {
+                    cls.status = "validated";
+                    break;
+                }
+            }
+        }
+
+        localStorage.setItem('courses', JSON.stringify(courses));
+        displayCourses(courses.courses);
     }
 
     function deleteCourse(index) {
@@ -75,16 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-
     // Logout button functionality
-    document.getElementById("logoutButton").addEventListener("click", function() {
+    document.getElementById("logoutButton").addEventListener("click", function () {
         sessionStorage.removeItem('adminId');
-        //showNotification("You have been logged out.");
         setTimeout(() => {
             window.location.href = "login.html";
         }, 1500);
     });
-
-
 });
