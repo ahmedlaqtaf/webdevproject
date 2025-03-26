@@ -7,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let courses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
     displayCourses(courses.courses);
 
+    function getClassEnrollment(courseId, classId) {
+        const enrollmentKey = `enrollment_${courseId}_${classId}`;
+        return JSON.parse(localStorage.getItem(enrollmentKey)) || [];
+    }
+
     closeFormBtn.addEventListener('click', () => {
         courseFormContainer.classList.add('hidden');
     });
@@ -41,11 +46,13 @@ document.addEventListener('DOMContentLoaded', () => {
             let classesHTML = '<h4>Classes:</h4>';
             if (course.classes && course.classes.length > 0) {
                 course.classes.forEach(cls => {
+                    const classEnrollment = getClassEnrollment(course.id, cls.id);
+
                     classesHTML += `
                     <div class="class-card">
                         <p><strong>Instructor:</strong> ${cls.instructor}</p>
                         <p><strong>Schedule:</strong> ${cls.schedule}</p>
-                        <p><strong>Seats:</strong> ${cls.enrolled}/${cls.capacity}</p>
+                        <p><strong>Seats:</strong> ${classEnrollment.length}/${cls.capacity}</p>
                         <p>-------------------<p>
                     </div>
                     `;

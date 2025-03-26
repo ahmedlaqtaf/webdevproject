@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loggedInUsername = localStorage.getItem('username') || null;
     console.log("Logged in as:", loggedInUsername);
 
-    // Function to get enrolled students for a specific class from localStorage
     function getClassEnrollment(courseId, classId) {
         const enrollmentKey = `enrollment_${courseId}_${classId}`;
         return JSON.parse(localStorage.getItem(enrollmentKey)) || [];
@@ -33,10 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch('courses.json')
             ]);
 
-            if (!studentResponse.ok || !userResponse.ok || !coursesResponse.ok) {
-                throw new Error("Failed to load data files.");
-            }
-
             const [studentData, userData, coursesData] = await Promise.all([
                 studentResponse.json(),
                 userResponse.json(),
@@ -46,27 +41,31 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Student data:", studentData);
             console.log("Users data:", userData);
 
-            // Find the logged-in user
             const user = userData.users.find(user => user.username === loggedInUsername);
             if (!user) throw new Error("User not found in users.json");
+
             const student = studentData.students.find(student => student.userId === user.id);
-            if (student) {
-                completedCourses = student.completed_courses.map(course => course.course);
-            } else {
-                completedCourses = [];
-            }
+            completedCourses = student ? student.completed_courses.map(course => course.course) : [];
 
             const localStorageCourses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
-            const mergedCourses = [...coursesData.courses];
+            let mergedCourses = [...coursesData.courses];
+
+            // Merge localStorage courses with fetched courses
             localStorageCourses.courses.forEach(localCourse => {
-                const exists = mergedCourses.some(course => course.id === localCourse.id);
-                if (!exists) {
+                const existingCourse = mergedCourses.find(course => course.id === localCourse.id);
+                if (existingCourse) {
+                    localCourse.classes.forEach(localClass => {
+                        const classExists = existingCourse.classes.some(cls => cls.id === localClass.id);
+                        if (!classExists) {
+                            existingCourse.classes.push(localClass);
+                        }
+                    });
+                } else {
                     mergedCourses.push(localCourse);
                 }
             });
             allCourses = mergedCourses;
             localStorage.setItem('courses', JSON.stringify({ courses: allCourses }));
-
             displayCourses(allCourses);
         } catch (error) {
             console.error("Error loading data:", error);
@@ -86,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
 
     // Display courses based on search term
     function handleSearch() {
@@ -158,6 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const enrollmentKey = `enrollment_${courseId}_${classId}`;
         let currentEnrollment = JSON.parse(localStorage.getItem(enrollmentKey)) || [];
         const courses = JSON.parse(localStorage.getItem('courses'));
+        const studentData = JSON.parse(localStorage.getItem('students'));
+
+        // Extensive Logging
+        console.log("Registration Attempt Details:");
+        console.log("Logged In Username:", loggedInUsername);
+        console.log("Course ID:", courseId);
+        console.log("Class ID:", classId);
 
         let selectedCourse;
         let selectedClass;
@@ -170,38 +177,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Logging course and class details
+        console.log("Selected Course:", selectedCourse);
+        console.log("Selected Class:", selectedClass);
+
         if (!selectedCourse || !selectedClass) {
             showNotification("Class not found.", true);
             return;
         }
 
-        // Check if already registered
+        const user = studentData.students.find(s => s.userId === localStorage.getItem('userId'));
+        console.log("User Found:", user);
+        const completedCourseIds = user ?
+            user.completed_courses.map(c => c.course) : [];
+        console.log("Completed Course IDs:", completedCourseIds);
+        console.log("Course Prerequisites:", selectedCourse.prerequisites);
+        const prerequisitesMet = selectedCourse.prerequisites.length === 0 ||
+            selectedCourse.prerequisites.every(prereq => {
+                const isCompleted = completedCourseIds.includes(prereq);
+                console.log(`Prerequisite ${prereq} completed:`, isCompleted);
+                return isCompleted;
+            });
+
+        console.log("Prerequisites Met:", prerequisitesMet);
+
         if (currentEnrollment.includes(loggedInUsername)) {
             showNotification("You are already registered for this class.", true);
             return;
         }
 
-        // Check capacity
         if (currentEnrollment.length >= selectedClass.capacity) {
             showNotification("Class is full.", true);
             return;
         }
-
-        // Check prerequisites
-        let studentData = JSON.parse(localStorage.getItem('students')) || { students: [] };
-        let student = studentData.students.find(s => s.userId === loggedInUsername);
-
-        if (!student) {
-            student = {
-                userId: loggedInUsername,
-                completed_courses: []
-            };
-            studentData.students.push(student);
-            localStorage.setItem('students', JSON.stringify(studentData));
-        }
-
-        const completedCourses = student.completed_courses.map(c => c.course);
-        const prerequisitesMet = selectedCourse.prerequisites.every(p => completedCourses.includes(p));
 
         if (!prerequisitesMet) {
             showNotification("You have not completed the required prerequisites.", true);
@@ -212,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentEnrollment.push(loggedInUsername);
         localStorage.setItem(enrollmentKey, JSON.stringify(currentEnrollment));
 
-        showNotification(`Successfully registered for ${selectedCourse.name} - ${selectedClass.instructor}.`);
+        showNotification(`Successfully registered for ${selectedCourse.name}`);
 
         displayCourses(courses.courses);
     }
