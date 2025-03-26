@@ -97,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
         displayCourses(filteredCourses);
     }
 
-    // Display courses in the DOM
     function displayCourses(courses) {
         courseList.innerHTML = '';
 

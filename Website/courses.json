@@ -7,20 +7,12 @@
             "prerequisites": [],
             "open_for_registration": true,
             "classes": [{
-                    "id": "CS101-A",
-                    "instructor": "Ali Ahmed",
-                    "schedule": "Monday & Wednesday 10:00-11:30 AM",
-                    "capacity": 30,
-                    "enrolled_students": []
-                },
-                {
-                    "id": "CS101-B",
-                    "instructor": "Khalid Belal",
-                    "schedule": "Tuesday & Thursday 2:00-3:30 PM",
-                    "capacity": 25,
-                    "enrolled_students": []
-                }
-            ]
+                "id": "CS101-A",
+                "instructor": "Ali Ahmed",
+                "schedule": "Monday & Wednesday 10:00-11:30 AM",
+                "capacity": 30,
+                "enrolled_students": []
+            }]
         },
         {
             "id": "DB351",
@@ -43,7 +35,14 @@
             "category": "Programming",
             "description": "Modern web development techniques and frameworks",
             "prerequisites": ["CS151"],
-            "open_for_registration": false
+            "open_for_registration": false,
+            "classes": [{
+                "id": "WD350-A",
+                "instructor": "Omar Ahmed",
+                "schedule": "Sunday & Wednesday 9:30-11:20 AM",
+                "capacity": 30,
+                "enrolled_students": []
+            }]
 
         },
         {
@@ -52,7 +51,14 @@
             "category": "Programming",
             "description": "Advanced OOP principles and design patterns",
             "prerequisites": ["CS151"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "classes": [{
+                "id": "OOP251-A",
+                "instructor": "Zeyad Ahmed",
+                "schedule": "Monday & Wednesday 8:00-9:30 AM",
+                "capacity": 35,
+                "enrolled_students": []
+            }]
 
         },
         {
@@ -61,16 +67,14 @@
             "category": "Data Science",
             "description": "Introduction to machine learning algorithms",
             "prerequisites": ["WD350"],
-            "open_for_registration": false
-
-        },
-        {
-            "id": "AI601",
-            "name": "Artificial Intelligence",
-            "category": "Data Science",
-            "description": "Core concepts and applications of AI",
-            "prerequisites": ["ML501"],
-            "open_for_registration": false
+            "open_for_registration": false,
+            "classes": [{
+                "id": "ML501-A",
+                "instructor": "Abdullah Ahmed",
+                "schedule": "Sunday & Thursday 9:00-10:20 AM",
+                "capacity": 40,
+                "enrolled_students": []
+            }]
 
         },
         {
@@ -79,7 +83,14 @@
             "category": "Computer Science",
             "description": "In-depth study of data structures and algorithm design",
             "prerequisites": ["CS151"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "classes": [{
+                "id": "DS400-A",
+                "instructor": "Ahmed Khalid",
+                "schedule": "Sunday & Thursday 9:00-10:20 AM",
+                "capacity": 30,
+                "enrolled_students": []
+            }]
         },
         {
             "id": "CN450",
@@ -87,7 +98,14 @@
             "category": "Networking",
             "description": "Networking concepts, protocols, and security",
             "prerequisites": ["CS151"],
-            "open_for_registration": true
+            "open_for_registration": true,
+            "classes": [{
+                "id": "CN450-A",
+                "instructor": "Mohammed Omar",
+                "schedule": "Sunday & Thursday 9:00-10:20 AM",
+                "capacity": 30,
+                "enrolled_students": []
+            }]
 
         },
         {
@@ -98,38 +116,12 @@
             "prerequisites": ["OOP251"],
             "open_for_registration": true,
             "classes": [{
-                    "id": "SE500-A",
-                    "instructor": "Ali Ahmed",
-                    "schedule": "Monday & Wednesday 10:00-11:30 AM",
-                    "capacity": 30,
-                    "enrolled_students": []
-                },
-                {
-                    "id": "SE500-B",
-                    "instructor": "Khalid Belal",
-                    "schedule": "Tuesday & Thursday 2:00-3:30 PM",
-                    "capacity": 25,
-                    "enrolled_students": []
-                }
-            ]
-        },
-        {
-            "id": "CY600",
-            "name": "Cybersecurity Basics",
-            "category": "Security",
-            "description": "Introduction to cybersecurity principles and practices",
-            "prerequisites": ["CN450"],
-            "open_for_registration": false
-
-        },
-        {
-            "id": "CC700",
-            "name": "Cloud Computing",
-            "category": "Cloud Computing",
-            "description": "Fundamentals of cloud platforms and services",
-            "prerequisites": ["CN450"],
-            "open_for_registration": true
-
+                "id": "SE500-A",
+                "instructor": "Ali Ahmed",
+                "schedule": "Monday & Wednesday 10:00-11:30 AM",
+                "capacity": 30,
+                "enrolled_students": []
+            }]
         }
     ]
 }
