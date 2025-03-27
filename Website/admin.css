@@ -148,11 +148,50 @@ button:hover {
     background-color: #1c327a;
 }
 
-#closeFormBtn {
-    background-color: #f44336;
-    margin-left: 10px;
+#classFormContainer {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    width: 300px;
 }
 
-#closeFormBtn:hover {
-    background-color: #d32f2f;
+#classFormContainer h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#classForm input,
+#classForm select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#classForm button {
+    display: flex;
+    justify-items: center;
+    width: 10%;
+    padding: 10px;
+    background-color: #1c327a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#classForm button:hover {
+    background-color: #1c327a;
+}
+
+#closeClassFormBtn {
+    background-color: red;
+    margin-top: 10px;
+}
+
+#closeClassFormBtn:hover {
+    background-color: rgb(100, 14, 14);
 }

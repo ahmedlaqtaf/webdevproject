@@ -1,15 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
     const courseList = document.getElementById('courseList');
-
     const courseFormContainer = document.getElementById('courseFormContainer');
     const closeFormBtn = document.getElementById('closeFormBtn');
     const courseForm = document.getElementById('courseForm');
 
-
     let courses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
     displayCourses(courses.courses);
 
-    const adminID = sessionStorage.getItem('adminId');
+    function getClassEnrollment(courseId, classId) {
+        const enrollmentKey = `enrollment_${courseId}_${classId}`;
+        return JSON.parse(localStorage.getItem(enrollmentKey)) || [];
+    }
+
     closeFormBtn.addEventListener('click', () => {
         courseFormContainer.classList.add('hidden');
     });
@@ -17,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     courseForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // Get the course data from the form
         const courseData = {
             id: document.getElementById('id').value,
             name: document.getElementById('name').value,
@@ -25,66 +26,120 @@ document.addEventListener('DOMContentLoaded', () => {
             description: document.getElementById('description').value,
             prerequisites: document.getElementById('prerequisites').value.split(',').map(item => item.trim()),
             open_for_registration: document.getElementById('open_for_registration').value === 'true',
-            status: "pending"
+            status: "pending",
+            classes: []
         };
 
         courses.courses.push(courseData);
-
-
         localStorage.setItem('courses', JSON.stringify(courses));
-        courseForm.reset();
-        courseFormContainer.classList.add('hidden');
         displayCourses(courses.courses);
+        courseForm.reset();
     });
 
     function displayCourses(courses) {
-        const courseList = document.getElementById('courseList');
         courseList.innerHTML = '';
 
         courses.forEach((course, index) => {
             const courseCard = document.createElement('div');
             courseCard.classList.add('course-card');
 
+            let classesHTML = '<h4>Classes:</h4>';
+            if (course.classes && course.classes.length > 0) {
+                course.classes.forEach(cls => {
+                    const classEnrollment = getClassEnrollment(course.id, cls.id);
+
+                    classesHTML += `
+                    <div class="class-card">
+                        <p><strong>Instructor:</strong> ${cls.instructor}</p>
+                        <p><strong>Schedule:</strong> ${cls.schedule}</p>
+                        <p><strong>Seats:</strong> ${classEnrollment.length}/${cls.capacity}</p>
+                        <p>-------------------<p>
+                    </div>
+                    `;
+                });
+            } else {
+                classesHTML += '<p>No classes available.</p>';
+            }
+
             courseCard.innerHTML = `
             <h3>${course.name} (${course.id})</h3>
             <p><strong>Category:</strong> ${course.category}</p>
-            <p>${course.description}</p>
-            <p><strong>Status:</strong> ${course.status}</p>
-            <p><strong>Open for Registration:</strong> ${course.open_for_registration ? 'Yes' : 'No'}</p>
-            <button class="delete-btn" data-index="${index}">Delete</button>
-        `;
+            ${classesHTML}
+            <button class="add-class-btn" data-index="${index}">Add Class</button>
+            <button class="delete-course-btn" data-index="${index}">Delete Course</button>
+            `;
 
             courseList.appendChild(courseCard);
         });
 
-        document.querySelectorAll('.delete-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const index = e.target.getAttribute('data-index');
-                deleteCourse(index);
+        document.querySelectorAll('.add-class-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const index = event.target.dataset.index;
+                showAddClassForm(parseInt(index));
+            });
+        });
+
+        document.querySelectorAll('.delete-course-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const index = event.target.dataset.index;
+                deleteCourse(parseInt(index));
             });
         });
     }
 
-    function deleteCourse(index) {
-        let courses = JSON.parse(localStorage.getItem("courses")) || { courses: [] };
+    function showAddClassForm(courseIndex) {
+        const classFormContainer = document.createElement('div');
+        classFormContainer.innerHTML = `
+        <h2>Add New Class</h2>
+        <form id="classForm">
+            <label for="instructor">Instructor:</label>
+            <input type="text" id="instructor" required><br>
+            <label for="schedule">Schedule:</label>
+            <input type="text" id="schedule" required><br>
+            <label for="capacity">Capacity:</label>
+            <input type="number" id="capacity" required><br>
+            <button type="submit">Add Class</button>
+            <button type="button" id="cancelClassForm">Cancel</button>
+        </form>
+    `;
 
-        if (index !== null) {
+        document.body.appendChild(classFormContainer);
+
+        document.getElementById('cancelClassForm').addEventListener('click', () => {
+            document.body.removeChild(classFormContainer);
+        });
+
+        document.getElementById('classForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const newClass = {
+                id: `class_${Date.now()}`, // Unique ID for the class
+                instructor: document.getElementById('instructor').value,
+                schedule: document.getElementById('schedule').value,
+                capacity: parseInt(document.getElementById('capacity').value),
+                enrolled: 0
+            };
+            let updatedCourses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
+            updatedCourses.courses[courseIndex].classes.push(newClass);
+            localStorage.setItem('courses', JSON.stringify(updatedCourses));
+            displayCourses(updatedCourses.courses);
+            document.body.removeChild(classFormContainer);
+        });
+    }
+
+
+    function deleteCourse(index) {
+        if (index >= 0 && index < courses.courses.length) {
             courses.courses.splice(index, 1);
             localStorage.setItem('courses', JSON.stringify(courses));
             displayCourses(courses.courses);
         }
     }
 
-
-
-    // Logout button functionality
-    document.getElementById("logoutButton").addEventListener("click", function() {
+    document.getElementById("logoutButton").addEventListener("click", () => {
         sessionStorage.removeItem('adminId');
-        //showNotification("You have been logged out.");
         setTimeout(() => {
             window.location.href = "login.html";
         }, 1500);
     });
-
-
 });
