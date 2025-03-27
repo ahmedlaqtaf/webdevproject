@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const courseList = document.getElementById('courseList');
     const courseFormContainer = document.getElementById('courseFormContainer');
+    const showFormBtn = document.getElementById('showFormBtn');
     const closeFormBtn = document.getElementById('closeFormBtn');
-    const courseForm = document.getElementById('courseForm');
 
     let courses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
     displayCourses(courses.courses);
@@ -86,6 +86,14 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    showFormBtn.addEventListener('click', () => {
+        courseFormContainer.style.display = 'block';
+    });
+
+    closeFormBtn.addEventListener('click', () => {
+        courseFormContainer.style.display = 'none';
+    });
 
     function showAddClassForm(courseIndex) {
         const classFormContainer = document.createElement('div');
