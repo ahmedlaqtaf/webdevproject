@@ -7,56 +7,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let completedCourses = [];
     let allCourses = [];
+
     const studentId = sessionStorage.getItem('studentId');
     const userId = sessionStorage.getItem('userId');
     const userRole = sessionStorage.getItem('userRole');
 
-if (!studentId) {
-        showNotification("Please log in first.", true);
-        setTimeout(() => {
-            window.location.href = "login.html";
-        }, 2000);
-        return;
-    }
 
     // Retrieve logged-in username
-    const loggedInUsername = localStorage.getItem('username') || null;
+    const loggedInUsername = sessionStorage.getItem('username') || null;
     console.log("Logged in as:", loggedInUsername);
 
     function getClassEnrollment(courseId, classId) {
         const enrollmentKey = `enrollment_${courseId}_${classId}`;
-        return JSON.parse(localStorage.getItem(enrollmentKey)) || [];
+        return JSON.parse(sessionStorage.getItem(enrollmentKey)) || [];
     }
 
     // Fetch student data and initialize courses
     async function initializeApp() {
-        if (!loggedInUsername) {
-            showNotification("User not logged in. Redirecting to login...", true);
-            setTimeout(() => window.location.href = "login.html", 2000);
-            return;
-        }
 
         try {
             const [studentResponse, userResponse, coursesResponse] = await Promise.all([
                 fetch('students.json'),
-                fetch('users.json'),
+                fetch('users.json'),//useless
                 fetch('courses.json')
             ]);
 
             const [studentData, userData, coursesData] = await Promise.all([
                 studentResponse.json(),
-                userResponse.json(),
+                userResponse.json(),//useless
                 coursesResponse.json()
             ]);
 
-            console.log("Student data:", studentData);
-            console.log("Users data:", userData);
+            console.log("Student data:", studentData);//all students
 
-            const user = userData.users.find(user => user.username === loggedInUsername);
-            if (!user) throw new Error("User not found in users.json");
+            const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
 
-            const student = studentData.students.find(student => student.userId === user.id);
+            const student = studentData.students.find(student => student.userId === userId);//just logged in student
+            if (!student) throw new Error("Student record not found");
+        
+            console.log("Found student:", student);
+
             completedCourses = student ? student.completed_courses.map(course => course.course) : [];
+            console.log("Completed Courses:", completedCourses);
 
             const localStorageCourses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
             let mergedCourses = [...coursesData.courses];
@@ -81,19 +73,19 @@ if (!studentId) {
         } catch (error) {
             console.error("Error loading data:", error);
 
-            try {
-                const localStorageCourses = JSON.parse(localStorage.getItem('courses'));
-                if (localStorageCourses && localStorageCourses.courses) {
-                    allCourses = localStorageCourses.courses;
-                    displayCourses(allCourses);
-                    showNotification("Loaded courses from local storage.", true);
-                } else {
-                    throw new Error("No courses found in local storage");
-                }
-            } catch (localError) {
-                console.error("Error loading local storage courses:", localError);
-                showNotification("Error loading courses. Please try again.", true);
-            }
+            // try {
+            //     const localStorageCourses = JSON.parse(localStorage.getItem('courses'));
+            //     if (localStorageCourses && localStorageCourses.courses) {
+            //         allCourses = localStorageCourses.courses;
+            //         displayCourses(allCourses);
+            //         showNotification("Loaded courses from local storage.", true);
+            //     } else {
+            //         throw new Error("No courses found in local storage");
+            //     }
+            // } catch (localError) {
+            //     console.error("Error loading local storage courses:", localError);
+            //     showNotification("Error loading courses. Please try again.", true);
+            // }
         }
     }
 
@@ -108,15 +100,15 @@ if (!studentId) {
         displayCourses(filteredCourses);
     }
 
-    function displayCourses(courses) {
+    function displayCourses(allCourses) {
         courseList.innerHTML = '';
 
-        if (courses.length === 0) {
+        if (allCourses.length === 0) {
             courseList.innerHTML = '<p>No courses found.</p>';
             return;
         }
 
-        courses.forEach(course => {
+        allCourses.forEach(course => {
             const courseCard = document.createElement('div');
             courseCard.classList.add('course-card');
 
@@ -280,6 +272,10 @@ document.addEventListener('DOMContentLoaded', function () {
                     localStorage.setItem('username', user.username);
                     localStorage.setItem('role', user.role); // Store role
                     localStorage.setItem('userId', user.id); // Store ID
+
+                    sessionStorage.setItem('username', user.username);
+                    sessionStorage.setItem('userId', user.id);
+                    sessionStorage.setItem('userRole', user.role);
 
                     if (user.role === "admin") {
                         window.location.href = 'admin.html';
