@@ -7,11 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let completedCourses = [];
     let allCourses = [];
-    const studentId = sessionStorage.getItem('studentId');
-    const userId = sessionStorage.getItem('userId');
-    const userRole = sessionStorage.getItem('userRole');
+    const studentId = localStorage.getItem('studentId');
+    const userId = localStorage.getItem('userId');
+    const userRole = localStorage.getItem('userRole');
 
-if (!studentId) {
+    if (!userId) {
+        showNotification("Please log in first.", true);
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 2000);
+        return;
+    }
+
+    if (!studentId) {
         showNotification("Please log in first.", true);
         setTimeout(() => {
             window.location.href = "login.html";
