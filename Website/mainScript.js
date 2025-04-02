@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let completedCourses = [];
     let allCourses = [];
-    const studentId = localStorage.getItem('studentId');
     const userId = localStorage.getItem('userId');
     const userRole = localStorage.getItem('userRole');
 
@@ -19,17 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    if (!studentId) {
-        showNotification("Please log in first.", true);
-        setTimeout(() => {
-            window.location.href = "login.html";
-        }, 2000);
-        return;
-    }
 
     // Retrieve logged-in username
     const loggedInUsername = localStorage.getItem('username') || null;
     console.log("Logged in as:", loggedInUsername);
+
 
     function getClassEnrollment(courseId, classId) {
         const enrollmentKey = `enrollment_${courseId}_${classId}`;
@@ -286,12 +279,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (user) {
                     localStorage.setItem('username', user.username);
-                    localStorage.setItem('role', user.role); // Store role
+                    localStorage.setItem('userRole', user.role); // Store role
                     localStorage.setItem('userId', user.id); // Store ID
+
+
 
                     if (user.role === "admin") {
                         window.location.href = 'admin.html';
                     } else if (user.role === "student") {
+
                         window.location.href = 'main.html';
                     } else {
                         window.location.href = 'instructor.html';
