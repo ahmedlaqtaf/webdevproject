@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Retrieve logged-in username
     const loggedInUsername = localStorage.getItem('username') || null;
-    console.log("Logged in as:", loggedInUsername);
+    console.log("Logged in as:", loggedInUsername, " ", userId); //debugging
 
 
     function getClassEnrollment(courseId, classId) {
@@ -287,7 +287,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (user.role === "admin") {
                         window.location.href = 'admin.html';
                     } else if (user.role === "student") {
-
+                        const studentResponse = await fetch('students.json');
+                        const studentData = await studentResponse.json();
+                        const student = studentData.students.find(s => s.userId === user.id);
+                        if (student) {
+                            localStorage.setItem('studentId', student.id);
+                        }
                         window.location.href = 'main.html';
                     } else {
                         window.location.href = 'instructor.html';
