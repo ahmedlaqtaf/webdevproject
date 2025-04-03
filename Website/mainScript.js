@@ -295,6 +295,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                         window.location.href = 'main.html';
                     } else {
+                        sessionStorage.setItem('instructorName', username);
+                        sessionStorage.setItem('instructorId', user.id);
                         window.location.href = 'instructor.html';
                     }
                 } else {

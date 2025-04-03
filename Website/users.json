@@ -1,6 +1,5 @@
 {
-    "users": [
-        {
+    "users": [{
             "username": "std1",
             "password": "123",
             "role": "student",
