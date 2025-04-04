@@ -21,7 +21,8 @@
             "username": "inst1",
             "password": "321",
             "role": "instructor",
-            "id": "4"
+            "id": "4",
+            "name": "Ali Ahmed"
         }
     ]
 }

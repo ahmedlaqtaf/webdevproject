@@ -279,8 +279,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (user) {
                     localStorage.setItem('username', user.username);
-                    localStorage.setItem('userRole', user.role); // Store role
-                    localStorage.setItem('userId', user.id); // Store ID
+                    localStorage.setItem('userRole', user.role); // store role
+                    localStorage.setItem('userId', user.id); // store ID
 
 
 
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                         window.location.href = 'main.html';
                     } else {
-                        sessionStorage.setItem('instructorName', username);
+                        sessionStorage.setItem('instructorName', user.name);
                         sessionStorage.setItem('instructorId', user.id);
                         window.location.href = 'instructor.html';
                     }

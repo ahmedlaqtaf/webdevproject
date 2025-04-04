@@ -1,12 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const instructorName = sessionStorage.getItem('instructorName');
   if (!instructorName) {
-    alert("Instructor not logged in.");
     window.location.href = "login.html";
     return;
   }
 
-  const courseList = document.getElementById('instructorClasses');
+  const courseList = document.querySelector('#instructorClasses');
   const coursesData = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
 
   let instructorClasses = [];
@@ -63,3 +62,9 @@ function submitGrades(classId) {
   localStorage.setItem(`grades_${classId}`, JSON.stringify(grades));
   alert("Grades submitted successfully!");
 }
+
+document.getElementById("logoutButton").addEventListener("click", () => {
+  setTimeout(() => {
+    window.location.href = "login.html";
+  }, 1500);
+});
