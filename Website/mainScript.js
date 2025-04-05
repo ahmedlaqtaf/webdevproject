@@ -7,15 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let completedCourses = [];
     let allCourses = [];
+    const userId = localStorage.getItem('userId');
+    const userRole = localStorage.getItem('userRole');
 
-    const studentId = sessionStorage.getItem('studentId');
-    const userId = sessionStorage.getItem('userId');
-    const userRole = sessionStorage.getItem('userRole');
+    if (!userId) {
+        showNotification("Please log in first.", true);
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 2000);
+        return;
+    }
 
 
     // Retrieve logged-in username
-    const loggedInUsername = sessionStorage.getItem('username') || null;
-    console.log("Logged in as:", loggedInUsername);
+    const loggedInUsername = localStorage.getItem('username') || null;
+    console.log("Logged in as:", loggedInUsername, " ", userId); //debugging
+
 
     function getClassEnrollment(courseId, classId) {
         const enrollmentKey = `enrollment_${courseId}_${classId}`;
@@ -270,8 +277,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (user) {
                     localStorage.setItem('username', user.username);
-                    localStorage.setItem('role', user.role); // Store role
-                    localStorage.setItem('userId', user.id); // Store ID
+                    localStorage.setItem('userRole', user.role); // store role
+                    localStorage.setItem('userId', user.id); // store ID
+
+
 
                     sessionStorage.setItem('username', user.username);
                     sessionStorage.setItem('userId', user.id);
@@ -280,8 +289,16 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (user.role === "admin") {
                         window.location.href = 'admin.html';
                     } else if (user.role === "student") {
+                        const studentResponse = await fetch('students.json');
+                        const studentData = await studentResponse.json();
+                        const student = studentData.students.find(s => s.userId === user.id);
+                        if (student) {
+                            localStorage.setItem('studentId', student.id);
+                        }
                         window.location.href = 'main.html';
                     } else {
+                        sessionStorage.setItem('instructorName', user.name);
+                        sessionStorage.setItem('instructorId', user.id);
                         window.location.href = 'instructor.html';
                     }
                 } else {

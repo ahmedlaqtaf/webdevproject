@@ -53,7 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p><strong>Instructor:</strong> ${cls.instructor}</p>
                         <p><strong>Schedule:</strong> ${cls.schedule}</p>
                         <p><strong>Seats:</strong> ${classEnrollment.length}/${cls.capacity}</p>
-                        <p>-------------------<p>
+                        <button class="btn-delete" data-course-id="${course.id}" data-class-id="${cls.id}">Delete Class</button>
+                        <hr/>
                     </div>
                     `;
                 });
@@ -65,8 +66,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <h3>${course.name} (${course.id})</h3>
             <p><strong>Category:</strong> ${course.category}</p>
             ${classesHTML}
+            <div style="margin-top: 1rem;">
             <button class="add-class-btn" data-index="${index}">Add Class</button>
-            <button class="delete-course-btn" data-index="${index}">Delete Course</button>
+            <button class="btn-delete" data-index="${index}">Delete Course</button>
+            <div>
             `;
 
             courseList.appendChild(courseCard);
@@ -79,12 +82,20 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        document.querySelectorAll('.delete-course-btn').forEach(button => {
+        document.querySelectorAll('.btn-delete').forEach(button => {
             button.addEventListener('click', (event) => {
-                const index = event.target.dataset.index;
-                deleteCourse(parseInt(index));
+                const courseId = event.target.dataset.courseId;
+                const classId = event.target.dataset.classId;
+
+                if (classId) {
+                    deleteClass(courseId, classId);
+                } else {
+                    const index = event.target.dataset.index;
+                    deleteCourse(parseInt(index));
+                }
             });
         });
+
     }
 
     showFormBtn.addEventListener('click', () => {
@@ -143,6 +154,27 @@ document.addEventListener('DOMContentLoaded', () => {
             displayCourses(courses.courses);
         }
     }
+
+    function deleteClass(courseId, classId) {
+        let courses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
+
+        const courseIndex = courses.courses.findIndex(course => course.id === courseId);
+        if (courseIndex !== -1) {
+            let course = courses.courses[courseIndex];
+            const classIndex = course.classes.findIndex(cls => cls.id === classId);
+            if (classIndex !== -1) {
+                course.classes.splice(classIndex, 1);
+                localStorage.setItem('courses', JSON.stringify(courses));
+                displayCourses(courses.courses);
+                console.log(`Deleted class ${classId} from course ${courseId}`);
+            } else {
+                console.warn(`Class ${classId} not found in course ${courseId}`);
+            }
+        } else {
+            console.warn(`Course ${courseId} not found`);
+        }
+    }
+
 
     document.getElementById("logoutButton").addEventListener("click", () => {
         sessionStorage.removeItem('adminId');

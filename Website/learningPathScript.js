@@ -1,10 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Get the studentId from the URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    const studentId = urlParams.get('studentId');
+    const studentId = localStorage.getItem('studentId');
 
     if (!studentId) {
-        // If no studentId is found, redirect to the login page
         window.location.href = 'login.html';
         return;
     }
@@ -12,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let studentData = null;
     let allCourses = [];
 
-    // Fetch student data
     fetch('students.json')
         .then(response => response.json())
         .then(data => {
@@ -20,14 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (student) {
                 studentData = student;
-
-                // Fetch courses data
                 fetch('courses.json')
                     .then(response => response.json())
                     .then(coursesData => {
                         allCourses = coursesData.courses;
-
-                        // Display completed courses
                         const completedCoursesList = document.getElementById('completedCoursesList');
                         if (student.completed_courses && student.completed_courses.length > 0) {
                             completedCoursesList.innerHTML = student.completed_courses.map(course => {
@@ -53,6 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.error('Error fetching courses data:', error);
                         alert('Failed to load courses data. Please try again.');
                     });
+            } else {
+                console.error("Student not found.");
+                window.location.href = 'login.html';
             }
         })
         .catch(error => {
@@ -60,9 +55,9 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Failed to load student data. Please try again.');
         });
 
-    // Logout button functionality
     document.getElementById("logoutButton").addEventListener("click", function () {
-        sessionStorage.removeItem('studentId');
+        localStorage.removeItem('studentId');
+        localStorage.removeItem('userId');
         window.location.href = "login.html";
     });
 });
