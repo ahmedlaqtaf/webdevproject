@@ -6,6 +6,7 @@
             "description": "Learn basic programming concepts using Python",
             "prerequisites": [],
             "open_for_registration": true,
+            "status": "Active",
             "classes": [{
                 "id": "CS101-A",
                 "instructor": "Ali Ahmed",
@@ -21,6 +22,7 @@
             "description": "Comprehensive course on relational and NoSQL databases",
             "prerequisites": ["OOP251"],
             "open_for_registration": true,
+            "status": "Active",
             "classes": [{
                 "id": "DB351-A",
                 "instructor": "Mohammed Ahmed",
@@ -36,6 +38,7 @@
             "description": "Modern web development techniques and frameworks",
             "prerequisites": ["CS151"],
             "open_for_registration": false,
+            "status": "Cancelled",
             "classes": [{
                 "id": "WD350-A",
                 "instructor": "Omar Ahmed",
@@ -52,6 +55,7 @@
             "description": "Advanced OOP principles and design patterns",
             "prerequisites": ["CS151"],
             "open_for_registration": true,
+            "status": "Active",
             "classes": [{
                 "id": "OOP251-A",
                 "instructor": "Zeyad Ahmed",
@@ -68,6 +72,7 @@
             "description": "Introduction to machine learning algorithms",
             "prerequisites": ["WD350"],
             "open_for_registration": false,
+            "status": "Cancelled",
             "classes": [{
                 "id": "ML501-A",
                 "instructor": "Abdullah Ahmed",
@@ -84,6 +89,7 @@
             "description": "In-depth study of data structures and algorithm design",
             "prerequisites": ["CS151"],
             "open_for_registration": true,
+            "status": "Active",
             "classes": [{
                 "id": "DS400-A",
                 "instructor": "Ahmed Khalid",
@@ -99,6 +105,7 @@
             "description": "Networking concepts, protocols, and security",
             "prerequisites": ["CS151"],
             "open_for_registration": true,
+            "status": "Active",
             "classes": [{
                 "id": "CN450-A",
                 "instructor": "Mohammed Omar",
@@ -115,6 +122,7 @@
             "description": "Software development methodologies and best practices",
             "prerequisites": ["OOP251"],
             "open_for_registration": true,
+            "status": "Active",
             "classes": [{
                 "id": "SE500-A",
                 "instructor": "Ali Ahmed",

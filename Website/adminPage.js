@@ -176,6 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+
     document.getElementById("logoutButton").addEventListener("click", () => {
         sessionStorage.removeItem('adminId');
         setTimeout(() => {
