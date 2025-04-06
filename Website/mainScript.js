@@ -48,25 +48,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Find the currently logged-in student
             currentStudent = studentData.students.find(student => student.userId === userId);
+            // In the initializeApp function, after finding currentStudent
+            if (currentStudent) {
+                console.log("Current student data loaded:", currentStudent);
+                console.log("Pending registrations:", currentStudent.pending_registrations);
+            }
             if (!currentStudent) {
-                 // Attempt to load from localStorage if fetch fails or student not found initially
-                 const localStudents = JSON.parse(localStorage.getItem('students'));
-                 if (localStudents && localStudents.students) {
+                // Attempt to load from localStorage if fetch fails or student not found initially
+                const localStudents = JSON.parse(localStorage.getItem('students'));
+                if (localStudents && localStudents.students) {
                     currentStudent = localStudents.students.find(student => student.userId === userId);
-                 }
-                 if (!currentStudent) {
+                }
+                if (!currentStudent) {
                     console.error("Student record not found for userId:", userId);
                     showNotification("Failed to load your student data. Logging out.", true);
                     setTimeout(handleLogout, 2000); // Logout if student data crucial and missing
                     return; // Stop execution if student data is essential and not found
-                 } else {
+                } else {
                     console.log("Found student from localStorage:", currentStudent);
-                 }
+                }
 
             } else {
-                 console.log("Found student from students.json:", currentStudent);
-                 // Save fetched student data to localStorage for persistence if needed
-                 localStorage.setItem('students', JSON.stringify(studentData)); // Save all students data
+                console.log("Found student from students.json:", currentStudent);
+                // Save fetched student data to localStorage for persistence if needed
+                localStorage.setItem('students', JSON.stringify(studentData)); // Save all students data
             }
 
 
@@ -106,20 +111,20 @@ document.addEventListener('DOMContentLoaded', () => {
             displayCourses(allCourses); // Initial display
         } catch (error) {
             console.error("Error loading initial data:", error);
-             // Fallback to localStorage if fetch fails
-             try {
+            // Fallback to localStorage if fetch fails
+            try {
                 const localStorageCourses = JSON.parse(localStorage.getItem('courses'));
                 const localStudents = JSON.parse(localStorage.getItem('students')); // Also try loading student data
 
                 if (localStorageCourses && localStorageCourses.courses) {
                     allCourses = localStorageCourses.courses;
-                     if (localStudents && localStudents.students) {
+                    if (localStudents && localStudents.students) {
                         currentStudent = localStudents.students.find(student => student.userId === userId);
-                     }
-                     if (!currentStudent) {
-                         console.warn("Could not find student data in localStorage either.");
-                         // Decide if app can proceed without student data or force logout
-                     }
+                    }
+                    if (!currentStudent) {
+                        console.warn("Could not find student data in localStorage either.");
+                        // Decide if app can proceed without student data or force logout
+                    }
                     displayCourses(allCourses);
                     showNotification("Loaded courses from local storage due to fetch error.", false);
                 } else {
@@ -147,21 +152,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Display courses on the page
     function displayCourses(coursesToDisplay) {
         courseList.innerHTML = ''; // Clear previous list
-
         if (!coursesToDisplay || coursesToDisplay.length === 0) {
             courseList.innerHTML = '<p>No courses match your criteria or available.</p>';
             return;
         }
+        const studentsData = JSON.parse(localStorage.getItem('students')) || { students: [] };
+        currentStudent = studentsData.students.find(s => s.userId === userId);
 
-         // Ensure student data is available before proceeding
         if (!currentStudent) {
             console.warn("Student data not available for display logic.");
-
+            return;
         }
-
-
-        const studentCompletedCourses = currentStudent?.completed_courses?.map(c => c.course) || [];
-        const studentPendingCourses = currentStudent?.pending_registrations?.map(r => r.courseId) || [];
+        const studentCompletedCourses = currentStudent ?.completed_courses ?.map(c => c.course) || [];
+        const studentPendingCourses = currentStudent ?.pending_registrations ?.map(r => r.courseId) || [];
 
 
 
@@ -192,22 +195,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else if (isPending) {
                         buttonText = "Pending";
                         buttonDisabled = true; // Disable if pending for the course
-                         buttonStyle = "background-color:#ffcc00; color: #333; border: none; padding: 10px 15px; border-radius: 5px; cursor: not-allowed;";
+                        buttonStyle = "background-color:#ffcc00; color: #333; border: none; padding: 10px 15px; border-radius: 5px; cursor: not-allowed;";
                     } else if (isFull) {
                         buttonText = "Class Full";
                         buttonDisabled = true;
                         buttonStyle = "background-color:#cccccc; color: #666; border: none; padding: 10px 15px; border-radius: 5px; cursor: not-allowed;";
                     }
 
-                     // Check prerequisites *before* enabling the button if not completed/pending/full
-                     if (!buttonDisabled) {
+                    // Check prerequisites *before* enabling the button if not completed/pending/full
+                    if (!buttonDisabled) {
                         const prerequisitesMet = checkPrerequisites(course.id);
                         if (!prerequisitesMet) {
                             buttonText = "Prereq. Not Met";
                             buttonDisabled = true;
                             buttonStyle = "background-color:#ff9999; color: #333; border: none; padding: 10px 15px; border-radius: 5px; cursor: not-allowed;";
                         }
-                     }
+                    }
 
 
                     classesHTML += `
@@ -233,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add prerequisites display
             let prereqText = 'None';
             if (course.prerequisites && course.prerequisites.length > 0 && !(course.prerequisites.length === 1 && course.prerequisites[0] === '')) {
-                 prereqText = course.prerequisites.join(', ');
+                prereqText = course.prerequisites.join(', ');
             }
 
 
@@ -247,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             if (course.open_for_registration) {
-               courseList.appendChild(courseCard);
+                courseList.appendChild(courseCard);
             } else {
 
             }
@@ -264,18 +267,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to check prerequisites
     function checkPrerequisites(courseId) {
-         if (!currentStudent) return false; // Cannot check if student data is missing
+        if (!currentStudent) return false; // Cannot check if student data is missing
 
-         const selectedCourse = allCourses.find(c => c.id === courseId);
-         if (!selectedCourse) return false; // Course not found
+        const selectedCourse = allCourses.find(c => c.id === courseId);
+        if (!selectedCourse) return false; // Course not found
 
-          // Handle cases where prerequisites might be null, undefined, or an empty array, or an array with just an empty string
-         if (!selectedCourse.prerequisites || selectedCourse.prerequisites.length === 0 || (selectedCourse.prerequisites.length === 1 && selectedCourse.prerequisites[0] === '')) {
-             return true; // No prerequisites needed
-         }
+        // Handle cases where prerequisites might be null, undefined, or an empty array, or an array with just an empty string
+        if (!selectedCourse.prerequisites || selectedCourse.prerequisites.length === 0 || (selectedCourse.prerequisites.length === 1 && selectedCourse.prerequisites[0] === '')) {
+            return true; // No prerequisites needed
+        }
 
-         const completedCourseIds = currentStudent.completed_courses?.map(c => c.course) || [];
-         return selectedCourse.prerequisites.every(prereq => completedCourseIds.includes(prereq.trim())); // Trim whitespace just in case
+        const completedCourseIds = currentStudent.completed_courses ?.map(c => c.course) || [];
+        return selectedCourse.prerequisites.every(prereq => completedCourseIds.includes(prereq.trim())); // Trim whitespace just in case
     }
 
 
@@ -300,27 +303,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const hasCompleted = currentStudent.completed_courses?.some(c => c.course === courseId);
+        const hasCompleted = currentStudent.completed_courses ?.some(c => c.course === courseId);
         if (hasCompleted) {
             showNotification("You have already completed this course.", true);
-             button.textContent = "Completed";
-             button.disabled = true;
+            button.textContent = "Completed";
+            button.disabled = true;
             return;
         }
 
-        const isPending = currentStudent.pending_registrations?.some(r => r.courseId === courseId);
+
+
+        const isPending = currentStudent.pending_registrations ?.some(r => r.courseId === courseId);
         if (isPending) {
             showNotification("You already have a pending registration for this course.", true);
-             button.textContent = "Pending";
-             button.disabled = true;
+            button.textContent = "Pending";
+            button.disabled = true;
             return;
         }
 
         // --- Prerequisite Check ---
-         if (!checkPrerequisites(courseId)) {
+        if (!checkPrerequisites(courseId)) {
             showNotification("You have not met the prerequisites for this course.", true);
-             button.textContent = "Prereq. Not Met";
-             button.disabled = true;
+            button.textContent = "Prereq. Not Met";
+            button.disabled = true;
             return;
         }
         // --- End Checks ---
@@ -333,20 +338,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const studentIndex = currentStudentsData.students.findIndex(s => s.userId === userId);
 
         if (studentIndex === -1) {
-             showNotification("Error finding your student record for saving.", true);
-             return; // Stop if the student can't be found in the storage to update
+            showNotification("Error finding your student record for saving.", true);
+            return; // Stop if the student can't be found in the storage to update
         }
 
-         // Initialize pending_registrations if it doesn't exist
-         if (!currentStudentsData.students[studentIndex].pending_registrations) {
-             currentStudentsData.students[studentIndex].pending_registrations = [];
-         }
+        // Initialize pending_registrations if it doesn't exist
+        if (!currentStudentsData.students[studentIndex].pending_registrations) {
+            currentStudentsData.students[studentIndex].pending_registrations = [];
+        }
 
 
         // Add to pending registrations
         currentStudentsData.students[studentIndex].pending_registrations.push({
             courseId: courseId,
-            classId: classId, 
+            classId: classId,
             status: "Pending",
             timestamp: new Date().toISOString()
         });
@@ -354,16 +359,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update student data in localStorage
         localStorage.setItem('students', JSON.stringify(currentStudentsData));
 
-         // Update the global currentStudent variable to reflect the change immediately in the UI
-         currentStudent = currentStudentsData.students[studentIndex];
+        // Update the global currentStudent variable to reflect the change immediately in the UI
+        currentStudent = currentStudentsData.students[studentIndex];
 
 
-   
+
         const selectedCourse = allCourses.find(c => c.id === courseId); // Get course name for notification
         showNotification(`Registration request submitted for ${selectedCourse?.name || courseId}. Status: Pending.`);
 
- 
-        displayCourses(allCourses); 
+
+        displayCourses(allCourses);
 
 
     }
@@ -376,10 +381,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (isError) {
             notification.classList.add("error-notification");
-             notification.style.backgroundColor = '#f44336'; // Red for error
+            notification.style.backgroundColor = '#f44336'; // Red for error
         } else {
-             notification.classList.add("success-notification");
-             notification.style.backgroundColor = '#4CAF50'; // Green for success/info
+            notification.classList.add("success-notification");
+            notification.style.backgroundColor = '#4CAF50'; // Green for success/info
         }
         notification.style.color = 'white';
 
@@ -418,9 +423,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 }); // End DOMContentLoaded for main app logic
 
-// =============================================
-// Login Functionality (Keep separate or ensure it runs correctly)
-// =============================================
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
 
@@ -432,21 +434,21 @@ document.addEventListener('DOMContentLoaded', function () {
             const password = document.getElementById('password').value; // No trim on password typically
             const errorMessage = document.getElementById('error-message');
 
-             // Basic validation
-             if (!username || !password) {
-                 errorMessage.textContent = 'Please enter both username and password.';
-                 errorMessage.style.display = 'block';
-                 return;
-             }
+            // Basic validation
+            if (!username || !password) {
+                errorMessage.textContent = 'Please enter both username and password.';
+                errorMessage.style.display = 'block';
+                return;
+            }
 
 
             errorMessage.style.display = 'none'; // Hide error initially
 
             try {
                 const response = await fetch('users.json');
-                 if (!response.ok) {
+                if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
-                 }
+                }
                 const data = await response.json();
 
                 // Find user
@@ -459,8 +461,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     localStorage.setItem('userRole', user.role);
                     localStorage.setItem('userId', user.id);
 
-                     sessionStorage.setItem('userId', user.id); 
-                     sessionStorage.setItem('userRole', user.role);
+                    sessionStorage.setItem('userId', user.id);
+                    sessionStorage.setItem('userRole', user.role);
 
 
                     // Redirect based on role
@@ -468,49 +470,48 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.location.href = 'admin.html';
                     } else if (user.role === "student") {
                         // Fetch student details to get the student-specific ID (like "202501234")
-                         try {
+                        try {
                             const studentResponse = await fetch('students.json');
-                             if (!studentResponse.ok) throw new Error('Failed to fetch student details');
+                            if (!studentResponse.ok) throw new Error('Failed to fetch student details');
                             const studentData = await studentResponse.json();
                             const student = studentData.students.find(s => s.userId === user.id);
                             if (student) {
                                 localStorage.setItem('studentId', student.id); // Store the specific student ID
-                                 console.log("Student ID found and stored:", student.id);
+                                console.log("Student ID found and stored:", student.id);
                             } else {
                                 console.warn("Could not find matching student record for userId:", user.id);
-                                 // Decide how to handle this - maybe prevent login or show warning
-                                 errorMessage.textContent = 'Login successful, but student record not found.';
-                                 errorMessage.style.display = 'block';
-                                 return; // Prevent redirect if student record is essential
+                                // Decide how to handle this - maybe prevent login or show warning
+                                errorMessage.textContent = 'Login successful, but student record not found.';
+                                errorMessage.style.display = 'block';
+                                return; // Prevent redirect if student record is essential
                             }
-                             // Store fetched student data in localStorage for the main app to use
-                             localStorage.setItem('students', JSON.stringify(studentData));
+                            // Store fetched student data in localStorage for the main app to use
+                            localStorage.setItem('students', JSON.stringify(studentData));
 
 
                         } catch (studentError) {
-                             console.error("Error fetching student details:", studentError);
-                             errorMessage.textContent = 'Login successful, but failed to load student details.';
-                             errorMessage.style.display = 'block';
-                             return; // Prevent redirect if details are needed immediately
+                            console.error("Error fetching student details:", studentError);
+                            errorMessage.textContent = 'Login successful, but failed to load student details.';
+                            errorMessage.style.display = 'block';
+                            return; // Prevent redirect if details are needed immediately
                         }
 
                         window.location.href = 'main.html'; // Redirect student to main course page
-                    } else if (user.role === "instructor"){
+                    } else if (user.role === "instructor") {
                         // Store instructor name if available and needed for the dashboard
                         if (user.name) {
-                             sessionStorage.setItem('instructorName', user.name);
-                             console.log("Instructor Name stored:", user.name);
+                            sessionStorage.setItem('instructorName', user.name);
+                            console.log("Instructor Name stored:", user.name);
                         }
-                         sessionStorage.setItem('instructorId', user.id); // Store instructor ID in session
+                        sessionStorage.setItem('instructorId', user.id); // Store instructor ID in session
                         window.location.href = 'instructor.html';
+                    } else {
+                        // Handle unknown roles or default redirect
+                        console.warn("Unknown user role:", user.role);
+                        errorMessage.textContent = 'Login successful, but role is undefined.';
+                        errorMessage.style.display = 'block';
+                        // window.location.href = 'defaultDashboard.html'; // Example default
                     }
-                     else {
-                         // Handle unknown roles or default redirect
-                         console.warn("Unknown user role:", user.role);
-                         errorMessage.textContent = 'Login successful, but role is undefined.';
-                         errorMessage.style.display = 'block';
-                         // window.location.href = 'defaultDashboard.html'; // Example default
-                     }
 
                 } else {
                     // Invalid credentials
@@ -525,6 +526,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     } else {
-         console.log("Login form not found on this page."); // Debugging message
+        console.log("Login form not found on this page."); // Debugging message
     }
 }); // End DOMContentLoaded for login logic

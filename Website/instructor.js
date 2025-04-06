@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const courseList = document.querySelector('#instructorClasses');
   const coursesData = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
 
+  const allStudentsData = JSON.parse(localStorage.getItem('students')) ?.students || [];
+
   let instructorClasses = [];
 
   coursesData.courses.forEach(course => {
@@ -21,7 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
           courseName: course.name,
           classId: cls.id,
           schedule: cls.schedule,
-          students: enrolledStudents
+          students: enrolledStudents.map(studentId => {
+            const fullStudent = allStudentsData.find(s => s.id === studentId);
+            return {
+              studentId,
+              name: fullStudent ?.name || "Unknown"
+                        };
+          })
         });
       }
     });
@@ -34,10 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   instructorClasses.forEach(cls => {
     let studentList = cls.students.map(student =>
-      `<li>${student.name} - Grade: 
-                <input type="text" data-student-id="${student.studentId}" data-class-id="${cls.classId}" placeholder="Enter grade">
-            </li>`
+      `<li>(${student.name}) - Grade: 
+            <input type="text" data-student-id="${student.studentId}" data-class-id="${cls.classId}" placeholder="Enter grade">
+        </li>`
     ).join('');
+
 
     courseList.innerHTML += `
             <div class="class-card">
