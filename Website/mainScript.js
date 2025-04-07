@@ -151,11 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Display courses on the page
     function displayCourses(coursesToDisplay) {
-        courseList.innerHTML = ''; // Clear previous list
+        courseList.innerHTML = ''; 
         if (!coursesToDisplay || coursesToDisplay.length === 0) {
             courseList.innerHTML = '<p>No courses match your criteria or available.</p>';
             return;
-        }
+        } 
         const studentsData = JSON.parse(localStorage.getItem('students')) || { students: [] };
         currentStudent = studentsData.students.find(s => s.userId === userId);
 
@@ -163,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Student data not available for display logic.");
             return;
         }
-        const studentCompletedCourses = currentStudent ?.completed_courses ?.map(c => c.course) || [];
-        const studentPendingCourses = currentStudent ?.pending_registrations ?.map(r => r.courseId) || [];
+        const studentCompletedCourses = currentStudent?.completed_courses?.map(c => c.course) || [];
+        const studentPendingCourses = currentStudent?.pending_registrations?.map(r => r.courseId) || [];
 
 
 
