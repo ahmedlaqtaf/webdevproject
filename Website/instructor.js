@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const courseList = document.querySelector('#instructorClasses');
   const coursesData = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
 
-  const allStudentsData = JSON.parse(localStorage.getItem('students')) ? .students || [];
+  const allStudentsData = JSON.parse(localStorage.getItem('students')) ?.students || [];
 
   let instructorClasses = [];
 
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const fullStudent = allStudentsData.find(s => s.id === studentId);
             return {
               studentId,
-              name: fullStudent ? .name || "Unknown"
+              name: fullStudent ?.name || "Unknown"
                         };
           })
         });
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   instructorClasses.forEach(cls => {
     let studentList = cls.students.map(student =>
-      `<li>(${student.studentId}) - Grade: 
+      `<li> ${student.name} (${student.studentId}) - Grade: 
             <input type="text" data-student-id="${student.studentId}" data-class-id="${cls.classId}" placeholder="Enter grade">
         </li>`
     ).join('');
