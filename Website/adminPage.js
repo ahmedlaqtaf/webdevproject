@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to create the pending registrations container if it doesn't exist
     function createPendingRegistrationsContainer() {
         const container = document.createElement('div');
         container.id = 'pendingRegistrationsContainer';
@@ -124,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return container;
     }
 
-    // Function to get all pending registrations from all students
+    //get all pending registrations from all students
     function getAllPendingRegistrations() {
         const studentsData = JSON.parse(localStorage.getItem('students')) || { students: [] };
         const allPendingRegistrations = [];
@@ -162,7 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return allPendingRegistrations;
     }
 
-    // Function to display all pending registrations
     function displayPendingRegistrations() {
         const pendingList = document.getElementById('pendingRegistrationsList');
         if (!pendingList) return;
@@ -199,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pendingList.innerHTML = html;
 
-        // Attach event listeners to the buttons
+        // add event listeners to the buttons
         document.querySelectorAll('.approve-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const studentId = event.target.dataset.studentId;
@@ -219,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Function to handle registration approval or rejection
+    //handle registration approval or rejection
     function handleRegistrationApproval(studentId, courseId, classId, isApproved) {
         const studentsData = JSON.parse(localStorage.getItem('students')) || { students: [] };
         const studentIndex = studentsData.students.findIndex(s => s.id === studentId);
@@ -243,8 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("This registration request was not found.");
             return false;
         }
-
-        // Remove from pending registrations
         const registration = student.pending_registrations.splice(pendingIndex, 1)[0];
 
         if (isApproved) {
@@ -256,8 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 enrollmentDate: new Date().toISOString(),
                 status: "Enrolled"
             });
-
-            // Update enrollment count for the class
             const enrollmentKey = `enrollment_${courseId}_${classId}`;
             const enrollment = JSON.parse(localStorage.getItem(enrollmentKey)) || [];
             enrollment.push(studentId);
@@ -267,11 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             alert(`Registration rejected for student ${studentId} in course ${courseId}.`);
         }
-
-        // Save updated student data
         localStorage.setItem('students', JSON.stringify(studentsData));
-
-        // Refresh the pending registrations display
         displayPendingRegistrations();
         return true;
     }

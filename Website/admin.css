@@ -166,16 +166,23 @@ button:hover {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
+#closeFormBtn {
+    display: flex;
+    margin-top: -3rem;
+}
+
 #courseFormContainer {
     display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     background: white;
     padding: 20px;
+    margin-top: 30px;
+    border: 2px solid #3d3d3d;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #classFormContainer {

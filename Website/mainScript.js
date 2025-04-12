@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStudent = null; // Store the logged-in student's data
 
     const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
-    const userRole = localStorage.getItem('userRole') || sessionStorage.getItem('userRole'); // Use sessionStorage as fallback
+    const userRole = localStorage.getItem('userRole') || sessionStorage.getItem('userRole');
 
     if (!userId) {
         showNotification("Please log in first.", true);
@@ -18,23 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    console.log("Logged in user ID:", userId); // Debugging
+    console.log("Logged in user ID:", userId);
 
-    // Function to get enrollment count for a specific class from localStorage
     function getClassEnrollmentCount(courseId, classId) {
         const enrollmentKey = `enrollment_${courseId}_${classId}`;
-        // Assuming enrollment data stores an array of student IDs or objects
         const enrollment = JSON.parse(localStorage.getItem(enrollmentKey)) || [];
         return enrollment.length;
     }
 
-    // Fetch necessary data and initialize the application
     async function initializeApp() {
         try {
-            // Fetch courses and student data in parallel
             const [coursesResponse, studentsResponse] = await Promise.all([
                 fetch('courses.json'),
-                fetch('students.json') // Fetch student data
+                fetch('students.json')
             ]);
 
             if (!coursesResponse.ok || !studentsResponse.ok) {
@@ -46,15 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 studentsResponse.json()
             ]);
 
-            // Find the currently logged-in student
             currentStudent = studentData.students.find(student => student.userId === userId);
-            // In the initializeApp function, after finding currentStudent
             if (currentStudent) {
                 console.log("Current student data loaded:", currentStudent);
                 console.log("Pending registrations:", currentStudent.pending_registrations);
             }
             if (!currentStudent) {
-                // Attempt to load from localStorage if fetch fails or student not found initially
                 const localStudents = JSON.parse(localStorage.getItem('students'));
                 if (localStudents && localStudents.students) {
                     currentStudent = localStudents.students.find(student => student.userId === userId);
@@ -62,30 +55,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!currentStudent) {
                     console.error("Student record not found for userId:", userId);
                     showNotification("Failed to load your student data. Logging out.", true);
-                    setTimeout(handleLogout, 2000); // Logout if student data crucial and missing
-                    return; // Stop execution if student data is essential and not found
+                    setTimeout(handleLogout, 2000);
+                    return;
                 } else {
                     console.log("Found student from localStorage:", currentStudent);
                 }
 
             } else {
                 console.log("Found student from students.json:", currentStudent);
-                // Save fetched student data to localStorage for persistence if needed
-                localStorage.setItem('students', JSON.stringify(studentData)); // Save all students data
+                localStorage.setItem('students', JSON.stringify(studentData));
             }
 
-
-            // --- Course Merging Logic ---
             const localStorageCourses = JSON.parse(localStorage.getItem('courses')) || { courses: [] };
-            let mergedCourses = [...coursesData.courses]; // Start with fetched courses
+            let mergedCourses = [...coursesData.courses];
 
-            // Create a map for quick lookup of fetched courses by ID
             const fetchedCourseMap = new Map(mergedCourses.map(course => [course.id, course]));
 
             localStorageCourses.courses.forEach(localCourse => {
                 const existingCourse = fetchedCourseMap.get(localCourse.id);
                 if (existingCourse) {
-                    // Merge classes: Add classes from local storage only if they don't exist in fetched data
                     const existingClassIds = new Set(existingCourse.classes.map(cls => cls.id));
                     localCourse.classes.forEach(localClass => {
                         if (!existingClassIds.has(localClass.id)) {
@@ -95,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     });
                 } else {
-                    // Add course from local storage if it wasn't in the fetched data
                     mergedCourses.push(localCourse);
                     fetchedCourseMap.set(localCourse.id, localCourse); // Add to map
                     console.log(`Added course ${localCourse.id} from localStorage`);
@@ -103,15 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             allCourses = mergedCourses;
-            // Save the potentially merged course list back to localStorage
             localStorage.setItem('courses', JSON.stringify({ courses: allCourses }));
-            // --- End Course Merging Logic ---
-
-
             displayCourses(allCourses); // Initial display
         } catch (error) {
             console.error("Error loading initial data:", error);
-            // Fallback to localStorage if fetch fails
             try {
                 const localStorageCourses = JSON.parse(localStorage.getItem('courses'));
                 const localStudents = JSON.parse(localStorage.getItem('students')); // Also try loading student data
@@ -123,7 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     if (!currentStudent) {
                         console.warn("Could not find student data in localStorage either.");
-                        // Decide if app can proceed without student data or force logout
                     }
                     displayCourses(allCourses);
                     showNotification("Loaded courses from local storage due to fetch error.", false);
@@ -137,8 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
-    // Handle search input changes
     function handleSearch() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         const filteredCourses = allCourses.filter(course =>
@@ -151,11 +130,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Display courses on the page
     function displayCourses(coursesToDisplay) {
-        courseList.innerHTML = ''; 
+        courseList.innerHTML = '';
         if (!coursesToDisplay || coursesToDisplay.length === 0) {
             courseList.innerHTML = '<p>No courses match your criteria or available.</p>';
             return;
-        } 
+        }
         const studentsData = JSON.parse(localStorage.getItem('students')) || { students: [] };
         currentStudent = studentsData.students.find(s => s.userId === userId);
 
@@ -163,8 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn("Student data not available for display logic.");
             return;
         }
-        const studentCompletedCourses = currentStudent?.completed_courses?.map(c => c.course) || [];
-        const studentPendingCourses = currentStudent?.pending_registrations?.map(r => r.courseId) || [];
+        const studentCompletedCourses = currentStudent ?.completed_courses ?.map(c => c.course) || [];
+        const studentPendingCourses = currentStudent ?.pending_registrations ?.map(r => r.courseId) || [];
 
 
 
@@ -181,9 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const enrollmentCount = getClassEnrollmentCount(course.id, cls.id);
                     const isFull = enrollmentCount >= cls.capacity;
                     const isCompleted = studentCompletedCourses.includes(course.id);
-                    const isPending = studentPendingCourses.includes(course.id); // Checks if pending for the *course*
-                    // const isPendingThisClass = studentPendingClasses.includes(cls.id); // Check if pending for *this specific class*
-
+                    const isPending = studentPendingCourses.includes(course.id);
                     let buttonText = "Register";
                     let buttonDisabled = false;
                     let buttonStyle = "background-color:rgb(0, 170, 255); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;"; // Default style
@@ -201,8 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         buttonDisabled = true;
                         buttonStyle = "background-color:#cccccc; color: #666; border: none; padding: 10px 15px; border-radius: 5px; cursor: not-allowed;";
                     }
-
-                    // Check prerequisites *before* enabling the button if not completed/pending/full
                     if (!buttonDisabled) {
                         const prerequisitesMet = checkPrerequisites(course.id);
                         if (!prerequisitesMet) {
@@ -232,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 classesHTML = '<p>No classes currently scheduled for this course.</p>';
             }
-
             // Add prerequisites display
             let prereqText = 'None';
             if (course.prerequisites && course.prerequisites.length > 0 && !(course.prerequisites.length === 1 && course.prerequisites[0] === '')) {
@@ -247,8 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  <p><strong>Prerequisites:</strong> ${prereqText}</p>
                  <p><strong>Open for Registration:</strong> ${course.open_for_registration ? 'Yes' : 'No'}</p> ${classesHTML}
             `;
-
-
             if (course.open_for_registration) {
                 courseList.appendChild(courseCard);
             } else {
@@ -256,33 +228,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Re-attach event listeners for the newly created buttons
         document.querySelectorAll('.register-class-btn').forEach(button => {
-            // Only add listener if the button is not disabled
             if (!button.disabled) {
                 button.addEventListener('click', handleClassRegistration);
             }
         });
     }
 
-    // Function to check prerequisites
     function checkPrerequisites(courseId) {
-        if (!currentStudent) return false; // Cannot check if student data is missing
+        if (!currentStudent) return false;
 
         const selectedCourse = allCourses.find(c => c.id === courseId);
         if (!selectedCourse) return false; // Course not found
 
-        // Handle cases where prerequisites might be null, undefined, or an empty array, or an array with just an empty string
+
         if (!selectedCourse.prerequisites || selectedCourse.prerequisites.length === 0 || (selectedCourse.prerequisites.length === 1 && selectedCourse.prerequisites[0] === '')) {
-            return true; // No prerequisites needed
+            return true;
         }
 
         const completedCourseIds = currentStudent.completed_courses ?.map(c => c.course) || [];
-        return selectedCourse.prerequisites.every(prereq => completedCourseIds.includes(prereq.trim())); // Trim whitespace just in case
+        return selectedCourse.prerequisites.every(prereq => completedCourseIds.includes(prereq.trim()));
     }
 
-
-    // Handle the click on a register button
     function handleClassRegistration(event) {
         if (!currentStudent) {
             showNotification("Cannot register, student data not loaded.", true);
@@ -292,9 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const button = event.target;
         const courseId = button.dataset.courseId;
         const classId = button.dataset.classId;
-        const classCapacity = parseInt(button.dataset.capacity, 10); // Get capacity from data attribute
+        const classCapacity = parseInt(button.dataset.capacity, 10);
 
-        // --- Double checks (although UI should prevent clicks on disabled buttons) ---
         const enrollmentCount = getClassEnrollmentCount(courseId, classId);
         if (enrollmentCount >= classCapacity) {
             showNotification("Class is full. Registration failed.", true);
@@ -328,27 +294,19 @@ document.addEventListener('DOMContentLoaded', () => {
             button.disabled = true;
             return;
         }
-        // --- End Checks ---
 
-
-        // --- Proceed with Registration Logic ---
-
-        // Retrieve the latest student data from localStorage before modifying
+        // Retrieve the latest student data from localStorage
         const currentStudentsData = JSON.parse(localStorage.getItem('students')) || { students: [] };
         const studentIndex = currentStudentsData.students.findIndex(s => s.userId === userId);
 
         if (studentIndex === -1) {
             showNotification("Error finding your student record for saving.", true);
-            return; // Stop if the student can't be found in the storage to update
+            return;
         }
-
-        // Initialize pending_registrations if it doesn't exist
         if (!currentStudentsData.students[studentIndex].pending_registrations) {
             currentStudentsData.students[studentIndex].pending_registrations = [];
         }
-
-
-        // Add to pending registrations
+        // add to pending registrations
         currentStudentsData.students[studentIndex].pending_registrations.push({
             courseId: courseId,
             classId: classId,
@@ -359,37 +317,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update student data in localStorage
         localStorage.setItem('students', JSON.stringify(currentStudentsData));
 
-        // Update the global currentStudent variable to reflect the change immediately in the UI
         currentStudent = currentStudentsData.students[studentIndex];
 
 
 
-        const selectedCourse = allCourses.find(c => c.id === courseId); // Get course name for notification
+        const selectedCourse = allCourses.find(c => c.id === courseId);
         showNotification(`Registration request submitted for ${selectedCourse?.name || courseId}. Status: Pending.`);
 
 
         displayCourses(allCourses);
 
-
     }
 
-    // Show notification messages
     function showNotification(message, isError = false) {
         notification.textContent = message;
         notification.style.display = "block";
-        notification.classList.remove("error-notification", "success-notification"); // Remove previous classes
+        notification.classList.remove("error-notification", "success-notification");
 
         if (isError) {
             notification.classList.add("error-notification");
-            notification.style.backgroundColor = '#f44336'; // Red for error
+            notification.style.backgroundColor = '#f44336';
         } else {
             notification.classList.add("success-notification");
-            notification.style.backgroundColor = '#4CAF50'; // Green for success/info
+            notification.style.backgroundColor = '#4CAF50';
+            notification.style.color = 'white';
         }
-        notification.style.color = 'white';
-
-
-        // Automatically hide the notification after 5 seconds
         setTimeout(() => {
             notification.style.display = "none";
         }, 5000);
@@ -400,50 +352,44 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('userId');
         localStorage.removeItem('userRole');
         localStorage.removeItem('username');
-        localStorage.removeItem('studentId'); // Make sure studentId is cleared
-        // Consider clearing sessionStorage too if used
+        localStorage.removeItem('studentId');
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('userRole');
         sessionStorage.removeItem('username');
-        sessionStorage.removeItem('instructorName'); // Clear instructor specific data too
+        sessionStorage.removeItem('instructorName');
         sessionStorage.removeItem('instructorId');
 
         showNotification("You have been logged out.");
         setTimeout(() => {
             window.location.href = "login.html"; // Redirect to login page
-        }, 1500); // Delay redirection slightly
+        }, 1500);
+
+
     }
-
-    // --- Event Listeners ---
-    searchInput.addEventListener('input', handleSearch); // Use 'input' for real-time filtering
+    //Event Listeners
+    searchInput.addEventListener('input', handleSearch);
     logoutButton.addEventListener('click', handleLogout);
-
-    // --- Initial Load ---
     initializeApp(); // Start the application
 
-}); // End DOMContentLoaded for main app logic
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('loginForm');
 
     if (loginForm) {
         loginForm.addEventListener('submit', async function (event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault();
 
             const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value; // No trim on password typically
+            const password = document.getElementById('password').value;
             const errorMessage = document.getElementById('error-message');
 
-            // Basic validation
             if (!username || !password) {
                 errorMessage.textContent = 'Please enter both username and password.';
                 errorMessage.style.display = 'block';
                 return;
             }
-
-
-            errorMessage.style.display = 'none'; // Hide error initially
-
+            errorMessage.style.display = 'none';
             try {
                 const response = await fetch('users.json');
                 if (!response.ok) {
@@ -456,36 +402,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 if (user) {
                     console.log("Login successful for:", user.username, "Role:", user.role, "ID:", user.id);
-                    // --- Use localStorage for persistence across browser sessions ---
                     localStorage.setItem('username', user.username);
                     localStorage.setItem('userRole', user.role);
                     localStorage.setItem('userId', user.id);
 
                     sessionStorage.setItem('userId', user.id);
                     sessionStorage.setItem('userRole', user.role);
-
-
-                    // Redirect based on role
                     if (user.role === "admin") {
                         window.location.href = 'admin.html';
                     } else if (user.role === "student") {
-                        // Fetch student details to get the student-specific ID (like "202501234")
+                        // Fetch student details to get the student id
                         try {
                             const studentResponse = await fetch('students.json');
                             if (!studentResponse.ok) throw new Error('Failed to fetch student details');
                             const studentData = await studentResponse.json();
                             const student = studentData.students.find(s => s.userId === user.id);
                             if (student) {
-                                localStorage.setItem('studentId', student.id); // Store the specific student ID
+                                localStorage.setItem('studentId', student.id);
                                 console.log("Student ID found and stored:", student.id);
                             } else {
                                 console.warn("Could not find matching student record for userId:", user.id);
-                                // Decide how to handle this - maybe prevent login or show warning
                                 errorMessage.textContent = 'Login successful, but student record not found.';
                                 errorMessage.style.display = 'block';
-                                return; // Prevent redirect if student record is essential
+                                return;
                             }
-                            // Store fetched student data in localStorage for the main app to use
                             localStorage.setItem('students', JSON.stringify(studentData));
 
 
@@ -493,12 +433,11 @@ document.addEventListener('DOMContentLoaded', function () {
                             console.error("Error fetching student details:", studentError);
                             errorMessage.textContent = 'Login successful, but failed to load student details.';
                             errorMessage.style.display = 'block';
-                            return; // Prevent redirect if details are needed immediately
+                            return;
                         }
 
                         window.location.href = 'main.html'; // Redirect student to main course page
                     } else if (user.role === "instructor") {
-                        // Store instructor name if available and needed for the dashboard
                         if (user.name) {
                             sessionStorage.setItem('instructorName', user.name);
                             console.log("Instructor Name stored:", user.name);
@@ -506,15 +445,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         sessionStorage.setItem('instructorId', user.id); // Store instructor ID in session
                         window.location.href = 'instructor.html';
                     } else {
-                        // Handle unknown roles or default redirect
                         console.warn("Unknown user role:", user.role);
                         errorMessage.textContent = 'Login successful, but role is undefined.';
                         errorMessage.style.display = 'block';
-                        // window.location.href = 'defaultDashboard.html'; // Example default
                     }
 
                 } else {
-                    // Invalid credentials
+                    // Invalid login information
                     console.log("Login failed for username:", username);
                     errorMessage.textContent = 'Invalid username or password.';
                     errorMessage.style.display = 'block';
@@ -526,6 +463,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     } else {
-        console.log("Login form not found on this page."); // Debugging message
+        console.log("Login form not found on this page.");
     }
-}); // End DOMContentLoaded for login logic
+});
