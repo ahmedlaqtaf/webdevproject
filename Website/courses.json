@@ -25,7 +25,7 @@
             "status": "Active",
             "classes": [{
                 "id": "DB351-A",
-                "instructor": "Mohammed Ahmed",
+                "instructor": "Ali Ahmed",
                 "schedule": "Sunday & Thursday 9:00-10:20 AM",
                 "capacity": 30,
                 "enrolled_students": []
