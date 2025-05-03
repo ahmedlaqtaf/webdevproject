@@ -77,9 +77,11 @@ model Enrollment {
   id        String @id @default(uuid())
   studentId String
   classId   String
-  status    String // pending, in-progress, completed
+  status    String @default("pending")
   grade     Float?
 
   student Student @relation(fields: [studentId], references: [id])
   class   Class   @relation(fields: [classId], references: [id])
+
+  @@unique([studentId, classId])
 }

@@ -1,0 +1,183 @@
+{
+    "students": [{
+            "id": "202501234",
+            "name": "Ali",
+            "userId": "1",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.9" },
+                { "course": "OOP251", "grade": "3.8" }
+            ]
+        },
+        {
+            "id": "202503456",
+            "name": "Fatima",
+            "userId": "2",
+            "completed_courses": [
+                { "course": "DB351", "grade": "4" },
+                { "course": "OOP251", "grade": "3.5" }
+            ]
+        },
+        {
+            "id": "202505678",
+            "name": "Yousef",
+            "userId": "3",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.2" },
+                { "course": "WD350", "grade": "3.7" }
+            ]
+        },
+        {
+            "id": "202507890",
+            "name": "Aisha",
+            "userId": "4",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.6" },
+                { "course": "SE500", "grade": "3.9" }
+            ]
+        },
+        {
+            "id": "202509012",
+            "name": "Salim",
+            "userId": "5",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.5" },
+                { "course": "DS400", "grade": "3.3" }
+            ]
+        },
+        {
+            "id": "202511234",
+            "name": "Sara",
+            "userId": "6",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.8" },
+                { "course": "WD350", "grade": "3.9" }
+            ]
+        },
+        {
+            "id": "202513456",
+            "name": "Omar",
+            "userId": "7",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.4" },
+                { "course": "DB351", "grade": "3.6" }
+            ]
+        },
+        {
+            "id": "202515678",
+            "name": "Layla",
+            "userId": "8",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.7" },
+                { "course": "OOP251", "grade": "4" }
+            ]
+        }, {
+            "id": "202517890",
+            "name": "Zain",
+            "userId": "9",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.1" },
+                { "course": "WD350", "grade": "3.4" }
+            ]
+        },
+        {
+            "id": "202519012",
+            "name": "Nadia",
+            "userId": "10",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.9" },
+                { "course": "DS400", "grade": "3.8" }
+            ]
+        },
+        {
+            "id": "202521111",
+            "name": "Hassan",
+            "userId": "11",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.3" },
+                { "course": "CN450", "grade": "3.4" }
+            ]
+        },
+        {
+            "id": "202523222",
+            "name": "Rania",
+            "userId": "12",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.7" },
+                { "course": "DS400", "grade": "3.6" }
+            ]
+        },
+        {
+            "id": "202525333",
+            "name": "Mahmoud",
+            "userId": "13",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.2" },
+                { "course": "OOP251", "grade": "3.4" }
+            ]
+        },
+        {
+            "id": "202527444",
+            "name": "Jana",
+            "userId": "14",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.9" },
+                { "course": "DB351", "grade": "3.6" }
+            ]
+        },
+        {
+            "id": "202529555",
+            "name": "Tariq",
+            "userId": "15",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.0" },
+                { "course": "CN450", "grade": "3.2" }
+            ]
+        },
+        {
+            "id": "202531666",
+            "name": "Noor",
+            "userId": "16",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.8" },
+                { "course": "SE500", "grade": "3.7" }
+            ]
+        },
+        {
+            "id": "202533777",
+            "name": "Ziad",
+            "userId": "17",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.1" },
+                { "course": "WD350", "grade": "3.0" }
+            ]
+        },
+        {
+            "id": "202535888",
+            "name": "Dana",
+            "userId": "18",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.5" },
+                { "course": "DS400", "grade": "3.9" }
+            ]
+        },
+        {
+            "id": "202537999",
+            "name": "Khaled",
+            "userId": "19",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.2" },
+                { "course": "OOP251", "grade": "3.3" }
+            ]
+        },
+        {
+            "id": "202539000",
+            "name": "Nada",
+            "userId": "20",
+            "completed_courses": [
+                { "course": "CS151", "grade": "3.9" },
+                { "course": "WD350", "grade": "3.7" }
+            ]
+        }
+
+    ]
+}

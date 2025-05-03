@@ -8,7 +8,7 @@
         "status": "Active",
         "classes": [{
             "id": "CS101-A",
-            "instructor": "instructor_1",
+            "instructor": "instructor_3",
             "schedule": "Monday & Wednesday 10:00-11:30 AM",
             "capacity": 30,
             "enrolled_students": []
@@ -40,7 +40,7 @@
         "status": "Cancelled",
         "classes": [{
             "id": "WD350-A",
-            "instructor": "instructor_1",
+            "instructor": "instructor_4",
             "schedule": "Sunday & Wednesday 9:30-11:20 AM",
             "capacity": 30,
             "enrolled_students": []
@@ -56,7 +56,7 @@
         "status": "Active",
         "classes": [{
             "id": "OOP251-A",
-            "instructor": "instructor_1",
+            "instructor": "instructor_7",
             "schedule": "Monday & Wednesday 8:00-9:30 AM",
             "capacity": 35,
             "enrolled_students": []
@@ -72,7 +72,7 @@
         "status": "Cancelled",
         "classes": [{
             "id": "ML501-A",
-            "instructor": "instructor_2",
+            "instructor": "instructor_5",
             "schedule": "Sunday & Thursday 9:00-10:20 AM",
             "capacity": 40,
             "enrolled_students": []
@@ -104,7 +104,7 @@
         "status": "Active",
         "classes": [{
             "id": "CN450-A",
-            "instructor": "instructor_2",
+            "instructor": "instructor_3",
             "schedule": "Sunday & Thursday 9:00-10:20 AM",
             "capacity": 30,
             "enrolled_students": []
@@ -120,9 +120,41 @@
         "status": "Active",
         "classes": [{
             "id": "SE500-A",
-            "instructor": "instructor_2",
+            "instructor": "instructor_6",
             "schedule": "Monday & Wednesday 10:00-11:30 AM",
             "capacity": 30,
+            "enrolled_students": []
+        }]
+    },
+    {
+        "id": "AI600",
+        "name": "Artificial Intelligence",
+        "category": "AI",
+        "description": "Foundations of AI and machine learning",
+        "prerequisites": ["ML501"],
+        "open_for_registration": false,
+        "status": "Cancelled",
+        "classes": [{
+            "id": "AI600-A",
+            "instructor": "instructor_1",
+            "schedule": "Sunday & Thursday 9:00-10:20 AM",
+            "capacity": 40,
+            "enrolled_students": []
+        }]
+    },
+    {
+        "id": "DS700",
+        "name": "Big Data Technologies",
+        "category": "Data Science",
+        "description": "Introduction to big data frameworks and tools",
+        "prerequisites": ["DS400"],
+        "open_for_registration": false,
+        "status": "Cancelled",
+        "classes": [{
+            "id": "DS700-A",
+            "instructor": "instructor_4",
+            "schedule": "Sunday & Thursday 9:00-10:20 AM",
+            "capacity": 40,
             "enrolled_students": []
         }]
     }
