@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String @unique
+  password String
+  role     String
+
+  student   Student? @relation(fields: [studentId], references: [id])
+  studentId String?  @unique
+
+  instructor   Instructor? @relation(fields: [instructorId], references: [id])
+  instructorId String?     @unique
+}
+
+model Student {
+  id               String            @id
+  name             String
+  userId           String            @unique
+  completedCourses CompletedCourse[]
+  enrollments      Enrollment[]
+  User             User?
+}
+
+model CompletedCourse {
+  id        String @id @default(uuid())
+  courseId  String
+  studentId String
+  grade     Float
+
+  student Student @relation(fields: [studentId], references: [id])
+}
+
+model Instructor {
+  id      String  @id
+  name    String
+  classes Class[]
+  User    User[]
+}
+
+model Course {
+  id                    String   @id
+  name                  String
+  category              String
+  description           String
+  open_for_registration Boolean
+  status                String
+  classes               Class[]
+  prerequisites         Course[] @relation("CoursePrerequisites")
+  requiredFor           Course[] @relation("CoursePrerequisites")
+}
+
+model Class {
+  id           String  @id
+  courseId     String
+  instructorId String
+  schedule     String
+  capacity     Int
+  isValidated  Boolean @default(false)
+
+  course      Course       @relation(fields: [courseId], references: [id])
+  instructor  Instructor   @relation(fields: [instructorId], references: [id])
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id        String @id @default(uuid())
+  studentId String
+  classId   String
+  status    String // pending, in-progress, completed
+  grade     Float?
+
+  student Student @relation(fields: [studentId], references: [id])
+  class   Class   @relation(fields: [classId], references: [id])
+}

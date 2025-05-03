@@ -1,0 +1,28 @@
+{
+    "users": [{
+            "username": "std1",
+            "password": "123",
+            "role": "student",
+            "id": "1"
+        },
+        {
+            "username": "std2",
+            "password": "1234",
+            "role": "student",
+            "id": "2"
+        },
+        {
+            "username": "admin1",
+            "password": "1234",
+            "role": "admin",
+            "id": "3"
+        },
+        {
+            "username": "inst1",
+            "password": "321",
+            "role": "instructor",
+            "id": "4",
+            "name": "Ali Ahmed"
+        }
+    ]
+}
