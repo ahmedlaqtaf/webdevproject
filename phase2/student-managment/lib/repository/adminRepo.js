@@ -1,6 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+class AdminRepo {
+    constructor() {
+        this.prisma = new PrismaClient();
+    }
+
+  }
 export async function getUnvalidatedClasses() {
   return await prisma.class.findMany({
     where: {

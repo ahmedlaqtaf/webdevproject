@@ -1,10 +1,8 @@
-import {
-  getCoursesByCategory,
-  searchCoursesByName,
-  getCourseById,
-  getAllCourses
-} from '@/lib/repository/courseRepo';
+import CourseRepo from '../../../../lib/repository/courseRepo';
+import { NextResponse } from 'next/server';
 
+
+const courseRepo = new CourseRepo();
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -13,16 +11,16 @@ export async function GET(request) {
   const id = searchParams.get('id');
 
   if (id) {
-    const course = await getCourseById(id);
-    return Response.json(course);
+    const course = await courseRepo.getCourseById(id);
+    return NextResponse.json(course);
   } else if (category) {
-    const courses = await getCoursesByCategory(category);
-    return Response.json(courses);
+    const courses = await courseRepo.getCoursesByCategory(category);
+    return NextResponse.json(courses);
   } else if (name) {
-    const courses = await searchCoursesByName(name);
-    return Response.json(courses);
+    const courses = await courseRepo.searchCoursesByName(name);
+    return NextResponse.json(courses);
   } else {
-    const courses = await getAllCourses();
-    return Response.json(courses);
+    const courses = await courseRepo.getAllCourses();
+    return NextResponse.json(courses);
   }
 }

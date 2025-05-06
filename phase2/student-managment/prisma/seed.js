@@ -15,7 +15,7 @@ async function main() {
       where: { id: inst.id },
       update: {},
       create: {
-        id: inst.id,
+        id: inst.id, 
         name: inst.name,
       },
     });
