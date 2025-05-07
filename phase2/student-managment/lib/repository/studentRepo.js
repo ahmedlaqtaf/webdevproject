@@ -2,61 +2,68 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 class StudentRepo {
-    constructor() {
-        this.prisma = new PrismaClient();
-    }
+  constructor() {
+    this.prisma = new PrismaClient();
+  }
 
-    async findAll() {
-        return this.prisma.student.findMany();
-    }
+  async findAll() {
+    return this.prisma.student.findMany();
+  }
 
-    async findById(id) {
-        return this.prisma.student.findUnique({
-            where: { id: Number(id)}
-        })
-    }
 
-    async create(studentData) {
-        return this.prisma.student.create({
-            data: studentData
-        })
-    }
+  async findById(id) {
+    return this.prisma.student.findUnique({
+      where: { id: id }
 
-    async update(id, studentData) {
-        return this.prisma.student.update({
-            where: { id: Number(id)},
-            data: studentData
-        })
-    }
+    })
+  }
 
-    async delete(id) {
-        return this.prisma.student.delete({
-            where: { id: Number(id)}
-        })
-    }
+  async create(studentData) {
+    return this.prisma.student.create({
+      data: studentData
+    })
+  }
 
-    async getTotalStudents() {
-        return this.prisma.student.count();
-    }
+  async update(id, studentData) {
+    return this.prisma.student.update({
+      where: { id: Number(id) },
+      data: studentData
+    })
+  }
 
-    async getAverageStudentsGPA() {
-        const result = await this.prisma.student.aggregate({
-            _avg: {
-                gpa: true
-            }
-        });
-        return result._avg.gpa || 0;
-    }
+  async delete(id) {
+    return this.prisma.student.delete({
+      where: { id: Number(id) }
+    })
+  }
 
-    async getAverageStudentsCoursesCount() {
-        const result = await this.prisma.student.aggregate({
-            _avg: {
-                completedCourses: true
-            }
-        });
-        return result._avg.completedCourses || 0;
-    }
-    
+  async getTotalStudents() {
+    return this.prisma.student.count();
+  }
+
+  async getAverageStudentsGPA() {
+    const result = await this.prisma.student.aggregate({
+      _avg: {
+        gpa: true
+      }
+    });
+    return result._avg.gpa || 0;
+  }
+
+  async getAverageStudentsCoursesCount() {
+    const students = await this.prisma.student.findMany({
+      include: {
+        completedCourses: true
+      }
+    });
+
+    const totalCompleted = students.reduce((sum, student) => sum + student.completedCourses.length, 0);
+    const avg = students.length > 0 ? totalCompleted / students.length : 0;
+
+    return avg;
+  }
+
+
 }
 
 export default StudentRepo;

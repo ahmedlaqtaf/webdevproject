@@ -1,4 +1,4 @@
-import CourseRepo from '../../../../lib/repository/courseRepo';
+import CourseRepo from '@/lib/repository/courseRepo';
 import { NextResponse } from 'next/server';
 
 
