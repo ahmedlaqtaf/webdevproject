@@ -21,6 +21,7 @@ model User {
 
   instructor   Instructor? @relation(fields: [instructorId], references: [id])
   instructorId String?     @unique
+  admins       Admin[]
 }
 
 model Student {
@@ -46,6 +47,13 @@ model Instructor {
   name    String
   classes Class[]
   User    User[]
+}
+
+model Admin {
+  id     String @id
+  name   String
+  userId String @unique
+  User   User   @relation(fields: [userId], references: [id])
 }
 
 model Course {

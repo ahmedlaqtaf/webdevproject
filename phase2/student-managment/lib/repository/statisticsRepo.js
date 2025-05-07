@@ -30,12 +30,22 @@ class StatisticsRepo {
     },
     include: {
       classes: {
-        select: {
+        include: {
           enrollments: true,
         },
       },
     },
   });
+
+  const withCounts = courses.map(course => {
+    let count = 0;
+    course.classes.forEach(cls => {
+      count += cls.enrollments.length;
+    });
+    return { id: course.id, name: course.name, enrollmentCount: count };
+  });
+
+  return withCounts.sort((a, b) => b.enrollmentCount - a.enrollmentCount).slice(0, 3);
 }
 
 // 4. how mnay failes (<2)
@@ -52,7 +62,29 @@ class StatisticsRepo {
         },
       },
     },
+    select: {
+      courseId: true
+    }
   });
+
+  const courseCounts = {};
+
+  for (const c of completed) {
+    courseCounts[c.courseId] = (courseCounts[c.courseId] || 0) + 1;
+  }
+
+  const allCourses = await prisma.course.findMany({
+    select: {
+      id: true,
+      name: true
+    }
+  });
+
+  return allCourses.map(course => ({
+    courseId: course.id,
+    courseName: course.name,
+    failCount: courseCounts[course.id] || 0
+  }));
 }
 
 // 5. how many pass (>= 2.0)
@@ -69,8 +101,32 @@ class StatisticsRepo {
         },
       },
     },
+    select: {
+      courseId: true
+    }
   });
+
+  const courseCounts = {};
+
+  for (const c of completed) {
+    courseCounts[c.courseId] = (courseCounts[c.courseId] || 0) + 1;
+  }
+
+  const allCourses = await prisma.course.findMany({
+    select: {
+      id: true,
+      name: true
+    }
+  });
+
+  return allCourses.map(course => ({
+    courseId: course.id,
+    courseName: course.name,
+    passCount: courseCounts[course.id] || 0
+  }));
 }
+
+
 
 // 6. class count for instructor
  async  getClassCountPerInstructor() {
@@ -111,7 +167,16 @@ class StatisticsRepo {
       completedCourses: true,
     },
   });
+
+  const withGPA = students.map((s) => {
+    const grades = s.completedCourses.map((c) => c.grade).filter((g) => g !== null);
+    const avg = grades.length > 0 ? (grades.reduce((a, b) => a + b, 0) / grades.length) : 0;
+    return { id: s.id, name: s.name, gpa: avg };
+  });
+
+  return withGPA.sort((a, b) => b.gpa - a.gpa).slice(0, 5);
 }
+
 
 // 9. courses with most failures
  async  getCoursesWithMostFailures() {

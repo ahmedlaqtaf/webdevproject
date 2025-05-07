@@ -1,0 +1,610 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap');
+* {
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --indigo-50: #eef2ff;
+    --indigo-100: #e0e7ff;
+    --indigo-200: #c7d2fe;
+    --indigo-300: #a5b4fc;
+    --indigo-400: #818cf8;
+    --indigo-500: #6366f1;
+    --indigo-600: #4f46e5;
+    --indigo-700: #4338ca;
+    --green-500: #10b981;
+    --green-600: #059669;
+    --amber-500: #f59e0b;
+    --amber-600: #d97706;
+    --red-500: #ef4444;
+    --red-600: #dc2626;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    align-items: center;
+    color: rgb(255, 255, 255);
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+#pageTitle {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+
+/* Navigation */
+
+.nav-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tab {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-tab:hover {
+    background-color: var(--gray-100);
+}
+
+.nav-tab.active {
+    background-color: var(--indigo-100);
+    color: var(--indigo-700);
+    font-weight: 500;
+}
+
+
+/* Cards and Lists */
+
+.card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 15px;
+    background-color: var(--gray-100);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--gray-800);
+    margin: 0;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+
+/* Course items */
+
+.course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+
+.course-item {
+    background-color: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.2s;
+}
+
+.course-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.course-header {
+    padding: 12px;
+    border-bottom: 1px solid var(--gray-200);
+    position: relative;
+}
+
+.course-title {
+    font-weight: 600;
+    margin: 0;
+    padding-right: 30px;
+}
+
+.course-id {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    margin-top: 3px;
+}
+
+.course-body {
+    padding: 12px;
+}
+
+.course-detail {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.course-label {
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.course-footer {
+    padding: 12px;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Status badges */
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.badge-completed {
+    background-color: var(--green-500);
+    color: white;
+}
+
+.badge-inprogress {
+    background-color: var(--indigo-500);
+    color: white;
+}
+
+.badge-pending {
+    background-color: var(--amber-500);
+    color: white;
+}
+
+.badge-unvalidated {
+    background-color: var(--gray-400);
+    color: white;
+}
+
+.badge-cancelled {
+    background-color: var(--red-500);
+    color: white;
+}
+
+
+/* Category pills */
+
+.category-pill {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    background-color: var(--indigo-100);
+    color: var(--indigo-700);
+}
+
+
+/* Buttons */
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 5px;
+    border: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--indigo-600);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--indigo-700);
+}
+
+.btn-success {
+    background-color: var(--green-500);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: var(--green-600);
+}
+
+.btn-warning {
+    background-color: var(--amber-500);
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: var(--amber-600);
+}
+
+.btn-danger {
+    background-color: var(--red-500);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: var(--red-600);
+}
+
+.btn-secondary {
+    background-color: var(--gray-200);
+    color: var(--gray-700);
+}
+
+.btn-secondary:hover {
+    background-color: var(--gray-300);
+}
+
+.btn[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-sm {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+}
+
+
+/* Forms */
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--gray-700);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--gray-300);
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--indigo-400);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+
+/* Modal */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 600px;
+    overflow: hidden;
+    animation: modalFadeIn 0.3s;
+}
+
+.modal-header {
+    padding: 15px;
+    background-color: var(--gray-100);
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-close {
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 15px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 15px;
+    background-color: var(--gray-100);
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Tables */
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+th {
+    background-color: var(--gray-100);
+    font-weight: 600;
+}
+
+tr:hover {
+    background-color: var(--gray-50);
+}
+
+.grade-input {
+    width: 60px;
+    text-align: center;
+}
+
+
+/* Specific to learning path */
+
+.path-section {
+    margin-bottom: 30px;
+}
+
+.path-heading {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--gray-800);
+    border-bottom: 2px solid var(--gray-200);
+    padding-bottom: 8px;
+}
+
+.grade-pill {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.grade-a {
+    background-color: #c6f6d5;
+    color: #22543d;
+}
+
+.grade-b {
+    background-color: #e6fffa;
+    color: #234e52;
+}
+
+.grade-c {
+    background-color: #feebcb;
+    color: #7b341e;
+}
+
+.grade-d {
+    background-color: #fed7d7;
+    color: #822727;
+}
+
+.grade-f {
+    background-color: #feb2b2;
+    color: #742a2a;
+}
+
+
+/* Notification */
+
+#notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: var(--green-500);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+    max-width: 350px;
+}
+
+.notification-error {
+    background-color: var(--red-500);
+}
+
+
+/* Filter buttons */
+
+.filter-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 6px 12px;
+    background-color: var(--gray-200);
+    color: var(--gray-700);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background-color: var(--gray-300);
+}
+
+.filter-btn.active {
+    background-color: var(--indigo-500);
+    color: white;
+}
+
+
+/* Classes dropdown */
+
+.classes-dropdown {
+    margin-top: 10px;
+    background-color: var(--gray-50);
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+}
+
+.class-item {
+    padding: 8px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.class-item:last-child {
+    border-bottom: none;
+}
+
+
+/* Logout button */
+
+#logoutButton {
+    background-color: var(--red-500);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+    background-color: var(--red-600);
+}
+
+
+/* User role indicator */
+
+.user-role {
+    display: inline-block;
+    padding: 3px 8px;
+    background-color: var(--indigo-100);
+    color: var(--indigo-700);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.search-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 15px 10px 35px;
+    border: 1px solid var(--gray-300);
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-400);
+}

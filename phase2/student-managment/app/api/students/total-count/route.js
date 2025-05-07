@@ -8,9 +8,6 @@ export async function GET() {
         const totalStudents = await studentRepo.getTotalStudents();
         return NextResponse.json({ totalStudents });
     } catch (error) {
-        return NextResponse.json(
-            { error: "Failed to fetch total number of students =.=" },
-            { status: 500 }
-        )
+        return NextResponse.json({ error: "Failed to fetch total number of students =.=" }, { status: 500 })
     }
 }

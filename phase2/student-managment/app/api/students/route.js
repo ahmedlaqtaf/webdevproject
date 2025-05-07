@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import StudentRepo from '../../../lib/repository/studentRepo';
+import StudentRepo from '@/lib/repository/studentRepo';
 
 const studentRepo = new StudentRepo();
 
@@ -8,10 +8,7 @@ export async function GET() {
         const students = await studentRepo.findAll();
         return NextResponse.json(students);
     } catch (error) {
-        return NextResponse.json(
-            { error: "Failed to fetch students =*", details: error.message },
-            { status: 500 }
-        )
+        return NextResponse.json({ error: "Failed to fetch students =*", details: error.message }, { status: 500 })
     }
 }
 
@@ -21,13 +18,9 @@ export async function POST(request) {
         const student = await studentRepo.create(studentData);
         return NextResponse.json(student);
     } catch (error) {
-        return NextResponse.json(
-            { error: "Failed to create student",
-              details: error.message },
-            { status: 500 }
-        )
+        return NextResponse.json({
+            error: "Failed to create student",
+            details: error.message
+        }, { status: 500 })
     }
 }
-
-
-
