@@ -6,12 +6,12 @@ export default function page() {
     return (
       <>
         <main>
-          <h1>Welcome to Qatar University's CSE Resgistration system</h1>
+          <h1>Welcome to Qatar University's CS Resgistration system</h1>
   
           <div>
           <form id="form">
             <div className="form-group">
-              <p id="usertype">Please choose user type...</p>
+              <p> Sign in</p>
               <label htmlFor="email">
                 <p>Email:</p>
               </label>
