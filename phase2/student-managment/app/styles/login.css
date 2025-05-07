@@ -1,0 +1,140 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a202c;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    color: #4a5568;
+    margin-bottom: 2rem;
+  }
+
+  form {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+  }
+
+  .error-message {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    display: none;
+    text-align: center;
+  }
+
+  button[type='submit'] {
+    width: 100%;
+    background: #3182ce;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  button[type='submit']:hover {
+    background: #2b6cb0;
+    transform: translateY(-2px);
+  }
+
+  .divider {
+    position: relative;
+    margin: 1.5rem 0;
+  }
+
+  .divider-line {
+    border-top: 1px solid #e2e8f0;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+  }
+
+  .divider-text {
+    position: relative;
+    text-align: center;
+    background: white;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    color: #718096;
+  }
+
+  .github-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #2d3748;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    gap: 0.5rem;
+  }
+
+  .github-button:hover {
+    background: #1a202c;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 600px) {
+    form {
+      padding: 1.5rem;
+      max-width: 90%;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+  }

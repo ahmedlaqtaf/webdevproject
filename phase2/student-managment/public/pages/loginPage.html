@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Registration System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      /* Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f0f4f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      main {
+        background: #fff;
+        padding: 40px 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        color: #333;
+      }
+
+      .user-type {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px 0;
+      }
+
+      .user-type button {
+        background: none;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        cursor: pointer;
+        flex: 1;
+        margin: 0 5px;
+        transition: all 0.3s ease;
+      }
+
+      .user-type button:hover,
+      .user-type button.active {
+        background: #007bff;
+        color: #fff;
+        border-color: #007bff;
+      }
+
+      .user-type button i {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 500;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border 0.3s ease;
+      }
+
+      input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        color: #fff;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      button[type="submit"]:hover {
+        background: #0056b3;
+      }
+
+      .sign-in-up {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .sign-in-up a {
+        color: #007bff;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .sign-in-up a:hover {
+        text-decoration: underline;
+      }
+
+      #indicator {
+        display: none;
+        color: red;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Welcome to Qatar University's Registration System</h1>
+
+      <form id="form">
+        <p style="text-align: center; margin-bottom: 10px; color: #555;">
+          Please choose your role:
+        </p>
+
+        <div class="user-type">
+          <button type="button" id="Student-btn">
+            <i class="fa fa-user-graduate"></i>
+            <div>Student</div>
+          </button>
+          <button type="button" id="Instructor-btn">
+            <i class="fa fa-chalkboard-teacher"></i>
+            <div>Instructor</div>
+          </button>
+          <button type="button" id="Admin-btn">
+            <i class="fa fa-user-shield"></i>
+            <div>Admin</div>
+          </button>
+        </div>
+
+        <div class="form-group">
+          <label for="id">Id:</label>
+          <input
+            type="id"
+            id="id"
+            name="id"
+            placeholder="e.g. 123456789"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="e.g. Pass123"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <button type="submit">Sign in</button>
+        </div>
+
+        <p class="sign-in-up">
+          <a href="signup.html">New User? Click here to sign up</a>
+        </p>
+
+        <p id="indicator">Incorrect Id/Password</p>
+      </form>
+    </main>
+
+    <script>
+      const userButtons = document.querySelectorAll('.user-type button');
+      userButtons.forEach((btn) =>
+        btn.addEventListener('click', () => {
+          userButtons.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+        })
+      );
+
+      // You can extend with real validation/login logic as needed
+    </script>
+  </body>
+</html>
