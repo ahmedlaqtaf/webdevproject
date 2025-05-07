@@ -10,11 +10,9 @@ class StudentRepo {
     return this.prisma.student.findMany();
   }
 
-
   async findById(id) {
     return this.prisma.student.findUnique({
       where: { id: id }
-
     })
   }
 
@@ -26,14 +24,14 @@ class StudentRepo {
 
   async update(id, studentData) {
     return this.prisma.student.update({
-      where: { id: Number(id) },
+      where: { id: id },
       data: studentData
     })
   }
 
   async delete(id) {
     return this.prisma.student.delete({
-      where: { id: Number(id) }
+      where: { id: id }
     })
   }
 
@@ -51,52 +49,58 @@ class StudentRepo {
   }
 
   async getAverageStudentsCoursesCount() {
-    const students = await this.prisma.student.findMany({
-      include: {
+    const result = await this.prisma.student.aggregate({
+      _avg: {
         completedCourses: true
       }
     });
-
-    const totalCompleted = students.reduce((sum, student) => sum + student.completedCourses.length, 0);
-    const avg = students.length > 0 ? totalCompleted / students.length : 0;
-
-    return avg;
+    return result._avg.completedCourses || 0;
+  }
+  async getCompletedCourses(studentId) {
+    return await this.prisma.student.findUnique({
+      where: {
+        id: studentId,
+      },
+      include: {
+        completedCourses: true,
+      },
+    });
   }
 
 
+  async getStudentLearningPath(studentId) {
+    const enrollments = await prisma.enrollment.findMany({
+      where: { studentId },
+      include: {
+        class: {
+          include: {
+            course: true,
+          },
+        },
+      },
+    });
+
+    const completed = [];
+    const inProgress = [];
+    const pending = [];
+
+    for (const e of enrollments) {
+      const course = e.class.course;
+      if (e.grade !== null) {
+        completed.push({ course, grade: e.grade });
+      } else if (e.status === 'approved') {
+        inProgress.push(course);
+      } else {
+        pending.push(course);
+      }
+    }
+
+    return {
+      completed,
+      inProgress,
+      pending,
+    };
+  }
 }
 
 export default StudentRepo;
-export async function getStudentLearningPath(studentId) {
-  const enrollments = await prisma.enrollment.findMany({
-    where: { studentId },
-    include: {
-      class: {
-        include: {
-          course: true,
-        },
-      },
-    },
-  });
-
-  const completed = [];
-  const inProgress = [];
-  const pending = [];
-
-  for (const e of enrollments) {
-    const course = e.class.course;
-    if (e.grade !== null) {
-      completed.push({ course, grade: e.grade });
-    } else if (e.status === 'approved') {
-      inProgress.push(course);
-    } else {
-      pending.push(course);
-    }
-  }
-
-  return {
-    completed,
-    inProgress,
-    pending,
-  };
-}
