@@ -1,13 +1,18 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
+class StatisticsRepo {
+  constructor() {
+    this.prisma = new PrismaClient();
+  }
+
 // 1. total number of students
-export async function getTotalStudents() {
+ async  getTotalStudents() {
   return await prisma.student.count();
 }
 
 // 2. total courses per category
-export async function getCourseCountByCategory() {
+ async  getCourseCountByCategory() {
   return await prisma.course.groupBy({
     by: ['category'],
     _count: true,
@@ -15,7 +20,7 @@ export async function getCourseCountByCategory() {
 }
 
 // 3. top 3 courses with enrollment count
-export async function getTop3CoursesByEnrollment() {
+ async  getTop3CoursesByEnrollment() {
   return await prisma.course.findMany({
     take: 3,
     orderBy: {
@@ -34,7 +39,7 @@ export async function getTop3CoursesByEnrollment() {
 }
 
 // 4. how mnay failes (<2)
-export async function getFailureCountPerCourse() {
+ async  getFailureCountPerCourse() {
   return await prisma.course.findMany({
     include: {
       classes: {
@@ -51,7 +56,7 @@ export async function getFailureCountPerCourse() {
 }
 
 // 5. how many pass (>= 2.0)
-export async function getPassCountPerCourse() {
+ async  getPassCountPerCourse() {
   return await prisma.course.findMany({
     include: {
       classes: {
@@ -68,7 +73,7 @@ export async function getPassCountPerCourse() {
 }
 
 // 6. class count for instructor
-export async function getClassCountPerInstructor() {
+ async  getClassCountPerInstructor() {
   return await prisma.instructor.findMany({
     select: {
       name: true,
@@ -80,7 +85,7 @@ export async function getClassCountPerInstructor() {
 }
 
 // 7.how many students per class
-export async function getStudentCountPerClass() {
+ async  getStudentCountPerClass() {
   return await prisma.class.findMany({
     select: {
       id: true,
@@ -92,7 +97,7 @@ export async function getStudentCountPerClass() {
 }
 
 // 8. top 5 highest GPA students
-export async function getTop5StudentsByGPA() {
+ async  getTop5StudentsByGPA() {
   return await prisma.student.findMany({
     take: 5,
     orderBy: {
@@ -109,7 +114,7 @@ export async function getTop5StudentsByGPA() {
 }
 
 // 9. courses with most failures
-export async function getCoursesWithMostFailures() {
+ async  getCoursesWithMostFailures() {
   return await prisma.course.findMany({
     include: {
       classes: {
@@ -126,9 +131,12 @@ export async function getCoursesWithMostFailures() {
 }
 
 // 10. course status (ative vs cancelled)
-export async function getCourseStatusCounts() {
+ async  getCourseStatusCounts() {
   return await prisma.course.groupBy({
     by: ['status'],
     _count: true,
   });
 }
+}
+
+export default new StatisticsRepo();

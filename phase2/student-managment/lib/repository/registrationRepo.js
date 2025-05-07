@@ -40,8 +40,8 @@ class RegistrationRepo {
       },
     });
   }
- async  registerStudentToClass(studentId, classId) {
-  const classData = await prisma.class.findUnique({
+async  registerStudentToClass(studentId, classId) {
+  const classData = await this.prisma.class.findUnique({
     where: { id: classId },
     include: {
       enrollments: true,
@@ -57,7 +57,7 @@ class RegistrationRepo {
   console.log('classData:', classData); //debugging 
 
   if (!classData) throw new Error('Class not found');
-  const alreadyEnrolled = await prisma.enrollment.findFirst({
+  const alreadyEnrolled = await this.prisma.enrollment.findFirst({
     where: {
       studentId,
       classId,
@@ -86,7 +86,7 @@ class RegistrationRepo {
   }
 
   // register the student
-  return await prisma.enrollment.create({
+  return await this.prisma.enrollment.create({
     data: {
       student: { connect: { id: studentId } },
       class: { connect: { id: classId } },
@@ -95,3 +95,5 @@ class RegistrationRepo {
   });
 }
 }
+
+export default new RegistrationRepo();

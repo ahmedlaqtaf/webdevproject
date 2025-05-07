@@ -1,10 +1,13 @@
 import { NextResponse } from 'next/server';
-import CompletedCourseRepo from '../../../../../lib/repository/courseRepo';
+import StudentRepo from '../../../../../lib/repository/studentRepo';
 
-export async function GET(request, { params }) {
+const studentRepo = new StudentRepo();
+
+export async function GET(request, context) {
     try {
+        const {params} = await context;
         const { id } = params;
-        const completedCourse = await CompletedCourseRepo.findById(id);
+        const completedCourse = await studentRepo.getCompletedCourses(id);
         
         if (!completedCourse) {
             return NextResponse.json({ 
@@ -64,5 +67,3 @@ export async function DELETE(request, { params }) {
         }, { status: 500 });
     }
 }
-
-

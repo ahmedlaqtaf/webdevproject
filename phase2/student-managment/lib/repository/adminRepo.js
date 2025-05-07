@@ -6,8 +6,8 @@ class AdminRepo {
         this.prisma = new PrismaClient();
     }
 
-  }
-export async function getUnvalidatedClasses() {
+  
+ async  getUnvalidatedClasses() {
   return await prisma.class.findMany({
     where: {
       isValidated: false,
@@ -20,7 +20,7 @@ export async function getUnvalidatedClasses() {
   });
 }
 
-export async function validateClass(classId) {
+ async  validateClass(classId) {
   // mark class as validated
   await prisma.class.update({
     where: { id: classId },
@@ -40,7 +40,7 @@ export async function validateClass(classId) {
   return { success: true };
 }
 
-export async function cancelClass(classId) {
+ async  cancelClass(classId) {
   await prisma.class.update({
     where: { id: classId },
     data: { isValidated: false },
@@ -55,3 +55,5 @@ export async function cancelClass(classId) {
 
   return { success: true, cancelled: classId };
 }
+}
+export default new AdminRepo();

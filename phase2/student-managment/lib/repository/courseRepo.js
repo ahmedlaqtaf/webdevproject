@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-
-
 class CourseRepo {
     constructor() {
         this.prisma = new PrismaClient();
