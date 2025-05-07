@@ -12,13 +12,13 @@ export default function page() {
           <form id="form">
             <div className="form-group">
               <p> Sign in</p>
-              <label htmlFor="email">
+              <label htmlFor="id">
                 <p>Email:</p>
               </label>
               <input
-                type="email"
-                id="email"
-                name="email"
+                type="id"
+                id="id"
+                name="id"
                 required
                 placeholder="e.g. Student@qu.edu.qa"
               />
