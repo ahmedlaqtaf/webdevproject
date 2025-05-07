@@ -50,7 +50,8 @@ async  registerStudentToClass(studentId, classId) {
           prerequisites: true,
         },
       },
-    });
+    }});
+
 
 
     console.log('classData:', classData); //debugging 
