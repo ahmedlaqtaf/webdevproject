@@ -72,7 +72,7 @@ async  registerStudentToClass(studentId, classId) {
     }
 
     // check if student completed prerequest
-    const student = await prisma.student.findUnique({
+    const student = await this.prisma.student.findUnique({
       where: { id: studentId },
       include: { completedCourses: true },
     });

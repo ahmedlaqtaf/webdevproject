@@ -1,15 +1,21 @@
-import RegistrationRepo from '../../../lib/repository/registrationRepo';
+import { NextResponse } from 'next/server';
+import RegistrationRepo from '../../../../lib/repository/registrationRepo';
 
-const registrationRepo = new RegistrationRepo();
+export async function GET(request, { params }) {
+  const { id } = params;
+  const registration = await RegistrationRepo.findById(id);
+  return NextResponse.json(registration);
+}
 
-export async function POST(req) {
-  const body = await req.json();
-  const { studentId, classId } = body;
+export async function PUT(request, { params }) {
+  const { id } = params;
+  const registrationData = await request.json();
+  const registration = await RegistrationRepo.update(id, registrationData);
+  return NextResponse.json(registration);
+}
 
-  try {
-    const result = await registrationRepo.registerStudentToClass(studentId, classId);
-    return Response.json({ success: true, data: result });
-  } catch (e) {
-    return Response.json({ success: false, error: e.message }, { status: 400 });
-  }
+export async function DELETE(request, { params }) {
+  const { id } = params;
+  const registration = await RegistrationRepo.delete(id);
+  return NextResponse.json(registration);
 }
