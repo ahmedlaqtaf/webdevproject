@@ -1,10 +1,9 @@
-import { PrismaClient } from '../../generated/prisma';
-
+import { PrismaClient } from '@prisma/client';
 class UserRepo {
   constructor() {
     this.prisma = new PrismaClient();
   }
-//get all users
+  //get all users
   async findAll() {
     return this.prisma.user.findMany();
   }
@@ -39,6 +38,24 @@ class UserRepo {
       where: { id: Number(id) }
     });
   }
+
+  async findByUsernameAndPassword(username, password) {
+    const user = await this.prisma.user.findUnique({
+      where: { username },
+      include: {
+        student: true,
+        instructor: true,
+        admins: true,
+      },
+    });
+
+    if (user && user.password === password) {
+      return user;
+    }
+
+    return null;
+  }
+
 }
 
 export default UserRepo;

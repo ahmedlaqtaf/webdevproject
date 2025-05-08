@@ -15,17 +15,12 @@ export async function getCoursesByCategory(category) {
   });
 }
 
-export async function getTopCourses() {
+export async function getAllCourses() {
   return await prisma.course.findMany({
-    orderBy: {
-      classes: {
-        _count: 'desc'
-      }
-    },
-    take: 3,
     include: { classes: true }
   });
 }
+
 
 export async function getTotalStudentsPerCourse() {
   return await prisma.course.findMany({

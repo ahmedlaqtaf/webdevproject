@@ -123,13 +123,14 @@ body {
 
 .course-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     gap: 15px;
 }
 
 .course-item {
     background-color: white;
     border: 1px solid var(--gray-200);
+    ;
     border-radius: 5px;
     overflow: hidden;
     transition: box-shadow 0.3s, transform 0.2s;
@@ -149,7 +150,7 @@ body {
 .course-title {
     font-weight: 600;
     margin: 0;
-    padding-right: 30px;
+    padding-right: 2rem;
 }
 
 .course-id {
@@ -188,7 +189,11 @@ body {
     border-radius: 12px;
     font-size: 0.75rem;
     font-weight: 500;
-    display: inline-block;
+    width: 10%;
+    position: absolute;
+    text-align: center;
+    right: 12px;
+    top: 55%;
 }
 
 .badge-completed {
