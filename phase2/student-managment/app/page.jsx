@@ -1,11 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function HomePage() {
   const router = useRouter();
   return router.push("/pages/login");
 }
-//home page not dashboard
+// home page not dashboard
 // export default function HomePage() {
 //   return (
 //     <div>
@@ -18,14 +19,14 @@ export default function HomePage() {
 //         <Link className="nav-tab" href="/pages/dashboard">
 //           Dashboard
 //         </Link>
-//         <Link className="nav-tab" href="/register">
+//         <Link className="nav-tab" href="/pages/register">
 //           Register
 //         </Link>
-//         <Link className="nav-tab" href="/login">
+//         <Link className="nav-tab" href="/pages/login">
 //           Login
 //         </Link>
-//         <Link className="nav-tab" href="/api/courses">
-//           Courses API
+//         <Link className="nav-tab" href="">
+//           Statistics
 //         </Link>
 //       </div>
 

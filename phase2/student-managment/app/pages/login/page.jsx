@@ -3,47 +3,60 @@ import "../../styles/login.css";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+import { signIn } from "next-auth/react"; // ✅ Added import
 
 export default function Page() {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setError("");
+    setLoading(true);
+
     const username = e.target.id.value;
     const password = e.target.password.value;
 
-    const res = await fetch("/api/users/login", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const res = await fetch("/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }, // ✅ Added header
+        body: JSON.stringify({ username, password }),
+      });
 
-    if (res.ok) {
-      const cookie = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("id_token="))
-        ?.split("=")[1];
+      if (res.ok) {
+        const cookie = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("id_token="))
+          ?.split("=")[1];
 
-      if (!cookie) {
-        setError("No token found");
-        return;
+        if (!cookie) {
+          setError("No token found");
+          setLoading(false);
+          return;
+        }
+
+        const decoded = jwtDecode(cookie);
+
+        if (decoded.role === "admin") router.push("/pages/dashboard/admin");
+        else if (decoded.role === "instructor")
+          router.push("/pages/dashboard/instructor");
+        else if (decoded.role === "student")
+          router.push("/pages/dashboard/student");
+        else router.push("/");
+      } else {
+        setError("Incorrect Username/Password");
       }
-
-      const decoded = jwtDecode(cookie);
-
-      if (decoded.role === "admin") router.push("/pages/dashboard/admin");
-      else if (decoded.role === "instructor")
-        router.push("/pages/dashboard/instructor");
-      else if (decoded.role === "student")
-        router.push("/pages/dashboard/student");
-      else router.push("/");
-    } else {
-      setError("Incorrect Username/Password");
+    } catch (err) {
+      setError("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-    <main>
+    <main className="login-container">
       <h1>Welcome to Qatar University's CS Registration System</h1>
       <div>
         <form id="form" onSubmit={handleSubmit}>
@@ -53,7 +66,7 @@ export default function Page() {
               <p>Username:</p>
             </label>
             <input
-              type="id"
+              type="text"
               id="id"
               name="id"
               required
@@ -72,21 +85,35 @@ export default function Page() {
               placeholder="e.g. 123"
             />
           </div>
+          {error && (
+            <p className="error-message" role="alert">
+              {error}
+            </p>
+          )}
           <div className="form-group">
-            <button type="submit">Sign in</button>
+            <button type="submit" disabled={loading}>
+              {loading ? "Signing in..." : "Sign in"}
+            </button>
           </div>
-          <p id="indicator">Incorrect Email/Password</p>
+          <div className="divider">
+            <div className="divider-line"></div>
+            <span className="divider-text">OR</span>
+          </div>
           <div className="github-login">
             <button
-              onClick={() => signIn("github", { callbackUrl: "/pages/" })}
+              type="button"
+              className="github-button"
+              onClick={() =>
+                signIn("github", { callbackUrl: "/pages/dashboard" })
+              }
             >
               <img
                 src="/assets/Github-logo.png"
                 width="40"
                 height="40"
                 alt="GitHub"
-                padding="5"
               />
+
               <span>Sign in with GitHub</span>
             </button>
           </div>
