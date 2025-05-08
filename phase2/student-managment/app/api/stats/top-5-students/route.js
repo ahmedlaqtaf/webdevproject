@@ -1,7 +1,7 @@
-import { getTop5StudentsByGPA } from '@/lib/repository/statisticsRepo';
+import statisticsRepo from '@/lib/repository/statisticsRepo';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const result = await getTop5StudentsByGPA();
+  const result = await statisticsRepo.getTop5StudentsByGPA();
   return NextResponse.json(result);
 }
