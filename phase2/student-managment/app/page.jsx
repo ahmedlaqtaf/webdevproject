@@ -10,7 +10,7 @@ export default function HomePage() {
       </header>
 
       <div className="nav-tabs">
-        <Link className="nav-tab" href="/pages">
+        <Link className="nav-tab" href="/dashboard">
           Dashboard
         </Link>
         <Link className="nav-tab" href="/register">
