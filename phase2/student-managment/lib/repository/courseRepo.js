@@ -77,7 +77,7 @@ class CourseRepo {
   }
 
 
-  async getAllCourses() {
+  async getAllClasses() {
     return await prisma.course.findMany({
       include: {
         classes: true,

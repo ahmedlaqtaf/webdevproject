@@ -77,7 +77,7 @@ export default function DashboardPage() {
           <ul>
             {stats.top3Courses.map((c) => (
               <li key={c.id}>
-                {c.name} ({c.classes} {c.enrollment})
+                {c.name} : ({c.enrollmentCount})
               </li>
             ))}
           </ul>
@@ -88,8 +88,7 @@ export default function DashboardPage() {
           <ul>
             {stats.top5Students.map((s) => (
               <li key={s.id}>
-                {s.name}
-                {s.grade}
+                {s.name} - GPA: {s.gpa.toFixed(2)}
               </li>
             ))}
           </ul>

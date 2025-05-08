@@ -42,8 +42,14 @@
             "id": "WD350-A",
             "instructor": "instructor_4",
             "schedule": "Sunday & Wednesday 9:30-11:20 AM",
+            "capacity": 28,
+            "enrolled_students": [{ "studentId": "202501234" }, { "studentId": "202503456" }]
+        },{
+            "id": "WD350-B",
+            "instructor": "instructor_3",
+            "schedule": "Sunday & Wednesday 11:40-12:20 PM",
             "capacity": 30,
-            "enrolled_students": []
+            "enrolled_students": [{ "studentId": "202507890" }, { "studentId": "202509012" }, { "studentId": "202505678" }]
         }]
     },
     {

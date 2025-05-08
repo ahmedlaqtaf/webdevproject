@@ -1,4 +1,6 @@
 import Link from "next/link";
+
+//home page not dashboard
 export default function HomePage() {
   return (
     <div>
@@ -8,7 +10,7 @@ export default function HomePage() {
       </header>
 
       <div className="nav-tabs">
-        <Link className="nav-tab" href="/pages/dashboard">
+        <Link className="nav-tab" href="/pages">
           Dashboard
         </Link>
         <Link className="nav-tab" href="/register">
@@ -17,7 +19,7 @@ export default function HomePage() {
         <Link className="nav-tab" href="/login">
           Login
         </Link>
-        <Link className="nav-tab" href="/api/courses">
+        <Link className="nav-tab" href="/api/courses"> 
           Courses API
         </Link>
       </div>

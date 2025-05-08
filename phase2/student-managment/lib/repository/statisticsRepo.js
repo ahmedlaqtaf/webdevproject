@@ -31,6 +31,7 @@ class StatisticsRepo {
       },
     });
 
+    
     const withCounts = courses.map(course => {
       let count = 0;
       course.classes.forEach(cls => {
