@@ -78,24 +78,34 @@ class StatisticsRepo {
 
   // 5. how many passed (>= 2.0)
   async getPassCountPerCourse() {
-    return await this.prisma.course.findMany({
-      select: {
-        id: true,
-        name: true,
-        completedCourses: true,
+    const courses = await this.prisma.course.findMany({
+      include: {
+        classes: {
+          include: {
+            enrollments: true,
+          },
+        },
       },
-    }).then(courses =>
-      courses.map(course => {
-        const passCount = course.completedCourses.filter(c => c.grade >= 2.0).length;
-        return {
-          courseId: course.id,
-          courseName: course.name,
-          passCount,
-        };
-      })
-    );
-  }
+    });
 
+    const result = courses.map(course => {
+      let passCount = 0;
+      course.classes.forEach(cls => {
+        cls.enrollments.forEach(enroll => {
+          if (enroll.grade !== null && enroll.grade >= 2.0) {
+            passCount++;
+          }
+        });
+      });
+      return {
+        courseId: course.id,
+        courseName: course.name,
+        passCount,
+      };
+    });
+
+    return result;
+  }
 
   // 6. class count for instructor
   async getClassCountPerInstructor() {
@@ -135,9 +145,9 @@ class StatisticsRepo {
         .map((c) => c.grade)
         .filter((g) => g !== null);
       const avg =
-        grades.length > 0 ?
-          grades.reduce((a, b) => a + b, 0) / grades.length :
-          0;
+        grades.length > 0
+          ? grades.reduce((a, b) => a + b, 0) / grades.length
+          : 0;
       return { id: s.id, name: s.name, gpa: avg };
     });
 
