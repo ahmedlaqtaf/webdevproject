@@ -1,5 +1,5 @@
 'use client';
-import "../styles/login.css";
+import "../../styles/login.css";
 import React, { useState } from 'react';
 
 export default function page() {

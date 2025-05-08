@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import "../styles/studentDashboard.css";
+import "../../styles/studentDashboard.css";
 
 export default function DashboardPage() {
   const [stats, setStats] = useState(null);
