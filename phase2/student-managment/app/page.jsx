@@ -8,7 +8,7 @@ export default function HomePage() {
       </header>
 
       <div className="nav-tabs">
-        <Link className="nav-tab" href="/pages/dashboard">
+        <Link className="nav-tab" href="/dashboard">
           Dashboard
         </Link>
         <Link className="nav-tab" href="/register">

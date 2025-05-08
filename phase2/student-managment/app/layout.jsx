@@ -5,7 +5,8 @@ export const metadata = {
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-// import "./globals.css";
+import "./styles/studentDashboard.css";
+
 import NavBar from "./components/NavBar";
 
 const geistSans = Geist({
