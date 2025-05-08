@@ -1,0 +1,234 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    background-color: #3d3d3d;
+    color: white;
+    padding: 15px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+}
+
+.header {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#logoutButton {
+    margin-top: 1rem;
+    background-color: #e74c3c;
+    width: 90px;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+    background-color: #c0392b;
+}
+
+#courseList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.course-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+
+.course-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.course-card h3 {
+    font-size: 1.2rem;
+    color: #1c327a;
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.course-card button {
+    background-color: #3d3d3d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.course-card button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.course-card button:hover:not(:disabled) {
+    background-color: #3d3d3d;
+}
+
+.status-pending {
+    color: #ff9800;
+    font-weight: bold;
+}
+
+#courseFormContainer {
+    background-color: white;
+    border: 2px solid #3d3d3d;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#courseFormContainer input,
+#courseFormContainer select,
+#courseFormContainer textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#courseFormContainer form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+button {
+    background-color: #3d3d3d;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.btn-delete {
+    background: rgb(182, 2, 2) !important;
+}
+
+button:hover {
+    background-color: #3d3d3d;
+}
+
+#showFormBtn {
+    color: 1c327a;
+    background: white;
+    transition: ease .2s;
+}
+
+#showFormBtn:hover {
+    color: white;
+    background: #3d3d3d;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+#closeFormBtn {
+    display: flex;
+    margin-top: -3rem;
+}
+
+#courseFormContainer {
+    display: none;
+    background: white;
+    padding: 20px;
+    margin-top: 30px;
+    border: 2px solid #3d3d3d;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#classFormContainer {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    width: 300px;
+}
+
+#classFormContainer h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#classForm input,
+#classForm select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#classForm button {
+    display: flex;
+    justify-items: center;
+    width: 10%;
+    padding: 10px;
+    background-color: #3d3d3d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#classForm button:hover {
+    background-color: #3d3d3d;
+}
+
+#closeClassFormBtn {
+    background-color: red;
+    margin-top: 10px;
+}
+
+#closeClassFormBtn:hover {
+    background-color: rgb(100, 14, 14);
+}
