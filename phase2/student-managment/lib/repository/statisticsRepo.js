@@ -9,7 +9,7 @@ class StatisticsRepo {
   // 1. total number of students
   async getTotalStudents() {
     return await this.prisma.student.count();
-  }//done
+  } //done
 
   // 2. total courses per category
   async getCourseCountByCategory() {
