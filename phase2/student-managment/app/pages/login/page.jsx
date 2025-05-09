@@ -3,7 +3,7 @@ import "../../styles/login.css";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
-import { signIn } from "next-auth/react"; // ✅ Added import
+import { signIn } from "next-auth/react";
 
 export default function Page() {
   const [error, setError] = useState("");
@@ -21,7 +21,7 @@ export default function Page() {
     try {
       const res = await fetch("/api/users/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" }, // ✅ Added header
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 

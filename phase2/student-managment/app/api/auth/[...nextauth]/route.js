@@ -15,7 +15,8 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res = await fetch("/api/users/login", {
+        const res = await fetch(`${process.env.NEXTAUTH_URL}/api/users/login`, {
+
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(credentials),
@@ -32,17 +33,21 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      // Add access_token and the user object to the JWT
-      return { ...token, ...user };
+    async jwt({ token, user, account }) {
+      if (user) {
+        token.role = user.role || "github_user";
+        token.name = user.name || user.login;
+      }
+      return token;
     },
-
-    //send the entire session details (according to the Dr. docs). called when any of these get called  getSession(), useSession(), /api/auth/session)
     async session({ session, token }) {
-      session.user = token;
+      session.user = {
+        name: token.name,
+        role: token.role,
+      };
       return session;
     },
-  },
+  }
 };
 
 const handler = NextAuth(authOptions);
