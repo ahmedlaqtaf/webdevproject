@@ -98,7 +98,7 @@ export default function DashboardPage() {
                 : "N/A";
               return (
                 <li key={s.id}>
-                  {s.name} - GPA: {s.gpa.toFixed(2)}
+                  {s.name} - GPA: {gpa}
                 </li>
               );
             })}

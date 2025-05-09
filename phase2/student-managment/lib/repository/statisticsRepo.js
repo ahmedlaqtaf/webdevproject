@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 class StatisticsRepo {
@@ -9,12 +9,12 @@ class StatisticsRepo {
   // 1. total number of students
   async getTotalStudents() {
     return await this.prisma.student.count();
-  }
+  }//done
 
   // 2. total courses per category
   async getCourseCountByCategory() {
     return await this.prisma.course.groupBy({
-      by: ['category'],
+      by: ["category"],
       _count: true,
     });
   }
@@ -31,10 +31,9 @@ class StatisticsRepo {
       },
     });
 
-
-    const withCounts = courses.map(course => {
+    const withCounts = courses.map((course) => {
       let count = 0;
-      course.classes.forEach(cls => {
+      course.classes.forEach((cls) => {
         count += cls.enrollments.length;
       });
       return { id: course.id, name: course.name, enrollmentCount: count };
@@ -57,10 +56,10 @@ class StatisticsRepo {
       },
     });
 
-    const result = courses.map(course => {
+    const result = courses.map((course) => {
       let failCount = 0;
-      course.classes.forEach(cls => {
-        cls.enrollments.forEach(enroll => {
+      course.classes.forEach((cls) => {
+        cls.enrollments.forEach((enroll) => {
           if (enroll.grade !== null && enroll.grade < 2.0) {
             failCount++;
           }
@@ -78,30 +77,34 @@ class StatisticsRepo {
 
   // 5. how many passed (>= 2.0)
   async getPassCountPerCourse() {
-    const results = await this.prisma.course.findMany({
-      select: {
-        id: true,
-        name: true,
-        completedCourses: {
-          where: {
-            grade: {
-              gte: 2.0,
-            },
-          },
-          select: {
-            id: true,
-          },
+    const results = await this.prisma.completedCourse.groupBy({
+      by: ["courseId"],
+      where: {
+        grade: {
+          gte: 2.0,
         },
+      },
+      _count: {
+        _all: true,
       },
     });
 
-    return results.map(course => ({
-      courseId: course.id,
-      courseName: course.name,
-      passCount: course.completedCourses.length,
-    }));
-  }
+    const courses = await this.prisma.course.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    });
 
+    return results.map((result) => {
+      const course = courses.find((c) => c.id === result.courseId);
+      return {
+        courseId: result.courseId,
+        courseName: course?.name || "Unknown",
+        passCount: result._count._all,
+      };
+    });
+  }
 
   // 6. class count for instructor
   async getClassCountPerInstructor() {
@@ -141,9 +144,9 @@ class StatisticsRepo {
         .map((c) => c.grade)
         .filter((g) => g !== null);
       const avg =
-        grades.length > 0 ?
-          grades.reduce((a, b) => a + b, 0) / grades.length :
-          0;
+        grades.length > 0
+          ? grades.reduce((a, b) => a + b, 0) / grades.length
+          : 0;
       return { id: s.id, name: s.name, gpa: avg };
     });
 
@@ -162,10 +165,10 @@ class StatisticsRepo {
       },
     });
 
-    const withFailCounts = courses.map(course => {
+    const withFailCounts = courses.map((course) => {
       let failCount = 0;
-      course.classes.forEach(cls => {
-        cls.enrollments.forEach(enroll => {
+      course.classes.forEach((cls) => {
+        cls.enrollments.forEach((enroll) => {
           if (enroll.grade !== null && enroll.grade < 2.0) {
             failCount++;
           }
@@ -184,7 +187,7 @@ class StatisticsRepo {
   // 10. course status (active vs cancelled)
   async getCourseStatusCounts() {
     return await this.prisma.course.groupBy({
-      by: ['status'],
+      by: ["status"],
       _count: true,
     });
   }

@@ -13,13 +13,10 @@ export default function NavBar() {
     <header>
       <nav>
         <div className="nav-links">
-          <Link
-            href="/pages/dashboard"
-            className="react-link"
-          >
+          <Link href="/pages/dashboard" className="react-link">
             Dashboard
           </Link>
-          <Link href="/pages/statistics-dashboard" className="react-link">
+          <Link href="/pages/dashboard" className="react-link">
             Statistics
           </Link>
         </div>

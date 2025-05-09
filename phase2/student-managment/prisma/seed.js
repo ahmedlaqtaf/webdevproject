@@ -1,15 +1,20 @@
-import { PrismaClient } from '@prisma/client';
-import fs from 'fs';
-
+import { PrismaClient } from "@prisma/client";
+import fs from "fs";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const users = JSON.parse(fs.readFileSync('./data/users.json', 'utf8')).users;
-  const courses = JSON.parse(fs.readFileSync('./data/courses.json', 'utf8'));
-  const instructors = JSON.parse(fs.readFileSync('./data/instructors.json', 'utf8'));
-  const students = JSON.parse(fs.readFileSync('./data/students.json', 'utf8')).students;
-  const admins = JSON.parse(fs.readFileSync('./data/admins.json', 'utf8')).admins;
+  const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8")).users;
+  const courses = JSON.parse(fs.readFileSync("./data/courses.json", "utf8"));
+  const instructors = JSON.parse(
+    fs.readFileSync("./data/instructors.json", "utf8")
+  );
+  const students = JSON.parse(
+    fs.readFileSync("./data/students.json", "utf8")
+  ).students;
+  const admins = JSON.parse(
+    fs.readFileSync("./data/admins.json", "utf8")
+  ).admins;
 
   // Instructors
   for (const inst of instructors.instructors) {
@@ -47,12 +52,12 @@ async function main() {
           schedule: cls.schedule,
           capacity: cls.capacity,
           course: {
-            connect: { id: course.id }
+            connect: { id: course.id },
           },
           instructor: {
-            connect: { id: cls.instructor }
-          }
-        }
+            connect: { id: cls.instructor },
+          },
+        },
       });
     }
   }
@@ -98,7 +103,7 @@ async function main() {
       role: user.role,
     };
 
-    if (user.role === 'student') {
+    if (user.role === "student") {
       const student = await prisma.student.findUnique({
         where: { userId: user.id },
       });
@@ -116,13 +121,13 @@ async function main() {
           },
         },
       });
-    } else if (user.role === 'instructor') {
+    } else if (user.role === "instructor") {
       await prisma.instructor.upsert({
         where: { id: user.id },
         update: {},
         create: {
           id: user.id,
-          name: user.name || 'Unknown',
+          name: user.name || "Unknown",
         },
       });
 
@@ -134,11 +139,11 @@ async function main() {
           },
         },
       });
-    } else if (user.role === 'admin') {
+    } else if (user.role === "admin") {
       await prisma.user.create({
         data: {
           ...baseUser,
-          id: user.id
+          id: user.id,
         },
       });
     }
@@ -153,19 +158,18 @@ async function main() {
         id: admin.id,
         name: admin.name,
         User: {
-          connect: { id: admin.userId }
-        }
-      }
+          connect: { id: admin.userId },
+        },
+      },
     });
   }
 
-
-  console.log('Seeding complete.');
+  console.log("Seeding complete.");
 }
 
 main()
   .catch((e) => {
-    console.error('seeding error:', e);
+    console.error("seeding error:", e);
     process.exit(1);
   })
   .finally(async () => {

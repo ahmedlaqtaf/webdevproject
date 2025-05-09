@@ -39,11 +39,9 @@ export default function Page() {
 
         const decoded = jwtDecode(cookie);
 
-        if (decoded.role === "admin") router.push("/pages/dashboard/admin");
-        else if (decoded.role === "instructor")
-          router.push("/pages/dashboard/instructor");
-        else if (decoded.role === "student")
-          router.push("/pages/dashboard/student");
+        if (decoded.role === "admin") router.push("/pages/dashboard");
+        else if (decoded.role === "instructor") router.push("/pages/dashboard");
+        else if (decoded.role === "student") router.push("/pages/dashboard");
         else router.push("/");
       } else {
         setError("Incorrect Username/Password");
@@ -108,7 +106,7 @@ export default function Page() {
               }
             >
               <img
-                src="/assets/Github-logo.png"
+                src="assets/Github-logo.png"
                 width="40"
                 height="40"
                 alt="GitHub"
