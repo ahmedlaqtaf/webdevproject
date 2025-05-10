@@ -46,34 +46,31 @@ class StatisticsRepo {
 
   // 4. how many failed (<2.0)
   async getFailureCountPerCourse() {
-    const courses = await this.prisma.course.findMany({
-      include: {
-        classes: {
-          include: {
-            enrollments: true,
+    const result = await this.prisma.course.findMany({
+      select: {
+        id: true,
+        name: true,
+        _count: {
+          select: {
+            completedCourses: {
+              where: {
+                grade: {
+                  lt: 2.0,
+                },
+              },
+            },
           },
         },
       },
     });
 
-    const result = courses.map((course) => {
-      let failCount = 0;
-      course.classes.forEach((cls) => {
-        cls.enrollments.forEach((enroll) => {
-          if (enroll.grade !== null && enroll.grade < 2.0) {
-            failCount++;
-          }
-        });
-      });
-      return {
-        courseId: course.id,
-        courseName: course.name,
-        failCount,
-      };
-    });
-
-    return result;
+    return result.map((course) => ({
+      courseId: course.id,
+      courseName: course.name,
+      failCount: course._count.completedCourses,
+    }));
   }
+
 
   // 5. how many passed (>= 2.0)
   async getPassCountPerCourse() {
@@ -100,7 +97,7 @@ class StatisticsRepo {
       const course = courses.find((c) => c.id === result.courseId);
       return {
         courseId: result.courseId,
-        courseName: course?.name || "Unknown",
+        courseName: course ?.name || "Unknown",
         passCount: result._count._all,
       };
     });
@@ -144,9 +141,9 @@ class StatisticsRepo {
         .map((c) => c.grade)
         .filter((g) => g !== null);
       const avg =
-        grades.length > 0
-          ? grades.reduce((a, b) => a + b, 0) / grades.length
-          : 0;
+        grades.length > 0 ?
+          grades.reduce((a, b) => a + b, 0) / grades.length :
+          0;
       return { id: s.id, name: s.name, gpa: avg };
     });
 

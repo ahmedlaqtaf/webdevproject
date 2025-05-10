@@ -1,5 +1,4 @@
-[
-  {
+[{
     "id": "CS151",
     "name": "Introduction to Programming",
     "category": "Programming",
@@ -7,54 +6,104 @@
     "prerequisites": [],
     "open_for_registration": true,
     "status": "Active",
-    "classes": [
-      {
-        "id": "CS101-A",
-        "instructor": "instructor_3",
-        "schedule": "Monday & Wednesday 10:00-11:30 AM",
-        "capacity": 30,
-        "enrolled_students": [
-          { "studentId": "202501234" },
-          { "studentId": "202503456" }
-        ]
-      }
-    ]
+    "classes": [{
+      "id": "CS101-A",
+      "instructor": "instructor_3",
+      "schedule": "Monday & Wednesday 10:00-11:30 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202540042"
+        },
+        {
+          "studentId": "202540004"
+        },
+        {
+          "studentId": "202507890"
+        },
+        {
+          "studentId": "202531666"
+        },
+        {
+          "studentId": "202540047"
+        },
+        {
+          "studentId": "202540003"
+        },
+        {
+          "studentId": "202519012"
+        },
+        {
+          "studentId": "202517890"
+        }
+      ]
+    }]
   },
   {
     "id": "DB351",
     "name": "Database Management Systems",
     "category": "Databases",
     "description": "Comprehensive course on relational and NoSQL databases",
-    "prerequisites": ["OOP251"],
+    "prerequisites": [
+      "OOP251"
+    ],
     "open_for_registration": true,
     "status": "Active",
-    "classes": [
-      {
-        "id": "DB351-A",
-        "instructor": "instructor_2",
-        "schedule": "Sunday & Thursday 9:00-10:20 AM",
-        "capacity": 30,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "DB351-A",
+      "instructor": "instructor_2",
+      "schedule": "Sunday & Thursday 9:00-10:20 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202540003"
+        },
+        {
+          "studentId": "202515678"
+        },
+        {
+          "studentId": "202540030"
+        }
+      ]
+    }]
   },
   {
     "id": "WD350",
     "name": "Web Development with JavaScript",
     "category": "Programming",
     "description": "Modern web development techniques and frameworks",
-    "prerequisites": ["CS151"],
+    "prerequisites": [
+      "CS151"
+    ],
     "open_for_registration": false,
     "status": "Cancelled",
-    "classes": [
-      {
+    "classes": [{
         "id": "WD350-A",
         "instructor": "instructor_4",
         "schedule": "Sunday & Wednesday 9:30-11:20 AM",
         "capacity": 28,
-        "enrolled_students": [
-          { "studentId": "202501234" },
-          { "studentId": "202503456" }
+        "enrolled_students": [{
+            "studentId": "202540049"
+          },
+          {
+            "studentId": "202540021"
+          },
+          {
+            "studentId": "202515678"
+          },
+          {
+            "studentId": "202540044"
+          },
+          {
+            "studentId": "202517890"
+          },
+          {
+            "studentId": "202540033"
+          },
+          {
+            "studentId": "202540035"
+          },
+          {
+            "studentId": "202540020"
+          }
         ]
       },
       {
@@ -62,10 +111,30 @@
         "instructor": "instructor_3",
         "schedule": "Sunday & Wednesday 11:40-12:20 PM",
         "capacity": 30,
-        "enrolled_students": [
-          { "studentId": "202507890" },
-          { "studentId": "202509012" },
-          { "studentId": "202505678" }
+        "enrolled_students": [{
+            "studentId": "202540049"
+          },
+          {
+            "studentId": "202507890"
+          },
+          {
+            "studentId": "202540021"
+          },
+          {
+            "studentId": "202511234"
+          },
+          {
+            "studentId": "202537999"
+          },
+          {
+            "studentId": "202531666"
+          },
+          {
+            "studentId": "202523222"
+          },
+          {
+            "studentId": "202540020"
+          }
         ]
       }
     ]
@@ -75,125 +144,582 @@
     "name": "Object-Oriented Programming",
     "category": "Programming",
     "description": "Advanced OOP principles and design patterns",
-    "prerequisites": ["CS151"],
+    "prerequisites": [
+      "CS151"
+    ],
     "open_for_registration": true,
     "status": "Active",
-    "classes": [
-      {
-        "id": "OOP251-A",
-        "instructor": "instructor_7",
-        "schedule": "Monday & Wednesday 8:00-9:30 AM",
-        "capacity": 35,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "OOP251-A",
+      "instructor": "instructor_7",
+      "schedule": "Monday & Wednesday 8:00-9:30 AM",
+      "capacity": 35,
+      "enrolled_students": [{
+          "studentId": "202540006"
+        },
+        {
+          "studentId": "202540033"
+        },
+        {
+          "studentId": "202501234"
+        },
+        {
+          "studentId": "202540035"
+        },
+        {
+          "studentId": "202529555"
+        },
+        {
+          "studentId": "202519012"
+        },
+        {
+          "studentId": "202505678"
+        }
+      ]
+    }]
   },
   {
     "id": "ML501",
     "name": "Machine Learning Fundamentals",
     "category": "Data Science",
     "description": "Introduction to machine learning algorithms",
-    "prerequisites": ["WD350"],
+    "prerequisites": [
+      "WD350"
+    ],
     "open_for_registration": false,
     "status": "Cancelled",
-    "classes": [
-      {
-        "id": "ML501-A",
-        "instructor": "instructor_5",
-        "schedule": "Sunday & Thursday 9:00-10:20 AM",
-        "capacity": 40,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "ML501-A",
+      "instructor": "instructor_5",
+      "schedule": "Sunday & Thursday 9:00-10:20 AM",
+      "capacity": 40,
+      "enrolled_students": [{
+          "studentId": "202540022"
+        },
+        {
+          "studentId": "202511234"
+        },
+        {
+          "studentId": "202540047"
+        },
+        {
+          "studentId": "202517890"
+        },
+        {
+          "studentId": "202533777"
+        },
+        {
+          "studentId": "202540043"
+        },
+        {
+          "studentId": "202540027"
+        }
+      ]
+    }]
   },
   {
     "id": "DS400",
     "name": "Data Structures and Algorithms",
     "category": "Computer Science",
     "description": "In-depth study of data structures and algorithm design",
-    "prerequisites": ["CS151"],
+    "prerequisites": [
+      "CS151"
+    ],
     "open_for_registration": true,
     "status": "Active",
-    "classes": [
-      {
-        "id": "DS400-A",
-        "instructor": "instructor_1",
-        "schedule": "Sunday & Thursday 9:00-10:20 AM",
-        "capacity": 30,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "DS400-A",
+      "instructor": "instructor_1",
+      "schedule": "Sunday & Thursday 9:00-10:20 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202539000"
+        },
+        {
+          "studentId": "202525333"
+        },
+        {
+          "studentId": "202517890"
+        },
+        {
+          "studentId": "202535888"
+        },
+        {
+          "studentId": "202521111"
+        }
+      ]
+    }]
   },
   {
     "id": "CN450",
     "name": "Computer Networks",
     "category": "Networking",
     "description": "Networking concepts, protocols, and security",
-    "prerequisites": ["CS151"],
+    "prerequisites": [
+      "CS151"
+    ],
     "open_for_registration": true,
     "status": "Active",
-    "classes": [
-      {
-        "id": "CN450-A",
-        "instructor": "instructor_3",
-        "schedule": "Sunday & Thursday 9:00-10:20 AM",
-        "capacity": 30,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "CN450-A",
+      "instructor": "instructor_3",
+      "schedule": "Sunday & Thursday 9:00-10:20 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202531666"
+        },
+        {
+          "studentId": "202505678"
+        },
+        {
+          "studentId": "202537999"
+        },
+        {
+          "studentId": "202525333"
+        },
+        {
+          "studentId": "202540044"
+        },
+        {
+          "studentId": "202529555"
+        },
+        {
+          "studentId": "202521111"
+        }
+      ]
+    }]
   },
   {
     "id": "SE500",
     "name": "Software Engineering Principles",
     "category": "Software Engineering",
     "description": "Software development methodologies and best practices",
-    "prerequisites": ["OOP251"],
+    "prerequisites": [
+      "OOP251"
+    ],
     "open_for_registration": true,
     "status": "Active",
-    "classes": [
-      {
-        "id": "SE500-A",
-        "instructor": "instructor_6",
-        "schedule": "Monday & Wednesday 10:00-11:30 AM",
-        "capacity": 30,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "SE500-A",
+      "instructor": "instructor_6",
+      "schedule": "Monday & Wednesday 10:00-11:30 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202525333"
+        },
+        {
+          "studentId": "202540019"
+        },
+        {
+          "studentId": "202540011"
+        },
+        {
+          "studentId": "202540046"
+        },
+        {
+          "studentId": "202540009"
+        },
+        {
+          "studentId": "202540030"
+        },
+        {
+          "studentId": "202540041"
+        }
+      ]
+    }]
   },
   {
     "id": "AI600",
     "name": "Artificial Intelligence",
     "category": "AI",
     "description": "Foundations of AI and machine learning",
-    "prerequisites": ["ML501"],
+    "prerequisites": [
+      "ML501"
+    ],
     "open_for_registration": false,
     "status": "Cancelled",
-    "classes": [
-      {
-        "id": "AI600-A",
-        "instructor": "instructor_1",
-        "schedule": "Sunday & Thursday 9:00-10:20 AM",
-        "capacity": 40,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "AI600-A",
+      "instructor": "instructor_1",
+      "schedule": "Sunday & Thursday 9:00-10:20 AM",
+      "capacity": 40,
+      "enrolled_students": [{
+          "studentId": "202540044"
+        },
+        {
+          "studentId": "202540008"
+        },
+        {
+          "studentId": "202540028"
+        },
+        {
+          "studentId": "202540007"
+        },
+        {
+          "studentId": "202540038"
+        },
+        {
+          "studentId": "202540045"
+        },
+        {
+          "studentId": "202540014"
+        },
+        {
+          "studentId": "202540030"
+        }
+      ]
+    }]
   },
   {
     "id": "DS700",
     "name": "Big Data Technologies",
     "category": "Data Science",
     "description": "Introduction to big data frameworks and tools",
-    "prerequisites": ["DS400"],
+    "prerequisites": [
+      "DS400"
+    ],
     "open_for_registration": false,
     "status": "Cancelled",
-    "classes": [
-      {
-        "id": "DS700-A",
-        "instructor": "instructor_4",
-        "schedule": "Sunday & Thursday 9:00-10:20 AM",
-        "capacity": 40,
-        "enrolled_students": []
-      }
-    ]
+    "classes": [{
+      "id": "DS700-A",
+      "instructor": "instructor_4",
+      "schedule": "Sunday & Thursday 9:00-10:20 AM",
+      "capacity": 40,
+      "enrolled_students": [{
+          "studentId": "202540008"
+        },
+        {
+          "studentId": "202523222"
+        },
+        {
+          "studentId": "202540037"
+        },
+        {
+          "studentId": "202540010"
+        },
+        {
+          "studentId": "202540048"
+        },
+        {
+          "studentId": "202540036"
+        },
+        {
+          "studentId": "202540002"
+        },
+        {
+          "studentId": "202519012"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CE301",
+    "name": "Embedded Systems",
+    "category": "Computer Engineering",
+    "description": "Study of microcontrollers and embedded C programming.",
+    "prerequisites": [
+      "DS400"
+    ],
+    "open_for_registration": false,
+    "status": "Active",
+    "classes": [{
+      "id": "CE301-A",
+      "instructor": "instructor_4",
+      "schedule": "Monday & Tuesday 8:41 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202540037"
+        },
+        {
+          "studentId": "202540024"
+        },
+        {
+          "studentId": "202523222"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CS320",
+    "name": "Operating Systems",
+    "category": "Computer Science",
+    "description": "Concepts of process management, memory, and I/O systems.",
+    "prerequisites": [
+      "CS151",
+      "OOP251"
+    ],
+    "open_for_registration": true,
+    "status": "Active",
+    "classes": [{
+      "id": "CS320-A",
+      "instructor": "instructor_1",
+      "schedule": "Tuesday & Friday 2:27 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202537999"
+        },
+        {
+          "studentId": "202515678"
+        },
+        {
+          "studentId": "202525333"
+        },
+        {
+          "studentId": "202501234"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CS330",
+    "name": "Computer Graphics",
+    "category": "Computer Science",
+    "description": "Rendering, modeling, and interactive techniques in graphics.",
+    "prerequisites": [
+      "OOP251",
+      "CS151"
+    ],
+    "open_for_registration": true,
+    "status": "Active",
+    "classes": [{
+      "id": "CS330-A",
+      "instructor": "instructor_5",
+      "schedule": "Friday & Sunday 5:13 PM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202525333"
+        },
+        {
+          "studentId": "202501234"
+        },
+        {
+          "studentId": "202515678"
+        },
+        {
+          "studentId": "202537999"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CS350",
+    "name": "Data Mining",
+    "category": "Data Science",
+    "description": "Techniques to discover patterns in large datasets.",
+    "prerequisites": [
+      "OOP251"
+    ],
+    "open_for_registration": false,
+    "status": "Active",
+    "classes": [{
+      "id": "CS350-A",
+      "instructor": "instructor_2",
+      "schedule": "Friday & Sunday 3:14 PM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202540015"
+        },
+        {
+          "studentId": "202540009"
+        },
+        {
+          "studentId": "202503456"
+        },
+        {
+          "studentId": "202540003"
+        },
+        {
+          "studentId": "202540045"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CS360",
+    "name": "Cybersecurity Fundamentals",
+    "category": "Cybersecurity",
+    "description": "Introduction to security principles, threats, and defenses.",
+    "prerequisites": [
+      "DS400",
+      "OOP251"
+    ],
+    "open_for_registration": false,
+    "status": "Active",
+    "classes": [{
+      "id": "CS360-A",
+      "instructor": "instructor_7",
+      "schedule": "Tuesday & Tuesday 4:36 PM",
+      "capacity": 30,
+      "enrolled_students": []
+    }]
+  },
+  {
+    "id": "CE340",
+    "name": "Digital Signal Processing",
+    "category": "Computer Engineering",
+    "description": "Signals, transforms, and systems in engineering.",
+    "prerequisites": [
+      "DS400"
+    ],
+    "open_for_registration": true,
+    "status": "Active",
+    "classes": [{
+      "id": "CE340-A",
+      "instructor": "instructor_5",
+      "schedule": "Tuesday & Friday 11:32 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202540024"
+        },
+        {
+          "studentId": "202540013"
+        },
+        {
+          "studentId": "202540002"
+        },
+        {
+          "studentId": "202540008"
+        },
+        {
+          "studentId": "202540010"
+        },
+        {
+          "studentId": "202540036"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CS370",
+    "name": "Cloud Computing",
+    "category": "Computer Science",
+    "description": "Virtualization, distributed systems, and cloud platforms.",
+    "prerequisites": [
+      "OOP251"
+    ],
+    "open_for_registration": false,
+    "status": "Active",
+    "classes": [{
+      "id": "CS370-A",
+      "instructor": "instructor_5",
+      "schedule": "Tuesday & Friday 12:09 PM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202503456"
+        },
+        {
+          "studentId": "202540009"
+        },
+        {
+          "studentId": "202540015"
+        },
+        {
+          "studentId": "202525333"
+        },
+        {
+          "studentId": "202515678"
+        },
+        {
+          "studentId": "202540003"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CS380",
+    "name": "Mobile App Development",
+    "category": "Programming",
+    "description": "Design and build mobile applications for Android/iOS.",
+    "prerequisites": [
+      "OOP251"
+    ],
+    "open_for_registration": false,
+    "status": "Active",
+    "classes": [{
+      "id": "CS380-A",
+      "instructor": "instructor_7",
+      "schedule": "Thursday & Friday 2:16 PM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202540046"
+        },
+        {
+          "studentId": "202525333"
+        },
+        {
+          "studentId": "202540011"
+        },
+        {
+          "studentId": "202540041"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CS390",
+    "name": "Human-Computer Interaction",
+    "category": "Software Engineering",
+    "description": "User-centered design, usability, and interfaces.",
+    "prerequisites": [
+      "DS400",
+      "CS151"
+    ],
+    "open_for_registration": false,
+    "status": "Active",
+    "classes": [{
+      "id": "CS390-A",
+      "instructor": "instructor_2",
+      "schedule": "Tuesday & Sunday 12:54 PM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202535888"
+        },
+        {
+          "studentId": "202519012"
+        },
+        {
+          "studentId": "202523222"
+        }
+      ]
+    }]
+  },
+  {
+    "id": "CE310",
+    "name": "Computer Architecture",
+    "category": "Computer Engineering",
+    "description": "Study of processor design, memory, and performance.",
+    "prerequisites": [
+      "OOP251"
+    ],
+    "open_for_registration": false,
+    "status": "Active",
+    "classes": [{
+      "id": "CE310-A",
+      "instructor": "instructor_7",
+      "schedule": "Thursday & Monday 3:24 AM",
+      "capacity": 30,
+      "enrolled_students": [{
+          "studentId": "202540019"
+        },
+        {
+          "studentId": "202540030"
+        },
+        {
+          "studentId": "202540009"
+        },
+        {
+          "studentId": "202540011"
+        },
+        {
+          "studentId": "202540015"
+        },
+        {
+          "studentId": "202540041"
+        },
+        {
+          "studentId": "202501234"
+        }
+      ]
+    }]
   }
 ]
