@@ -95,6 +95,30 @@ async function main() {
     });
   }
 
+  // Enrollments
+  for (const course of courses) {
+    for (const cls of course.classes) {
+      if (cls.enrolled_students ?.length > 0) {
+        for (const student of cls.enrolled_students) {
+          try {
+            await prisma.enrollment.create({
+              data: {
+                student: { connect: { id: student.studentId } },
+                class: { connect: { id: cls.id } },
+                status: "approved",
+                grade: Math.random() > 0.3 ? parseFloat((2 + Math.random() * 2).toFixed(2)) : null
+
+              },
+            });
+          } catch (err) {
+            console.warn(` Skipped enrollment: class ${cls.id}, student ${student.studentId}`, err.message);
+          }
+        }
+      }
+    }
+  }
+
+
   // Users
   for (const user of users) {
     const baseUser = {

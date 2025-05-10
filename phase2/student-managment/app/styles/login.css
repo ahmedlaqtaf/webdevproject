@@ -1,141 +1,140 @@
 .login-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 20px;
 }
 
 h1 {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #1a202c;
-  margin-bottom: 1rem;
-  text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a202c;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 form {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
+    background: white;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
 }
 
 label {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #2d3748;
-  margin-bottom: 0.5rem;
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
 }
 
 input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus {
-  outline: none;
-  border-color: #3182ce;
-  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+    outline: none;
+    border-color: #3182ce;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
 }
 
 .error-message {
-  color: #e53e3e;
-  font-size: 0.875rem;
-  margin-top: -1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  display: block;
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    display: block;
 }
 
 button[type="submit"] {
-  width: 100%;
-  background: #3182ce;
-  color: white;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+    width: 100%;
+    background: #3182ce;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
 }
 
 button[type="submit"]:hover {
-  background: #2b6cb0;
-  transform: translateY(-2px);
+    background: #2b6cb0;
+    transform: translateY(-2px);
 }
 
 button[disabled] {
-  opacity: 0.6;
-  cursor: not-allowed;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .divider {
-  position: relative;
-  margin: 1.5rem 0;
-  text-align: center;
+    position: relative;
+    margin: 1.5rem 0;
+    text-align: center;
 }
 
 .divider-line {
-  border-top: 1px solid #e2e8f0;
-  position: absolute;
-  width: 100%;
-  top: 50%;
-  left: 0;
-  z-index: 0;
+    border-top: 1px solid #e2e8f0;
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    z-index: 0;
 }
 
 .divider-text {
-  position: relative;
-  display: inline-block;
-  background: white;
-  padding: 0 1rem;
-  font-size: 0.875rem;
-  color: #718096;
-  z-index: 1;
+    position: relative;
+    display: inline-block;
+    background: white;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    color: #718096;
+    z-index: 1;
 }
 
 .github-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  background: #2d3748;
-  color: white;
-  padding: 0.75rem;
-  border-radius: 8px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-  gap: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #5b6d8d;
+    color: white;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    gap: 0.5rem;
 }
 
 .github-button:hover {
-  background: #1a202c;
-  transform: translateY(-2px);
+    background: #1a202c;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 600px) {
-  form {
-    padding: 1.5rem;
-    max-width: 90%;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
+    form {
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
 }

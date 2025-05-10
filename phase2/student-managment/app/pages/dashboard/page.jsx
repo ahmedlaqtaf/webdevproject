@@ -1,174 +1,186 @@
-"use client";
+import { PrismaClient } from "@prisma/client";
+import fs from "fs";
 
-import { useEffect, useState } from "react";
-import "../../styles/studentDashboard.css";
+const prisma = new PrismaClient();
 
-export default function DashboardPage() {
-  const [stats, setStats] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+async function main() {
+  const users = JSON.parse(fs.readFileSync("./data/users.json", "utf8")).users;
+  const courses = JSON.parse(fs.readFileSync("./data/courses.json", "utf8"));
+  const instructors = JSON.parse(
+    fs.readFileSync("./data/instructors.json", "utf8")
+  );
+  const students = JSON.parse(
+    fs.readFileSync("./data/students.json", "utf8")
+  ).students;
+  const admins = JSON.parse(
+    fs.readFileSync("./data/admins.json", "utf8")
+  ).admins;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responses = await Promise.all([
-          fetch("/api/stats/total-students"),
-          fetch("/api/stats/courses-by-category"),
-          fetch("/api/stats/top-3-enrollments"),
-          fetch("/api/stats/failures-per-course"),
-          fetch("/api/stats/passes-per-course"),
-          fetch("/api/stats/classes-per-instructor"),
-          fetch("/api/stats/students-per-class"),
-          fetch("/api/stats/top-5-students"),
-          fetch("/api/stats/courses-with-most-failures"),
-          fetch("/api/stats/course-status-counts"),
-        ]);
+  // 1. Seed Instructors
+  for (const inst of instructors.instructors) {
+    await prisma.instructor.upsert({
+      where: { id: inst.id },
+      update: {},
+      create: { id: inst.id, name: inst.name },
+    });
+  }
 
-        const results = await Promise.all(responses.map((r) => r.json()));
+  // 2. Seed Students (without completedCourses yet)
+  for (const stu of students) {
+    await prisma.student.create({
+      data: {
+        id: stu.id,
+        name: stu.name,
+        userId: stu.userId,
+      },
+    });
+  }
 
-        setStats({
-          totalStudents: results[0].count,
-          courseCountByCategory: results[1],
-          top3Courses: results[2],
-          failurePerCourse: results[3],
-          passPerCourse: results[4],
-          classCountPerInstructor: results[5],
-          studentCountPerClass: results[6],
-          top5Students: results[7],
-          coursesWithMostFailures: results[8],
-          courseStatusCounts: results[9],
-        });
+  // 3. Seed Courses
+  for (const course of courses) {
+    await prisma.course.upsert({
+      where: { id: course.id },
+      update: {},
+      create: {
+        id: course.id,
+        name: course.name,
+        category: course.category,
+        description: course.description,
+        open_for_registration: course.open_for_registration,
+        status: course.status,
+      },
+    });
+  }
 
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching stats:", err);
-        setError("Failed to load dashboard stats.");
-        setLoading(false);
+  // 4. Seed Classes and Enrollments
+  for (const course of courses) {
+    for (const cls of course.classes) {
+      await prisma.class.upsert({
+        where: { id: cls.id },
+        update: {},
+        create: {
+          id: cls.id,
+          schedule: cls.schedule,
+          capacity: cls.capacity,
+          course: {
+            connect: { id: course.id },
+          },
+          instructor: {
+            connect: { id: cls.instructor },
+          },
+        },
+      });
+
+      if (cls.enrolled_students?.length > 0) {
+        for (const student of cls.enrolled_students) {
+          await prisma.enrollment.create({
+            data: {
+              student: { connect: { id: student.studentId } },
+              class: { connect: { id: cls.id } },
+              status: "approved",
+              grade: null,
+            },
+          });
+        }
       }
+    }
+  }
+
+  // 5. Add prerequisites
+  for (const course of courses) {
+    if (course.prerequisites?.length > 0) {
+      await prisma.course.update({
+        where: { id: course.id },
+        data: {
+          prerequisites: {
+            connect: course.prerequisites.map((pid) => ({ id: pid })),
+          },
+        },
+      });
+    }
+  }
+
+  // 6. Seed Users
+  for (const user of users) {
+    const baseUser = {
+      username: user.username,
+      password: user.password,
+      role: user.role,
     };
 
-    fetchData();
-  }, []);
+    if (user.role === "student") {
+      const student = await prisma.student.findUnique({
+        where: { userId: user.id },
+      });
 
-  if (loading) return <div>Loading dashboard...</div>;
-  if (error) return <div className="notification-error">{error}</div>;
+      if (!student) {
+        console.warn(`Student with userId ${user.id} not found`);
+        continue;
+      }
 
-  return (
-    <div>
-      <section className="welcome-section">
-        <h1>Dashboard Overview</h1>
-        <p>Overview of system statistics and performance.</p>
-      </section>
+      await prisma.user.create({
+        data: {
+          ...baseUser,
+          student: {
+            connect: { id: student.id },
+          },
+        },
+      });
+    } else if (user.role === "instructor") {
+      await prisma.user.create({
+        data: {
+          ...baseUser,
+          instructor: {
+            connect: { id: user.id },
+          },
+        },
+      });
+    } else if (user.role === "admin") {
+      await prisma.user.create({
+        data: {
+          ...baseUser,
+          id: user.id,
+        },
+      });
+    }
+  }
 
-      <div className="cards-container">
-        <div className="card">
-          <h2>Total Students</h2>
-          <p>{stats.totalStudents}</p>
-        </div>
+  // 7. Seed completedCourses 
+  for (const stu of students) {
+    for (const c of stu.completed_courses) {
+      await prisma.completedCourse.create({
+        data: {
+          courseId: c.course,
+          studentId: stu.id,
+          grade: parseFloat(c.grade),
+        },
+      });
+    }
+  }
 
-        <div className="card">
-          <h2>Course Count By Category</h2>
-          <ul>
-            {stats.courseCountByCategory.map((cat) => (
-              <li key={cat.category}>
-                {cat.category}: {cat._count}
-              </li>
-            ))}
-          </ul>
-        </div>
+  // 8. Seed Admins
+  for (const admin of admins) {
+    await prisma.admin.upsert({
+      where: { id: admin.id },
+      update: {},
+      create: {
+        id: admin.id,
+        name: admin.name,
+        User: {
+          connect: { id: admin.userId },
+        },
+      },
+    });
+  }
 
-        <div className="card">
-          <h2>Top 3 Courses By Enrollment</h2>
-          <ul>
-            {stats.top3Courses.map((c) => (
-              <li key={c.id}>
-                {c.name} - {c.enrollmentCount} enrollments
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="card">
-          <h2>Top 5 Students By GPA</h2>
-          <ul>
-            {stats.top5Students.map((s) => {
-              const grades = s.completedCourses?.map((c) => c.grade) || [];
-              const gpa = grades.length
-                ? (grades.reduce((a, b) => a + b, 0) / grades.length).toFixed(2)
-                : "N/A";
-              return (
-                <li key={s.id}>
-                  {s.name} - GPA: {gpa}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-
-        <div className="card">
-          <h2>Course Status Distribution</h2>
-          <ul>
-            {stats.courseStatusCounts.map((status) => (
-              <li key={status.status}>
-                {status.status}: {status._count}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="card">
-          <h2>Failure Count Per Course</h2>
-          <ul>
-            {stats.failurePerCourse.map((c) => (
-              <li key={c.courseId}>
-                {c.courseName}: {c.failCount} failed
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="card">
-          <h2>Pass Count Per Course</h2>
-          <ul>
-            {stats.passPerCourse.map((c) => (
-              <li key={c.courseId}>
-                {c.courseName}: {c.passCount} passed
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="card">
-          <h2>Classes Per Instructor</h2>
-          <ul>
-            {stats.classCountPerInstructor.map((i, idx) => (
-              <li key={idx}>
-                {i.name}: {i._count.classes}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="card">
-          <h2>Students Per Class</h2>
-          <ul>
-            {stats.studentCountPerClass.map((cls) => (
-              <li key={cls.id}>
-                Class {cls.id}: {cls._count.enrollments} students
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="card">
-          <h2>Courses With Most Failures</h2>
-          <ul>
-            {stats.coursesWithMostFailures.map((c) => (
-              <li key={c.id}>{c.name}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
+  console.log("Seeding complete.");
 }
+
+main()
+  .catch((e) => {
+    console.error(" Seeding error:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

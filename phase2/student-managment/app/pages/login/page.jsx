@@ -105,13 +105,7 @@ export default function Page() {
                 signIn("github", { callbackUrl: "/pages/dashboard" })
               }
             >
-              <img
-                src="assets/Github-logo.png"
-                width="40"
-                height="40"
-                alt="GitHub"
-              />
-
+              <img src="/Github-logo.png" width="40" height="40" alt="GitHub" />
               <span>Sign in with GitHub</span>
             </button>
           </div>

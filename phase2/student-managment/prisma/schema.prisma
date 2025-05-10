@@ -88,7 +88,7 @@ model Enrollment {
   id        String @id @default(uuid())
   studentId String
   classId   String
-  status    String @default("pending")
+  status    String @default("approved")
   grade     Float?
 
   student Student @relation(fields: [studentId], references: [id])
