@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700&display=swap');
+* {
+    font-family: "Poppins", sans-serif;
+}
+
 .login-container {
     display: flex;
     flex-direction: column;
@@ -17,6 +22,7 @@ h1 {
 }
 
 form {
+    margin-top: 1rem;
     background: white;
     padding: 2.5rem;
     border-radius: 12px;
@@ -113,19 +119,19 @@ button[disabled] {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background: #5b6d8d;
-    color: white;
+    background: #ffffff;
+    border: 1px solid #eeeeee;
+    color: rgb(26, 26, 26);
     padding: 0.75rem;
     border-radius: 8px;
     font-weight: 600;
-    border: none;
     cursor: pointer;
     transition: background 0.3s, transform 0.2s;
     gap: 0.5rem;
 }
 
 .github-button:hover {
-    background: #1a202c;
+    background: #ebebeb;
     transform: translateY(-2px);
 }
 

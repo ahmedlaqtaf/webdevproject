@@ -55,7 +55,7 @@ export default function Page() {
 
   return (
     <main className="login-container">
-      <h1>Welcome to Qatar University's CS Registration System</h1>
+      <h1>Welcome to Qatar University's CSE Registration System</h1>
       <div>
         <form id="form" onSubmit={handleSubmit}>
           <div className="form-group">
@@ -102,7 +102,10 @@ export default function Page() {
               type="button"
               className="github-button"
               onClick={() =>
-                signIn("github", { callbackUrl: "/pages/dashboard" })
+                signIn("github", {
+                  callbackUrl: "/pages/dashboard",
+                  prompt: "login",
+                })
               }
             >
               <img src="/Github-logo.png" width="40" height="40" alt="GitHub" />

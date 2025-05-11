@@ -62,6 +62,7 @@ class StatisticsRepo {
           },
         },
       },
+
     });
 
     return result.map((course) => ({

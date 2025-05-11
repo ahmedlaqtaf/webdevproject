@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import "../../app/styles/navigation.css";
 
 const handleLogout = () => {
-  // Implement logout functionality here
-  console.log("Logging out...");
-  // Redirect to login page or perform actual logout
+  signOut({ callbackUrl: "/" });
 };
+
 export default function NavBar() {
   return (
     <header>

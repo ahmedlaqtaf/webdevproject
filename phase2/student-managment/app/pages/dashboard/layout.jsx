@@ -4,7 +4,7 @@ export const metadata = {
 };
 
 import { Geist, Geist_Mono } from "next/font/google";
-
+import "../../globals.css";
 import "../../styles/navigation.css";
 
 import NavBar from "../../components/NavBar";

@@ -96,3 +96,8 @@ model Enrollment {
 
   @@unique([studentId, classId])
 }
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "./prisma/ERD.svg"
+}
