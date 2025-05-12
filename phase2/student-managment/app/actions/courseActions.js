@@ -1,11 +1,9 @@
-'use server';
-import CourseRepo from '../../lib/repository/courseRepo';
-//import SectionRepo from '../../lib/repository/';
-import RegistrationRepo from '../../lib/repository/registrationRepo';
-import StudentRepo from '../../lib/repository/studentRepo';
-//import SectionDayRepo from '../../lib/repository/';
+"use server";
+import CourseRepo from "../../lib/repository/courseRepo";
+import RegistrationRepo from "../../lib/repository/registrationRepo";
+import StudentRepo from "../../lib/repository/studentRepo";
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function getCoursesByCategory(category) {
@@ -17,28 +15,34 @@ export async function getCoursesByCategory(category) {
 
 export async function getAllCourses() {
   return await prisma.course.findMany({
-    include: { classes: true }
+    include: { classes: true },
   });
 }
-
 
 export async function getTotalStudentsPerCourse() {
-  return await prisma.course.findMany({
-    select: {
-      id: true,
-      name: true,
+  const courses = await prisma.course.findMany({
+    include: {
       classes: {
-        select: {
-          enrollments: {
-            select: {
-              studentId: true
-            }
-          }
-        }
-      }
-    }
+        include: {
+          enrollments: true,
+        },
+      },
+    },
+  });
+
+  return courses.map((course) => {
+    const total = course.classes.reduce(
+      (sum, cls) => sum + cls.enrollments.length,
+      0
+    );
+    return {
+      id: course.id,
+      name: course.name,
+      totalStudents: total,
+    };
   });
 }
+
 export async function createCourse(courseData) {
   const courseRepository = new CourseRepo();
   try {
@@ -48,26 +52,6 @@ export async function createCourse(courseData) {
     return { success: false, error: error.message };
   }
 }
-
-// Section actions
-// export async function createSection(sectionData) {
-//   try {
-//     const newSection = await SectionRepo.create(sectionData);
-//     return { success: true, data: newSection };
-//   } catch (error) {
-//     return { success: false, error: error.message };
-//   }
-// }
-
-// Add section days to a section
-// export async function createSectionDay(sectionDayData) {
-//   try {
-//     const newSectionDay = await SectionDayRepo.create(sectionDayData);
-//     return { success: true, data: newSectionDay };
-//   } catch (error) {
-//     return { success: false, error: error.message };
-//   }
-// }
 
 // Registration actions
 export async function createRegistration(registrationData) {
