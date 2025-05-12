@@ -15,12 +15,27 @@ export async function GET() {
 export async function POST(request) {
     try {
         const studentData = await request.json();
-        const student = await studentRepo.create(studentData);
+
+        // Correct Prisma create method call
+        const student = await studentRepo.create({
+            data: {
+                id: studentData.id, // id field directly here
+                name: studentData.name,
+                userId: studentData.userId,
+                completedCourses: { // Correctly map completedCourses field
+                    create: studentData.completedCourses.map(course => ({
+                        course: course.course,
+                        grade: course.grade,
+                    })),
+                },
+            },
+        });
+
         return NextResponse.json(student);
     } catch (error) {
         return NextResponse.json({
-            error: "Failed to create student",
-            details: error.message
-        }, { status: 500 })
+            error: 'Failed to create student',
+            details: error.message,
+        }, { status: 500 });
     }
 }

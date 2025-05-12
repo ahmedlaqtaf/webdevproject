@@ -12,28 +12,94 @@
       "schedule": "Monday & Wednesday 10:00-11:30 AM",
       "capacity": 30,
       "enrolled_students": [{
-          "studentId": "202540042"
+          "studentId": "202540250"
         },
         {
-          "studentId": "202540004"
+          "studentId": "202540251"
         },
         {
-          "studentId": "202507890"
+          "studentId": "202540253"
         },
         {
-          "studentId": "202531666"
+          "studentId": "202540254"
         },
         {
-          "studentId": "202540047"
+          "studentId": "202540255"
         },
         {
-          "studentId": "202540003"
+          "studentId": "202540256"
         },
         {
-          "studentId": "202519012"
+          "studentId": "202540258"
         },
         {
-          "studentId": "202517890"
+          "studentId": "202540259"
+        },
+        {
+          "studentId": "202540263"
+        },
+        {
+          "studentId": "202540265"
+        },
+        {
+          "studentId": "202540266"
+        },
+        {
+          "studentId": "202540267"
+        },
+        {
+          "studentId": "202540268"
+        },
+        {
+          "studentId": "202540270"
+        },
+        {
+          "studentId": "202540273"
+        },
+        {
+          "studentId": "202540274"
+        },
+        {
+          "studentId": "202540275"
+        },
+        {
+          "studentId": "202540276"
+        },
+        {
+          "studentId": "202540277"
+        },
+        {
+          "studentId": "202540278"
+        },
+        {
+          "studentId": "202540279"
+        },
+        {
+          "studentId": "202540280"
+        },
+        {
+          "studentId": "202540282"
+        },
+        {
+          "studentId": "202540283"
+        },
+        {
+          "studentId": "202540287"
+        },
+        {
+          "studentId": "202540288"
+        },
+        {
+          "studentId": "202540290"
+        },
+        {
+          "studentId": "202540291"
+        },
+        {
+          "studentId": "202540293"
+        },
+        {
+          "studentId": "202540295"
         }
       ]
     }]
@@ -54,13 +120,94 @@
       "schedule": "Sunday & Thursday 9:00-10:20 AM",
       "capacity": 30,
       "enrolled_students": [{
-          "studentId": "202540003"
+          "studentId": "202540252"
         },
         {
-          "studentId": "202515678"
+          "studentId": "202540255"
         },
         {
-          "studentId": "202540030"
+          "studentId": "202540256"
+        },
+        {
+          "studentId": "202540257"
+        },
+        {
+          "studentId": "202540258"
+        },
+        {
+          "studentId": "202540260"
+        },
+        {
+          "studentId": "202540261"
+        },
+        {
+          "studentId": "202540262"
+        },
+        {
+          "studentId": "202540264"
+        },
+        {
+          "studentId": "202540266"
+        },
+        {
+          "studentId": "202540267"
+        },
+        {
+          "studentId": "202540269"
+        },
+        {
+          "studentId": "202540270"
+        },
+        {
+          "studentId": "202540271"
+        },
+        {
+          "studentId": "202540272"
+        },
+        {
+          "studentId": "202540273"
+        },
+        {
+          "studentId": "202540274"
+        },
+        {
+          "studentId": "202540277"
+        },
+        {
+          "studentId": "202540281"
+        },
+        {
+          "studentId": "202540283"
+        },
+        {
+          "studentId": "202540284"
+        },
+        {
+          "studentId": "202540285"
+        },
+        {
+          "studentId": "202540286"
+        },
+        {
+          "studentId": "202540287"
+        },
+        {
+          "studentId": "202540288"
+        },
+        {
+          "studentId": "202540289"
+        },
+        {
+          "studentId": "202540292"
+        },
+        {
+          "studentId": "202540293"
+        },
+        {
+          "studentId": "202540294"
+        },
+        {
+          "studentId": "202540296"
         }
       ]
     }]
@@ -81,28 +228,88 @@
         "schedule": "Sunday & Wednesday 9:30-11:20 AM",
         "capacity": 28,
         "enrolled_students": [{
-            "studentId": "202540049"
+            "studentId": "202540250"
           },
           {
-            "studentId": "202540021"
+            "studentId": "202540251"
           },
           {
-            "studentId": "202515678"
+            "studentId": "202540252"
           },
           {
-            "studentId": "202540044"
+            "studentId": "202540253"
           },
           {
-            "studentId": "202517890"
+            "studentId": "202540254"
           },
           {
-            "studentId": "202540033"
+            "studentId": "202540257"
           },
           {
-            "studentId": "202540035"
+            "studentId": "202540259"
           },
           {
-            "studentId": "202540020"
+            "studentId": "202540260"
+          },
+          {
+            "studentId": "202540261"
+          },
+          {
+            "studentId": "202540262"
+          },
+          {
+            "studentId": "202540263"
+          },
+          {
+            "studentId": "202540264"
+          },
+          {
+            "studentId": "202540265"
+          },
+          {
+            "studentId": "202540268"
+          },
+          {
+            "studentId": "202540269"
+          },
+          {
+            "studentId": "202540271"
+          },
+          {
+            "studentId": "202540272"
+          },
+          {
+            "studentId": "202540275"
+          },
+          {
+            "studentId": "202540276"
+          },
+          {
+            "studentId": "202540278"
+          },
+          {
+            "studentId": "202540279"
+          },
+          {
+            "studentId": "202540280"
+          },
+          {
+            "studentId": "202540281"
+          },
+          {
+            "studentId": "202540282"
+          },
+          {
+            "studentId": "202540284"
+          },
+          {
+            "studentId": "202540285"
+          },
+          {
+            "studentId": "202540286"
+          },
+          {
+            "studentId": "202540289"
           }
         ]
       },
@@ -190,7 +397,7 @@
     "status": "Cancelled",
     "classes": [{
       "id": "ML501-A",
-      "instructor": "instructor_5",
+      "instructor": "instructor_9",
       "schedule": "Sunday & Thursday 9:00-10:20 AM",
       "capacity": 40,
       "enrolled_students": [{
@@ -262,7 +469,7 @@
     "status": "Active",
     "classes": [{
       "id": "CN450-A",
-      "instructor": "instructor_3",
+      "instructor": "instructor_9",
       "schedule": "Sunday & Thursday 9:00-10:20 AM",
       "capacity": 30,
       "enrolled_students": [{
@@ -340,7 +547,7 @@
     "status": "Cancelled",
     "classes": [{
       "id": "AI600-A",
-      "instructor": "instructor_1",
+      "instructor": "instructor_8",
       "schedule": "Sunday & Thursday 9:00-10:20 AM",
       "capacity": 40,
       "enrolled_students": [{
@@ -483,7 +690,7 @@
     "status": "Active",
     "classes": [{
       "id": "CS330-A",
-      "instructor": "instructor_5",
+      "instructor": "instructor_10",
       "schedule": "Friday & Sunday 5:13 PM",
       "capacity": 30,
       "enrolled_students": [{
@@ -547,7 +754,7 @@
     "status": "Active",
     "classes": [{
       "id": "CS360-A",
-      "instructor": "instructor_7",
+      "instructor": "instructor_10",
       "schedule": "Tuesday & Tuesday 4:36 PM",
       "capacity": 30,
       "enrolled_students": []
