@@ -112,6 +112,21 @@ export default function Page() {
               <span>Sign in with GitHub</span>
             </button>
           </div>
+          <div className="github-login">
+            <button
+              type="button"
+              className="github-button"
+              onClick={() =>
+                signIn("google", {
+                  callbackUrl: "/pages/dashboard",
+                  prompt: "login",
+                })
+              }
+            >
+              <img src="/Google.png" width="40" height="40" alt="GitHub" />
+              <span>Continue with Google</span>
+            </button>
+          </div>
         </form>
       </div>
     </main>

@@ -16,8 +16,8 @@ export default function NavBar() {
           <Link href="/pages/dashboard" className="react-link">
             Dashboard
           </Link>
-          <Link href="/pages/dashboard" className="react-link">
-            Statistics
+          <Link href="/pages/courses" className="react-link">
+            Courses
           </Link>
         </div>
         <button className="log-out-btn" onClick={handleLogout}>

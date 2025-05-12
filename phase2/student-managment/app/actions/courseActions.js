@@ -14,33 +14,50 @@ export async function getCoursesByCategory(category) {
 }
 
 export async function getAllCourses() {
-  return await prisma.course.findMany({
-    include: { classes: true },
-  });
-}
-
-export async function getTotalStudentsPerCourse() {
   const courses = await prisma.course.findMany({
     include: {
       classes: {
         include: {
-          enrollments: true,
-        },
-      },
-    },
+          enrollments: true
+        }
+      }
+    }
   });
 
-  return courses.map((course) => {
-    const total = course.classes.reduce(
+  return courses.map(course => ({
+    ...course,
+    totalEnrollments: course.classes.reduce(
       (sum, cls) => sum + cls.enrollments.length,
       0
-    );
-    return {
+    )
+  }));
+}
+
+export async function getTotalStudentsPerCourse() {
+  return await prisma.course.findMany({
+    select: {
+      id: true,
+      name: true,
+      _count: {
+        select: {
+          classes: {
+            select: {
+              enrollments: true
+            }
+          }
+        }
+      }
+    }
+  }).then(courses =>
+    courses.map(course => ({
       id: course.id,
       name: course.name,
-      totalStudents: total,
-    };
-  });
+      totalEnrollments: course._count.classes.reduce(
+        (sum, classEnrollments) => sum + classEnrollments.enrollments,
+        0
+      )
+    }))
+  );
 }
 
 export async function createCourse(courseData) {

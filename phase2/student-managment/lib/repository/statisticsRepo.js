@@ -179,7 +179,7 @@ class StatisticsRepo {
       };
     });
 
-    return withFailCounts.sort((a, b) => b.failCount - a.failCount);
+    return withFailCounts.sort((a, b) => b.failCount - a.failCount).slice(0, 5);
   }
 
   // 10. course status (active vs cancelled)
@@ -188,6 +188,27 @@ class StatisticsRepo {
       by: ["status"],
       _count: true,
     });
+  }
+  // 11. Average GPA per course
+  async getAverageGPAperCourse() {
+    const courses = await this.prisma.course.findMany({
+      include: {
+        completedCourses: true,
+      },
+    });
+
+    const withGPA = courses.map((course) => {
+      const grades = course.completedCourses
+        .map((completed) => completed.grade)
+        .filter((grade) => grade !== null);
+      const avg =
+        grades.length > 0
+          ? grades.reduce((sum, grade) => sum + grade, 0) / grades.length
+          : 0;
+      return { courseId: course.id, courseName: course.name, avgGPA: avg };
+    });
+
+    return withGPA.sort((a, b) => b.avgGPA - a.avgGPA);
   }
 }
 
